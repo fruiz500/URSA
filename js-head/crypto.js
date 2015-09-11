@@ -2,12 +2,16 @@
 function unlockItem(){
 	mainMsg.innerHTML = '<span class="blink" style="color:cyan">PROCESSING</span>';
 	setTimeout(function(){
-		var text = XSSfilter(mainBox.innerHTML);
-		if(text.match('\u2004') || text.match('\u2005') || text.match('\u2006')){			//detect special characters
+		var text = XSSfilter(mainBox.innerHTML).trim().replace(/&[^;]+;/g,'').replace(/\s/g,'');	//remove HTML tags that might have been introduced and extra spaces
+		text = text.split("=").sort(function (a, b) { return b.length - a.length; })[0];			//remove tags												
+
+		if(text.match('\u2004') || text.match('\u2005') || text.match('\u2006')){			//detect special hiding characters
 			fromLetters(text);
 			Decrypt()
-		}else{
+		}else if(text.slice(0,1) == '@'){													//detect encrypted item
 			Decrypt()
+		}else{
+			mainMsg.innerHTML = 'Text loaded'
 		}
 		btnLabels()
 	},20);
