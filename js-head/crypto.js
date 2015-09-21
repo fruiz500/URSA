@@ -37,7 +37,6 @@ function Encrypt(){
 	mainBox.innerHTML = "URSA40msg=@" + noncestr + cipherstr + "=URSA40msg";		
 
 	mainMsg.innerHTML = 'Locking successful. Click <strong>Email</strong> or copy and send.';
-	if(isMobile) mainMsg.innerHTML = 'Locking successful. Copy and click SMS';
 	if(!isMobile) selectMain();
 	btnLabels();
 };

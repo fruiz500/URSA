@@ -42,10 +42,6 @@ function sendSMS(){
     	} else if (document.selection && document.selection.type != "Control") {
         	text = document.selection.createRange().text;
     	}
-		if (text == ''){
-			mainMsg.innerHTML = 'Please copy the item to be texted and tap SMS again';
-			throw ('no selection')
-		}
 		window.open("SMS:","_parent")							//open SMS on mobile
 	} else {
 		mainMsg.innerHTML = 'SMS function is only available on mobile devices'
