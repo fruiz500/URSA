@@ -21,7 +21,7 @@
 <style>
 html {
 	-webkit-text-size-adjust: 100%;
-	overflow-y:scroll;
+	overflow-y: scroll;
 }
 body {
 	font-family: Sans-Serif;
@@ -29,198 +29,238 @@ body {
 	margin-left: 1%;
 	margin-right: 1%;
 	overflow: auto;
-	background-color: #cc3300;
+	background-color: #FFFFFF;
+	color: #000000;
+}
+.black_overlay {
+	display: none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	z-index: 1001;
+	-moz-opacity: 0.5;
+	opacity: .50;
+	filter: alpha(opacity=50);
+	background-color: black;
+}
+.white_content {
+	display: none;
+	position: absolute;
+	top: 10%;
+	left: 10%;
+	width: 80%;
+	height: 80%;
+	padding: 0px;
+	border: 0px solid gray;
+	z-index: 1002;
+	overflow: auto;
+	background-color: #FFFFFF;
+}
+.block_page {
+	display: none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	border: 0px solid gray;
+	z-index: 1002;
+	overflow: auto;
+	background-color: white;
+}
+.cssbutton {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 10px;
+	font-family: Arial;
+	font-size: 22px;
+	padding: 10px;
+	text-decoration: none;
+	border: 0px;
+	margin-right: -2px;
+	color: #666666;
+	background: #e6e6e6;
+}
+.cssbutton:hover {
+	text-decoration: none;
+	cursor: pointer;
+	background: #d8d8d8;
+}
+.cssbutton:disabled {
+	color: #b7b7b7;
+	background: #f4f4f4;
+	cursor: default;
+}
+.cssbutton:disabled:hover {
+	color: #b7b7b7;
+	background: #f4f4f4;
+	cursor: default;
+}
+.custom-file-input {
 	color: #ffffff;
 }
-	.black_overlay{
-		display: none;
-		position: absolute;
-		top: 0%;
-		left: 0%;
-		width: 100%;
-		height: 100%;
-		z-index:1001;
-		-moz-opacity: 0.5;
-		opacity:.50;
-		filter: alpha(opacity=50);
-		background-color: black;
-	}
-	.white_content {
-		display: none;
-		position: absolute;
-		top: 10%;
-		left: 10%;
-		width: 80%;
-		height: 80%;
-		padding: 0px;
-		border: 0px solid gray;
-		z-index:1002;
-		overflow: auto;
-		background-color: #cc3300;
-	}
-	.block_page {
-		display: none;
-		position: absolute;
-		top: 0%;
-		left: 0%;
-		width: 100%;
-		height: 100%;
-		padding: 0px;
-		border: 0px solid gray;
-		z-index:1002;
-		overflow: auto;
-		background-color: white;
-	}
-	.cssbutton {
-		-webkit-border-radius: 0;
-	  	-moz-border-radius: 0;
-  		border-radius: 15px;
-  		font-family: Arial;
-		font-size:22px;
-  		padding: 14px;
-  		text-decoration: none;
-		border:0px;
-		margin-right: -2px;
-  		color: #CACACA;
-  		background: #774444;
-	}
-	.cssbutton:hover {
-		text-decoration: none;
-		cursor: pointer;
-		background: #885555;
-	}
-	.cssbutton:disabled{
-		color: #aeaeae;
-  		background: #8D7373;
-		cursor: default;
-	}
-	.cssbutton:disabled:hover{
-		color: #aeaeae;
-  		background: #8D7373;
-		cursor: default;
-	}
-	.custom-file-input{
-		color: #cc3300;
-	}
-	.custom-file-input::-webkit-file-upload-button {
-  		visibility: hidden;
-	}
-	.custom-file-input::before {
- 	 	content: 'Select a file';
- 		display: inline-block;
-		-webkit-border-radius: 15px;
-  		-moz-border-radius: 15px;
-  		border-radius: 15px;
-  		font-family: Arial;
-		font-size:22px;
-  		padding: 14px;
-		border:0px;
- 		outline: none;
-  		white-space: nowrap;
-  		-webkit-user-select: none;
-  		cursor: pointer;
-  		text-decoration: none;
-  		color: #CACACA;
-  		background: #774444;
-	}
-	.custom-file-input:hover::before {
-  		background: #885555;
-	}
-	.custom-file-input:active::before {
-  		background: #774444;
-	}
-	.cssbox {
-		-webkit-border-radius: 15px;
-  		-moz-border-radius: 15px;
-  		border-radius: 15px;
-		font-size:medium;
-  		padding: 15px;
-  		text-decoration: none;
-		width: 100%;
-		-webkit-appearance: none;
-		box-sizing: border-box;
-   	 	-webkit-box-sizing:border-box;
-    	-moz-box-sizing: border-box;
-		-webkit-box-shadow: none;
-		-moz-box-shadow: none;
-		box-shadow: none;
-  		color: #000000;
-  		background: #ffcc99;		
-  		border: 1px solid #D3D3D3;
-		overflow: auto;
-	}
-	.helpitem {
-		font-size: medium;
-		cursor: pointer;
-		padding: 1px;
-	}
-	.helpitem:hover {
-		background-color: #bb2200;
-	}
-	.helptext{
-		font-size: medium;
-		display: none;
-	}
-	.intLink { cursor: pointer; }
-	.blink {
-    	-webkit-animation: blink .75s linear infinite;
-    	-moz-animation: blink .75s linear infinite;
-    	-ms-animation: blink .75s linear infinite;
-    	-o-animation: blink .75s linear infinite;
-    	animation: blink .75s linear infinite;
-	}
-		@-webkit-keyframes blink {
-    		0% { opacity: 1; }
-    		50% { opacity: 1; }
-			50.01% { opacity: 0; }
-			100% { opacity: 0; }
-		}
-		@-moz-keyframes blink {
-    		0% { opacity: 1; }
-    		50% { opacity: 1; }
-    		50.01% { opacity: 0; }
-    		100% { opacity: 0; }
-		}
-		@-ms-keyframes blink {
-   			0% { opacity: 1; }
-    		50% { opacity: 1; }
-			50.01% { opacity: 0; }
-			100% { opacity: 0; }
-		}
-		@-o-keyframes blink {
-			0% { opacity: 1; }
-    		50% { opacity: 1; }
-    		50.01% { opacity: 0; }
-    		100% { opacity: 0; }
-		}
-		@keyframes blink {
-    		0% { opacity: 1; }
-    		50% { opacity: 1; }
-    		50.01% { opacity: 0; }
-    		100% { opacity: 0; }
-		}
-		
-input[type=checkbox]{
- 	/* Larger checkboxes */
-  	-ms-transform: scale(1.7); /* IE */
+ .custom-file-input::-webkit-file-upload-button {
+ visibility: hidden;
+}
+.custom-file-input::before {
+	content: 'Select a file';
+	display: inline-block;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-family: Arial;
+	font-size: 22px;
+	padding: 10px;
+	border: 0px;
+	outline: none;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	cursor: pointer;
+	text-decoration: none;
+	color: #666666;
+	background: #e6e6e6;
+}
+.custom-file-input:hover::before {
+	background: #d8d8d8;
+}
+.custom-file-input:active::before {
+	background: #e6e6e6;
+}
+.cssbox {
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-size: medium;
+	padding: 15px;
+	text-decoration: none;
+	width: 100%;
+	-webkit-appearance: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	color: #000000;
+	background: #ffffee;
+	border: 1px solid #D3D3D3;
+	overflow: auto;
+}
+.helpitem {
+	font-size: medium;
+	cursor: pointer;
+	padding: 1px;
+}
+.helpitem:hover {
+	background-color: #eeeeee;
+}
+.helptext {
+	font-size: medium;
+	display: none;
+}
+.intLink {
+	cursor: pointer;
+}
+.blink {
+	-webkit-animation: blink .75s linear infinite;
+	-moz-animation: blink .75s linear infinite;
+	-ms-animation: blink .75s linear infinite;
+	-o-animation: blink .75s linear infinite;
+	animation: blink .75s linear infinite;
+}
+ @-webkit-keyframes blink {
+ 0% {
+opacity: 1;
+}
+ 50% {
+opacity: 1;
+}
+ 50.01% {
+opacity: 0;
+}
+ 100% {
+opacity: 0;
+}
+}
+ @-moz-keyframes blink {
+ 0% {
+opacity: 1;
+}
+ 50% {
+opacity: 1;
+}
+ 50.01% {
+opacity: 0;
+}
+ 100% {
+opacity: 0;
+}
+}
+ @-ms-keyframes blink {
+ 0% {
+opacity: 1;
+}
+ 50% {
+opacity: 1;
+}
+ 50.01% {
+opacity: 0;
+}
+ 100% {
+opacity: 0;
+}
+}
+ @-o-keyframes blink {
+ 0% {
+opacity: 1;
+}
+ 50% {
+opacity: 1;
+}
+ 50.01% {
+opacity: 0;
+}
+ 100% {
+opacity: 0;
+}
+}
+ @keyframes blink {
+ 0% {
+opacity: 1;
+}
+ 50% {
+opacity: 1;
+}
+ 50.01% {
+opacity: 0;
+}
+ 100% {
+opacity: 0;
+}
+}
+input[type=checkbox] {
+	/* Larger checkboxes */
+	-ms-transform: scale(1.7); /* IE */
 	-moz-transform: scale(1.7); /* FF */
-  	-webkit-transform: scale(1.7); /* Safari and Chrome */
-  	-o-transform: scale(1.7); /* Opera */
- 	padding: 0px;
+	-webkit-transform: scale(1.7); /* Safari and Chrome */
+	-o-transform: scale(1.7); /* Opera */
+	padding: 0px;
 	cursor: pointer;
-	border:1px solid #eeeeee;
+	border: 1px solid #eeeeee;
 }
-input[type=radio]{
-  	/* Larger radio buttons */
-  	-ms-transform: scale(1.7); /* IE */
- 	-moz-transform: scale(1.7); /* FF */
-  	-webkit-transform: scale(1.7); /* Safari and Chrome */
-  	-o-transform: scale(1.7); /* Opera */
- 	padding: 0px;
+input[type=radio] {
+	/* Larger radio buttons */
+	-ms-transform: scale(1.7); /* IE */
+	-moz-transform: scale(1.7); /* FF */
+	-webkit-transform: scale(1.7); /* Safari and Chrome */
+	-o-transform: scale(1.7); /* Opera */
+	padding: 0px;
 	cursor: pointer;
-	border:1px solid #eeeeee;
+	border: 1px solid #eeeeee;
 }
-
 select {
 	-webkit-appearance: button;
 	-moz-appearance: button;
@@ -231,31 +271,28 @@ select {
 	margin: 0;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	border:1px solid #dedede;
-	color: #666666;
-	background: #ffcc99;
+	border: 1px solid #dedede;
+	color: #111111;
+	background: #ffffee;
 }
-
-a:link{
-	color: lime;
+a:link {
+	color: green;
 }
-
-a:visited{
-	color: lime;
+a:visited {
+	color: green;
 }
-
-a:hover{
+a:hover {
 	color: yellow;
 }
-
-img.intLink { border: 0; }
-
+img.intLink {
+	border: 0;
+}
 #toolBar1 {
 	padding-top: 1px;
 	padding-left: 2px;
 	border-top-left-radius: 15px;
 	border-top-right-radius: 15px;
-	background: #774444;
+	background: #e6e6e6;
 }
 #toolBar1 select {
 	font-size: 10px;
@@ -267,7 +304,7 @@ img.intLink { border: 0; }
 	width: 100%;
 	padding: 12px;
 	margin-left: auto;
-	margin-right: auto; 
+	margin-right: auto;
 }
 </style>
 
@@ -279,6 +316,9 @@ img.intLink { border: 0; }
 
 <!--scrypt-async-js KDF by Dmitry Chestnykh. Edited to make it synchronous. https://github.com/dchest/scrypt-async-js-->
 <script src="js-opensrc/scrypt-async.js"></script>
+
+<!--lz-string compression algorithm. https://github.com/pieroxy/lz-string-->
+<script src="js-opensrc/lz-string.js"></script>
 
 <!--FastClick, used only on mobile devices. https://github.com/ftlabs/fastclick-->
 <script src="js-opensrc/fastclick.js"></script>
@@ -309,305 +349,305 @@ img.intLink { border: 0; }
 
 <!--Main screen-->
 <div id="mainScr" style="max-width: 1000px;	margin-left: auto; margin-right: auto; display:block;">
-  <div align="center">
-  <br>
+  <div align="center"> <br>
 
-<!--message area and local directory box, plus buttons-->
-	<div id="mainMsg" style="height:20px;"><span style="color:red;font-weight:bold">JAVASCRIPT OFF, PASSLOK CANNOT RUN</span></div><br /><br />
+    <!--message area and local directory box, plus buttons-->
+    <div id="mainMsg" style="height:20px;"><span style="color:red;font-weight:bold">JAVASCRIPT OFF, PASSLOK CANNOT RUN</span></div>
+    <br />
+    <br />
+    <input type="password" class="cssbox" autocomplete="off" id="pwd" onKeyUp="pwdKeyup(event);" style="width:95%; padding: 2px;" name="text" placeholder="Enter your shared Key here and the message in the box below." align="center">
+    <br />
+    <input type="checkbox" id="showKey" title="reveal box contents">
+    &nbsp; Show
+    <button class="cssbutton" id="suggestKeyBtn" value="Suggest" style="padding:6px;font-size:large;" title="suggest a Key made of five common words">5 Words</button><!--
+--><button class="cssbutton" id="randomBtn" value="Random" style="padding:6px;font-size:large;" title="display a random Key">Random</button><!--
+--><button class="cssbutton" id="clearKeyBtn" value="Clear" style="padding:6px;font-size:large;" title="clear the Key">Clear</button>
+    <br />
+    <br />
 
-	<input type="password" class="cssbox" autocomplete="off" id="pwd" onKeyUp="pwdKeyup(event);" style="width:95%;" name="text" placeholder="Enter your shared Key here and the message in the box below." align="center"><br /><br />
-    <input type="checkbox" id="showKey" title="reveal box contents">&nbsp; Show
-    <button class="cssbutton" id="suggestKeyBtn" value="Suggest" style="padding:6px;font-size:large;" title="suggest a Key made of five common words">5 Words</button>
-    <button class="cssbutton" id="randomBtn" value="Random" style="padding:6px;font-size:large;" title="display a random Key">Random</button>
-    <button class="cssbutton" id="clearKeyBtn" value="Clear" style="padding:6px;font-size:large;" title="clear the Key">Clear</button>
-    <br /><br />
-    
-<!--buttons above the main box-->
-<div id="mainBtnsTop" style="">
-   <button class="cssbutton" id="decryptBtn" value="Lock/Unlock" style="padding-right:7px;padding-left:7px;color:lime;" title="lock plain text in the box, unlock locked text (alt-L)" accesskey="l">Lock</button><!--
+    <!--buttons above the main box-->
+    <div id="mainBtnsTop" style="">
+      <button class="cssbutton" id="decryptBtn" value="Lock/Unlock" style="padding-right:7px;padding-left:7px;color:green;" title="lock plain text in the box, unlock locked text (alt-L)" accesskey="l">Lock</button><!--
 --><button class="cssbutton" id="sendMailBtn" value="Email" style="padding-right:7px;padding-left:7px;" title="put the box contents in an email using the default client (alt-E)">Email</button><!--
 --><button class="cssbutton" id="hideBtn" value="Hide" style="" title="switch recipients, or turn the message into regular text (alt-S)" accesskey="s" disabled>Hide</button><!--
 --><button class="cssbutton" id="chatBtn" value="Chat" style="" title="make a chat invitation or open it (alt-C)" accesskey="c">Chat</button>
-</div>
-</div>
+    </div>
+  </div>
 
-<!--toolbar for rich text editing; this first section contains lists for style, fonts, etc.-->   
-<div id="toolBar1" style="display:none;">
-<select id="formatBlock" title="headings, etc.">
-<option selected>- formatting -</option>
-<option value="h1">Title 1 &lt;h1&gt;</option>
-<option value="h2">Title 2 &lt;h2&gt;</option>
-<option value="h3">Title 3 &lt;h3&gt;</option>
-<option value="h4">Title 4 &lt;h4&gt;</option>
-<option value="h5">Title 5 &lt;h5&gt;</option>
-<option value="h6">Subtitle &lt;h6&gt;</option>
-<option value="p">Paragraph &lt;p&gt;</option>
-<option value="pre">Preformatted &lt;pre&gt;</option>
-</select>
-<select id="fontName" title="font type">
-<option class="heading" selected>- font -</option>
-<option>Arial</option>
-<option>Arial Black</option>
-<option>Courier New</option>
-<option>Times New Roman</option>
-<option>Verdana</option>
-<option>Comic Sans MS</option>
-<option>Impact</option>
-<option>Trebuchet MS</option>
-<option>Symbol</option>
-</select>
-<select id="fontSize" title="font size">
-<option class="heading" selected>- size -</option>
-<option value="1">Very small</option>
-<option value="2">A bit small</option>
-<option value="3">Normal</option>
-<option value="4">Medium-large</option>
-<option value="5">Big</option>
-<option value="6">Very big</option>
-<option value="7">Maximum</option>
-</select>
-<select id="foreColor" title="text color">
-<option class="heading" selected>- color -</option>
-<option value="brown">Brown</option>
-<option value="red">Red</option>
-<option value="orange">Orange</option>
-<option value="green">Green</option>
-<option value="blue">Blue</option>
-<option value="purple">Violet</option>
-<option value="violet">Pink</option>
-<option value="yellow">Yellow</option>
-<option value="cyan">Cyan</option>
-<option value="white">White</option>
-<option value="gray">Gray</option>
-<option value="black">Black</option>
-</select>
-<select id="backColor" title="color behind the text">
-<option class="heading" selected>- back color -</option>
-<option value="brown">Brown</option>
-<option value="red">Red</option>
-<option value="orange">Orange</option>
-<option value="green">Green</option>
-<option value="blue">Blue</option>
-<option value="purple">Violet</option>
-<option value="violet">Pink</option>
-<option value="yellow">Yellow</option>
-<option value="cyan">Cyan</option>
-<option value="white">White</option>
-<option value="gray">Gray</option>
-<option value="black">Black</option>
-</select>
+  <!--toolbar for rich text editing; this first section contains lists for style, fonts, etc.-->
+  <div id="toolBar1" style="display:none;">
+    <select id="formatBlock" title="headings, etc.">
+      <option selected>- formatting -</option>
+      <option value="h1">Title 1 &lt;h1&gt;</option>
+      <option value="h2">Title 2 &lt;h2&gt;</option>
+      <option value="h3">Title 3 &lt;h3&gt;</option>
+      <option value="h4">Title 4 &lt;h4&gt;</option>
+      <option value="h5">Title 5 &lt;h5&gt;</option>
+      <option value="h6">Subtitle &lt;h6&gt;</option>
+      <option value="p">Paragraph &lt;p&gt;</option>
+      <option value="pre">Preformatted &lt;pre&gt;</option>
+    </select>
+    <select id="fontName" title="font type">
+      <option class="heading" selected>- font -</option>
+      <option>Arial</option>
+      <option>Arial Black</option>
+      <option>Courier New</option>
+      <option>Times New Roman</option>
+      <option>Verdana</option>
+      <option>Comic Sans MS</option>
+      <option>Impact</option>
+      <option>Trebuchet MS</option>
+      <option>Symbol</option>
+    </select>
+    <select id="fontSize" title="font size">
+      <option class="heading" selected>- size -</option>
+      <option value="1">Very small</option>
+      <option value="2">A bit small</option>
+      <option value="3">Normal</option>
+      <option value="4">Medium-large</option>
+      <option value="5">Big</option>
+      <option value="6">Very big</option>
+      <option value="7">Maximum</option>
+    </select>
+    <select id="foreColor" title="text color">
+      <option class="heading" selected>- color -</option>
+      <option value="brown">Brown</option>
+      <option value="red">Red</option>
+      <option value="orange">Orange</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Violet</option>
+      <option value="violet">Pink</option>
+      <option value="yellow">Yellow</option>
+      <option value="cyan">Cyan</option>
+      <option value="white">White</option>
+      <option value="gray">Gray</option>
+      <option value="black">Black</option>
+    </select>
+    <select id="backColor" title="color behind the text">
+      <option class="heading" selected>- back color -</option>
+      <option value="brown">Brown</option>
+      <option value="red">Red</option>
+      <option value="orange">Orange</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Violet</option>
+      <option value="violet">Pink</option>
+      <option value="yellow">Yellow</option>
+      <option value="cyan">Cyan</option>
+      <option value="white">White</option>
+      <option value="gray">Gray</option>
+      <option value="black">Black</option>
+    </select>
 
-<!--rich text editing buttons; images are loaded as data-->
-<div id="toolBar2">
-<img class="intLink" title="Bold" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAInhI+pa+H9mJy0LhdgtrxzDG5WGFVk6aXqyk6Y9kXvKKNuLbb6zgMFADs=" />
-<img class="intLink" title="Italic" src="data:image/gif;base64,R0lGODlhFgAWAKEDAAAAAF9vj5WIbf///yH5BAEAAAMALAAAAAAWABYAAAIjnI+py+0Po5x0gXvruEKHrF2BB1YiCWgbMFIYpsbyTNd2UwAAOw==" />
-<img class="intLink" title="Underline" src="data:image/gif;base64,R0lGODlhFgAWAKECAAAAAF9vj////////yH5BAEAAAIALAAAAAAWABYAAAIrlI+py+0Po5zUgAsEzvEeL4Ea15EiJJ5PSqJmuwKBEKgxVuXWtun+DwxCCgA7" />
-<img class="intLink" title="Strikethrough" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAABGRkZxcXGrq6uOjo7CwsINDQ3p6emLJhauAAAAAXRSTlMAQObYZgAAAEVJREFUGNNjoCYoDjaBs1UZDGFMVmUGJhibXcidFa7GUVAVygpSUlJMS0uBqmFgFhSA6TVgYIOxmcUZ2BxgbEFnF2o6HQD3yAWvJ+vXvwAAAABJRU5ErkJggg==" />
-<img class="intLink" title="Subscript" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAACCgoJISEh0pePr7/WgssrS0tLH1vP156UFAAAAAXRSTlMAQObYZgAAAElJREFUGNNjoB5gDBQRFICy2YQCAhNgEomqAghFSg5wNosSkniQGktwAURYlFEp2d0AIiyYpKTGbICwJBihnd2kBM5mNjagzPEAztoHvc+7u1sAAAAASUVORK5CYII=" />
-<img class="intLink" title="Superscript" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAACCgoJISEigssrr7/V0pePS0tLH1vPtoVcWAAAAAXRSTlMAQObYZgAAAEpJREFUGNNjoC5gCTaAs5ndAxASrBA2o6GIoICpA5jNJmhg6B5SApFPUhZgDQ2AalRyQBioJABnMxqpwYWFGZUMYMKCSUpqlDocAJ7SBzNIUMnCAAAAAElFTkSuQmCC" />
-<img class="intLink" title="Left align" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIghI+py+0Po5y02ouz3jL4D4JMGELkGYxo+qzl4nKyXAAAOw==" />
-<img class="intLink" title="Center align" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIfhI+py+0Po5y02ouz3jL4D4JOGI7kaZ5Bqn4sycVbAQA7" />
-<img class="intLink" title="Right align" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIghI+py+0Po5y02ouz3jL4D4JQGDLkGYxouqzl43JyVgAAOw==" />
-<img class="intLink" title="Justify" src="data:image/gif;base64,R0lGODlhFgAWAIAAAMDAwAAAACH5BAEAAAAALAAAAAAWABYAAAIghI+py+0Po2yh2nvnxNxq2XVfFHIjVGLnk2brC8fyXAAAOw==" />
-<img class="intLink" title="Numbered list" src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAADljwliE35GjuaezxtHa7P///////yH5BAEAAAcALAAAAAAWABYAAAM2eLrc/jDKSespwjoRFvggCBUBoTFBeq6QIAysQnRHaEOzyaZ07Lu9lUBnC0UGQU1K52s6n5oEADs=" />
-<img class="intLink" title="Dotted list" src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAAB1ChF9vj1iE33mOrqezxv///////yH5BAEAAAcALAAAAAAWABYAAAMyeLrc/jDKSesppNhGRlBAKIZRERBbqm6YtnbfMY7lud64UwiuKnigGQliQuWOyKQykgAAOw==" />
-<img class="intLink" title="Quote" src="data:image/gif;base64,R0lGODlhFgAWAIQXAC1NqjFRjkBgmT9nqUJnsk9xrFJ7u2R9qmKBt1iGzHmOrm6Sz4OXw3Odz4Cl2ZSnw6KxyqO306K63bG70bTB0rDI3bvI4P///////////////////////////////////yH5BAEKAB8ALAAAAAAWABYAAAVP4CeOZGmeaKqubEs2CekkErvEI1zZuOgYFlakECEZFi0GgTGKEBATFmJAVXweVOoKEQgABB9IQDCmrLpjETrQQlhHjINrTq/b7/i8fp8PAQA7" />
-<img class="intLink" title="Delete indentation" src="data:image/gif;base64,R0lGODlhFgAWAMIHAAAAADljwliE35GjuaezxtDV3NHa7P///yH5BAEAAAcALAAAAAAWABYAAAM2eLrc/jDKCQG9F2i7u8agQgyK1z2EIBil+TWqEMxhMczsYVJ3e4ahk+sFnAgtxSQDqWw6n5cEADs=" />
-<img class="intLink" title="Add indentation" src="data:image/gif;base64,R0lGODlhFgAWAOMIAAAAADljwl9vj1iE35GjuaezxtDV3NHa7P///////////////////////////////yH5BAEAAAgALAAAAAAWABYAAAQ7EMlJq704650B/x8gemMpgugwHJNZXodKsO5oqUOgo5KhBwWESyMQsCRDHu9VOyk5TM9zSpFSr9gsJwIAOw==" />
-<img class="intLink" title="Horizontal rule" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAADIyMimpqbp6enz8/P8/PzZ2dldXV27aT9/AAAAAXRSTlMAQObYZgAAAD5JREFUGNNjoBg4GSDYSgpYFCQKgkECiC0aGuLi7GwsAGILKYGBABYt5QUwVoiZuJhJAITN6mxs7Apk0wIAACMpB/oWEo0pAAAAAElFTkSuQmCC" />
-<img class="intLink" title="Hyperlink" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />
-<img class="intLink" title="Remove hyperlink" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAAD08fHXzcxjY2OMhoafn5+uLyrktrTVXxhsAAAAAXRSTlMAQObYZgAAAGxJREFUGNNjwAAFMAZjEkMCYyKUU6aQoAaTYU90TIcrFwBCCFANDWIKDVUAMZkcBUVZBQWDQGwWERcnJhcXETBbBUEyKzubsjobK4PYrEZCwsxCQqZgc4KNTVmMjQOQzIfbW5jOgOYehDspAwBt9Q/S3exo3wAAAABJRU5ErkJggg==" />
-<img class="intLink" title="Remove formatting" src="data:image/gif;base64,R0lGODlhFgAWAIQbAD04KTRLYzFRjlldZl9vj1dusY14WYODhpWIbbSVFY6O7IOXw5qbms+wUbCztca0ccS4kdDQjdTLtMrL1O3YitHa7OPcsd/f4PfvrvDv8Pv5xv///////////////////yH5BAEKAB8ALAAAAAAWABYAAAV84CeOZGmeaKqubMteyzK547QoBcFWTm/jgsHq4rhMLoxFIehQQSAWR+Z4IAyaJ0kEgtFoLIzLwRE4oCQWrxoTOTAIhMCZ0tVgMBQKZHAYyFEWEV14eQ8IflhnEHmFDQkAiSkQCI2PDC4QBg+OAJc0ewadNCOgo6anqKkoIQA7" />
-<img class="intLink" title="Undo" src="data:image/gif;base64,R0lGODlhFgAWAOMKADljwliE33mOrpGjuYKl8aezxqPD+7/I19DV3NHa7P///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARR8MlJq7046807TkaYeJJBnES4EeUJvIGapWYAC0CsocQ7SDlWJkAkCA6ToMYWIARGQF3mRQVIEjkkSVLIbSfEwhdRIH4fh/DZMICe3/C4nBQBADs=" />
-<img class="intLink" title="Redo" src="data:image/gif;base64,R0lGODlhFgAWAMIHAB1ChDljwl9vj1iE34Kl8aPD+7/I1////yH5BAEKAAcALAAAAAAWABYAAANKeLrc/jDKSesyphi7SiEgsVXZEATDICqBVJjpqWZt9NaEDNbQK1wCQsxlYnxMAImhyDoFAElJasRRvAZVRqqQXUy7Cgx4TC6bswkAOw==" />
-</div></div>
-<div id="mainBox" contenteditable="true" class="cssbox" style="min-height:100px;" accesskey=";"></div>
-
-<div align="center">
-<!--buttons below the main box-->
-<div id="mainbuttonsbot" style="display: block;">
-<button class="cssbutton" id="sendSMSBtn" value="SMS" style="" title="mobile: open the default Texting app">SMS</button><!--
+    <!--rich text editing buttons; images are loaded as data-->
+    <div id="toolBar2"> <img class="intLink" title="Bold" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAInhI+pa+H9mJy0LhdgtrxzDG5WGFVk6aXqyk6Y9kXvKKNuLbb6zgMFADs=" /> <img class="intLink" title="Italic" src="data:image/gif;base64,R0lGODlhFgAWAKEDAAAAAF9vj5WIbf///yH5BAEAAAMALAAAAAAWABYAAAIjnI+py+0Po5x0gXvruEKHrF2BB1YiCWgbMFIYpsbyTNd2UwAAOw==" /> <img class="intLink" title="Underline" src="data:image/gif;base64,R0lGODlhFgAWAKECAAAAAF9vj////////yH5BAEAAAIALAAAAAAWABYAAAIrlI+py+0Po5zUgAsEzvEeL4Ea15EiJJ5PSqJmuwKBEKgxVuXWtun+DwxCCgA7" /> <img class="intLink" title="Strikethrough" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAABGRkZxcXGrq6uOjo7CwsINDQ3p6emLJhauAAAAAXRSTlMAQObYZgAAAEVJREFUGNNjoCYoDjaBs1UZDGFMVmUGJhibXcidFa7GUVAVygpSUlJMS0uBqmFgFhSA6TVgYIOxmcUZ2BxgbEFnF2o6HQD3yAWvJ+vXvwAAAABJRU5ErkJggg==" /> <img class="intLink" title="Subscript" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAACCgoJISEh0pePr7/WgssrS0tLH1vP156UFAAAAAXRSTlMAQObYZgAAAElJREFUGNNjoB5gDBQRFICy2YQCAhNgEomqAghFSg5wNosSkniQGktwAURYlFEp2d0AIiyYpKTGbICwJBihnd2kBM5mNjagzPEAztoHvc+7u1sAAAAASUVORK5CYII=" /> <img class="intLink" title="Superscript" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAACCgoJISEigssrr7/V0pePS0tLH1vPtoVcWAAAAAXRSTlMAQObYZgAAAEpJREFUGNNjoC5gCTaAs5ndAxASrBA2o6GIoICpA5jNJmhg6B5SApFPUhZgDQ2AalRyQBioJABnMxqpwYWFGZUMYMKCSUpqlDocAJ7SBzNIUMnCAAAAAElFTkSuQmCC" /> <img class="intLink" title="Left align" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIghI+py+0Po5y02ouz3jL4D4JMGELkGYxo+qzl4nKyXAAAOw==" /> <img class="intLink" title="Center align" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIfhI+py+0Po5y02ouz3jL4D4JOGI7kaZ5Bqn4sycVbAQA7" /> <img class="intLink" title="Right align" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAIghI+py+0Po5y02ouz3jL4D4JQGDLkGYxouqzl43JyVgAAOw==" /> <img class="intLink" title="Justify" src="data:image/gif;base64,R0lGODlhFgAWAIAAAMDAwAAAACH5BAEAAAAALAAAAAAWABYAAAIghI+py+0Po2yh2nvnxNxq2XVfFHIjVGLnk2brC8fyXAAAOw==" /> <img class="intLink" title="Numbered list" src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAADljwliE35GjuaezxtHa7P///////yH5BAEAAAcALAAAAAAWABYAAAM2eLrc/jDKSespwjoRFvggCBUBoTFBeq6QIAysQnRHaEOzyaZ07Lu9lUBnC0UGQU1K52s6n5oEADs=" /> <img class="intLink" title="Dotted list" src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAAB1ChF9vj1iE33mOrqezxv///////yH5BAEAAAcALAAAAAAWABYAAAMyeLrc/jDKSesppNhGRlBAKIZRERBbqm6YtnbfMY7lud64UwiuKnigGQliQuWOyKQykgAAOw==" /> <img class="intLink" title="Quote" src="data:image/gif;base64,R0lGODlhFgAWAIQXAC1NqjFRjkBgmT9nqUJnsk9xrFJ7u2R9qmKBt1iGzHmOrm6Sz4OXw3Odz4Cl2ZSnw6KxyqO306K63bG70bTB0rDI3bvI4P///////////////////////////////////yH5BAEKAB8ALAAAAAAWABYAAAVP4CeOZGmeaKqubEs2CekkErvEI1zZuOgYFlakECEZFi0GgTGKEBATFmJAVXweVOoKEQgABB9IQDCmrLpjETrQQlhHjINrTq/b7/i8fp8PAQA7" /> <img class="intLink" title="Delete indentation" src="data:image/gif;base64,R0lGODlhFgAWAMIHAAAAADljwliE35GjuaezxtDV3NHa7P///yH5BAEAAAcALAAAAAAWABYAAAM2eLrc/jDKCQG9F2i7u8agQgyK1z2EIBil+TWqEMxhMczsYVJ3e4ahk+sFnAgtxSQDqWw6n5cEADs=" /> <img class="intLink" title="Add indentation" src="data:image/gif;base64,R0lGODlhFgAWAOMIAAAAADljwl9vj1iE35GjuaezxtDV3NHa7P///////////////////////////////yH5BAEAAAgALAAAAAAWABYAAAQ7EMlJq704650B/x8gemMpgugwHJNZXodKsO5oqUOgo5KhBwWESyMQsCRDHu9VOyk5TM9zSpFSr9gsJwIAOw==" /> <img class="intLink" title="Horizontal rule" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAADIyMimpqbp6enz8/P8/PzZ2dldXV27aT9/AAAAAXRSTlMAQObYZgAAAD5JREFUGNNjoBg4GSDYSgpYFCQKgkECiC0aGuLi7GwsAGILKYGBABYt5QUwVoiZuJhJAITN6mxs7Apk0wIAACMpB/oWEo0pAAAAAElFTkSuQmCC" /> <img class="intLink" title="Hyperlink" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" /> <img class="intLink" title="Remove hyperlink" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAGFBMVEUAAAD08fHXzcxjY2OMhoafn5+uLyrktrTVXxhsAAAAAXRSTlMAQObYZgAAAGxJREFUGNNjwAAFMAZjEkMCYyKUU6aQoAaTYU90TIcrFwBCCFANDWIKDVUAMZkcBUVZBQWDQGwWERcnJhcXETBbBUEyKzubsjobK4PYrEZCwsxCQqZgc4KNTVmMjQOQzIfbW5jOgOYehDspAwBt9Q/S3exo3wAAAABJRU5ErkJggg==" /> <img class="intLink" title="Remove formatting" src="data:image/gif;base64,R0lGODlhFgAWAIQbAD04KTRLYzFRjlldZl9vj1dusY14WYODhpWIbbSVFY6O7IOXw5qbms+wUbCztca0ccS4kdDQjdTLtMrL1O3YitHa7OPcsd/f4PfvrvDv8Pv5xv///////////////////yH5BAEKAB8ALAAAAAAWABYAAAV84CeOZGmeaKqubMteyzK547QoBcFWTm/jgsHq4rhMLoxFIehQQSAWR+Z4IAyaJ0kEgtFoLIzLwRE4oCQWrxoTOTAIhMCZ0tVgMBQKZHAYyFEWEV14eQ8IflhnEHmFDQkAiSkQCI2PDC4QBg+OAJc0ewadNCOgo6anqKkoIQA7" /> <img class="intLink" title="Undo" src="data:image/gif;base64,R0lGODlhFgAWAOMKADljwliE33mOrpGjuYKl8aezxqPD+7/I19DV3NHa7P///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARR8MlJq7046807TkaYeJJBnES4EeUJvIGapWYAC0CsocQ7SDlWJkAkCA6ToMYWIARGQF3mRQVIEjkkSVLIbSfEwhdRIH4fh/DZMICe3/C4nBQBADs=" /> <img class="intLink" title="Redo" src="data:image/gif;base64,R0lGODlhFgAWAMIHAB1ChDljwl9vj1iE34Kl8aPD+7/I1////yH5BAEKAAcALAAAAAAWABYAAANKeLrc/jDKSesyphi7SiEgsVXZEATDICqBVJjpqWZt9NaEDNbQK1wCQsxlYnxMAImhyDoFAElJasRRvAZVRqqQXUy7Cgx4TC6bswkAOw==" /> </div>
+  </div>
+  <div id="mainBox" contenteditable="true" class="cssbox" style="min-height:100px;" accesskey=";"></div>
+  <div align="center">
+    <!--buttons below the main box-->
+    <div id="mainbuttonsbot" style="display: block;">
+      <button class="cssbutton" id="sendSMSBtn" value="SMS" style="" title="mobile: open the default Texting app">SMS</button><!--
 --><button class="cssbutton" id="niceEditBtn" value="Rich" style="" title="toggle rich text editor (alt-R)" accesskey="r">Rich</button><!--
 --><button class="cssbutton" id="selectMainBtn" value="Select" style="" title="select the text in the box">Select</button><!--
 --><button class="cssbutton" id="clearMainBtn" value="Clear" style="" title="clear the text in the box">Clear</button><!--
 --><button class="cssbutton" id="helpBtn" value="Help" style="" title="get help on using URSA (alt-H)" accesskey="h">Help</button>
+    </div>
+    <div id="fileBtns" style="display: block;">
+      <hr style="width:25%;">
+      <input class="custom-file-input" type="file" id="fileBtn" style="" title="open dialog to select file to load"/>
+      <button class="cssbutton" id="saveFileBtn" value="Save file" title="save file to default Downloads folder in original format, or as a text file if type is not recognized">Save file</button>
+    </div>
+  </div>
 </div>
-<div id="fileBtns" style="display: block;">
-<hr style="width:25%;">
-        <input class="custom-file-input" type="file" id="fileBtn" style="" title="open dialog to select file to load"/>
-        <button class="cssbutton" id="saveFileBtn" value="Save file" title="save file to default Downloads folder in original format, or as a text file if type is not recognized">Save file</button>
-  </div>
-  </div>
-  </div>
 
 <!--Help screen-->
 <div id="helpScr" style="max-width:1200px;margin-left:auto;margin-right:auto;display:none;">
-<h2 style="color:lime;font-size:x-large;">Welcome to URSA</h2>
-<button class="cssbutton" id="help2mainBtnTop" value="< Back" style="float:left;" title="return to main screen (alt-M)" accesskey='m'>&#9668; Back</button>
-<br />
-&nbsp;&nbsp;&nbsp;<span id='helpmsg'>For help on how to do things, click on each title.</span><br><br>
-<hr>
-
-<div id="aa1" class="helpitem">
-<h3>What is URSA?</h3>
-</div>
-<div id="a1" class="helptext">
-<p>URSA makes your favorite email private by encrypting it with a shared Key so only the intended recipients can see it. You don't need to make an account anywhere, but you need to get the shared Key to the recipients by some secure means (unencrypted email or texting won't do). Once this Key is forgotten by all participants the content remains locked forever.</p>
-<p>You can also use URSA to set up real-time secure chat sessions involving text, files, audio, or even video. The connection is direct between participants, with a server getting involved only at the start so you can find each other.</p>
-<p>URSA runs on a browser and is platform-independent. The chat component, however, does not yet run on IE or Safari, or under iOS.</p>
-<p>URSA is <em>still in experimental phase</em>, as it has not yet been duly vetted by experts. Bear this in mind before entrusting sensitive information to it.</p>
-<p>If you want more capability, you may want to try SeeOnce, from <a href="https://SeeOnce.net" target="_blank">https://SeeOnce.net</a>, or PassLok, from <a href="https://PassLok.com" target="_blank">https://PassLok.com</a>. In addition to read-once encryption and Letters encoding for a single recipient, PassLok implements three more encryption and five more steganography modes, plus signatures and secret splitting. PassLok can also encrypt for several recipients at once. SeeOnce encrypts for only one person at a time, but it does so in such a way that messages can only be decrypted once. SeeOnce is also simpler than PassLok.</p>
-</div>
-<hr>
-
-<div id="aa2" class="helpitem">
-<h3>How do I use URSA?</h3>
-</div>
-<div id="a2" class="helptext">
-<p>Just type the shared Key in the top box and the plain message in the bottom box. If you paste the plain message in, it will lock automatically, otherwise click <strong>Lock</strong>. If then you click the <strong>Email</strong> button, it will be forwarded to your default email so you can send it out. The recipients only need to click on a link on the email and supply the shared Key.</p>
-<p>If you want to disguise the result as apparently normal text, click the <strong>Hide</strong> button. You will be prompted for a cover text and directed to complete the result.</p>
-<p>To unlock a message, enter the shared Key on the top box and then paste the message in the bottom box (it is fine if it is disguised as normal text). The message will unhide and then unlock automatically. Otherwise, click the <strong>Unlock</strong> button.</p>
-<p>(PC only) If you click the <strong>Save</strong> button, it will be saved locally as an html file so any formatting is preserved.</p>
-<p>URSA will run from a saved file, so you don't have to be online in order to use it.</p>
-</div>
-<hr>
-
-<div id="aa3" class="helpitem">
-<h3>How does Chat work?</h3>
-</div>
-<div id="a3" class="helptext">
-<p>If you click the <strong>Chat</strong> button, a dialog asks you what kind of real-time chat you want to set up. There are three choices: text and files, this plus audio, and all this plus video. You can also add a short message, such as a date and time for the chat session.</p>
-<p>After you click <strong>OK</strong>, URSA makes a chat invite exactly as when locking a message. You then send it to the other participants, keeping a copy for yourself. When the time for the chat comes, unlock the chat invite and then you'll be able to join the chat session like everybody else.</p>
-<p>When the recipients get your chat invite, they will unlock it like any other URSA message and then the chat window will open and ask for an alias. When they supply this, they'll be connected directly to each of the participants already in the session. They may be asked to grant permission to feed audio or video when the connection takes place.</p>
-<p>If you get disconnected, click the <strong>Reset Chat</strong> button to reload the chat window and type your alias again. The chat ceases to exist when all participants close their chat windows.</p>
-</div>
-<hr>
-
-<div id="aa4" class="helpitem">
-<h3>Can I send files?</h3>
-</div>
-<div id="a4" class="helptext">
-<p>Chat has its own secure file-sending process, so we refer here to sending files by email. You have two choices:</p>
-<p>1. Encrypt the files using AES with a utility such as <a href="http://www.7-zip.org/" target="_blank">7-zip</a> (Windows), <a href="http://www.kekaosx.com/" target="_blank">Keka</a> (OSX), or p7zip (Linux), then lock the encryption password inside a URSA-locked message, and attach the encrypted archive to your email.</p>
-<p>2. You can load a file smaller than a megabyte as text, using the button at the lower left corner of the screen (labeled <strong>Select a file</strong> in Chrome, something else in other browsers), and then lock it as a regular message. After unlocking, the recipient can save the file using the <strong>Save file</strong> button.</p>
-</div>
-<hr>
-
-<div id="aa5" class="helpitem">
-<h3>Are there any potential insecurities?</h3>
-</div>
-<div id="a5" class="helptext">
-<p>We have tried to make URSA extremely easy to use without impacting security, but tradeoffs do exist. There are two issues that you must be aware of:</p>
-<p>1. <strong>How to get the shared Key to the recipients.</strong> Just locking it with a previously shared Key before sending is not secure enough, since compromising the previous Key will immediately compromise the new Key. Most likely, you are going to have to meet in person, or exchange Keys using an asymmetric encryption program such as <a href="https://seeonce.net" target="_blank">SeeOnce</a> or <a href="https://passlok.com" target="_blank">PassLok</a>.</p>
-<p>2. <strong>Hackers could change the code</strong> at the web server, and therefore destroy all security without users realizing it. The native app versions of URSA are code-signed by the respective app stores so this is not a problem with those, but if you are concerned about the authenticity of the web app, you can verify it by following the instructions below.</p>
-<div id='bb5' class="helpitem">
-  <p><em>Click here for instructions to verify the URSA code.</em></p>
-</div>
-<div id="b5" class="helptext">
-<p>Warning: following the links in these instructions may give away your location; proceed with caution.</p>
-<p>1. Head to Online-convert.com <a href="http://hash.online-convert.com/sha256-generator" target="_blank">http://hash.online-convert.com/sha256-generator</a> and write https://passlok.com/ursa in the second box from the top, then type Enter or click "Convert File". This will instruct this website to fetch the URSA code from its server and perform a SHA256 operation on it.</p>
-<p>2. A new screen should appear, displaying the SHA256 string in several formats. Now you want to compare this with the published value, which is available at different places. If both strings are the same, the code is tamper-free. Here are a few locations where this string in published (more to be added):</p>
-<ul>
-<li>URSA information page: <a href="http://ursa-app.weebly.com" target="_blank">http://ursa-app.weebly.com</a></li>
-<li>PR Gomez.com (author's blog): <a href="http://prgomez.com/current-version-of-ursa/" target="_blank">http://prgomez.com/current-version-of-ursa/</a></li>
-</ul>
-<p>3. Hackers may also be able to change the published SHA256 string, so this is why a video of F. Ruiz, the URSA developer, reading the string aloud with background music always accompanies the string. Watch it to make double sure the code is authentic.</p>
-</div>
-</div>
-<hr>
-
-<div id="aa6" class="helpitem">
-<h3>What's underneath URSA?</h3>
-</div>
-<div id="a6" class="helptext">
-<p>URSA is a very simplified sibling of PassLok privacy (<a href="https://passlok.com" target="_blank">https://passlok.com</a>), from which it takes its symmetric encryption mode, which is based on the XSalsa20 stream cipher, plus the WiseHash key-stretching algorithm to increase security with weak Keys.</p>
-<p> PassLok can unlock URSA-locked messages, and lock short messages that URSA can unlock. It also includes a complete directory management system for Keys shared with other users, so you only need to select the correspondent's name from a list on the Main screen.</p>
-<p>You can get full details on URSA's cryptography and the Chat function from the  <a href="http://www.weebly.com/uploads/2/4/1/8/24187628/passlok_technical_document.pdf" target="_blank">PassLok technical document.</a><a href="https://www.seeonce.net/seeonce_technical_document.pdf" target="_blank"></a>.</p>
-</div>
-<hr>
-
-<div id="aa7" class="helpitem">
-<h3>Keyboard shortcuts</h3>
-</div>
-<div id="a7" class="helptext">
-<p>The main functions in URSA can be accessed directly from the keyboard. The button tooltips tell you what the shortcut is for each button that has a shortcut, but below is a list just in case:</p>
+  <h2 style="color:green;font-size:x-large;">Welcome to URSA</h2>
+  <button class="cssbutton" id="help2mainBtnTop" value="< Back" style="float:left;" title="return to main screen (alt-M)" accesskey='m'>&#9668; Back</button>
+  <br />
+  &nbsp;&nbsp;&nbsp;<span id='helpmsg'>For help on how to do things, click on each title.</span><br>
+  <br>
+  <hr>
+  <div id="aa1" class="helpitem">
+    <h3>What is URSA?</h3>
+  </div>
+  <div id="a1" class="helptext">
+    <p>URSA makes your favorite email private by encrypting it with a shared Key so only the intended recipients can see it. You don't need to make an account anywhere, but you need to get the shared Key to the recipients by some secure means (unencrypted email or texting won't do). Once this Key is forgotten by all participants the content remains locked forever.</p>
+    <p>In other apps "forever" means a really, really long time, because of the computational difficulty of recovering a high-entropy encryption key. In URSA, it really means forever, whenever the Key is longer than the message being encrypted.</p>
+    <p>You can also use URSA to set up real-time secure chat sessions involving text, files, audio, or even video. The connection is direct between participants, with a server getting involved only at the start so you can find each other.</p>
+    <p>URSA runs on a browser and is platform-independent. The chat component, however, does not yet run on IE or Safari, or under iOS.</p>
+    <p>URSA is <em>still in experimental phase</em>, as it has not yet been duly vetted by experts. Bear this in mind before entrusting sensitive information to it.</p>
+    <p>If you want more capability, you may want to try SeeOnce, from <a href="https://SeeOnce.net" target="_blank">https://SeeOnce.net</a>, or PassLok, from <a href="https://PassLok.com" target="_blank">https://PassLok.com</a>. In addition to read-once encryption and Letters encoding for a single recipient, PassLok implements three more encryption and five more steganography modes, plus signatures and secret splitting. PassLok can also encrypt for several recipients at once. SeeOnce encrypts for only one person at a time, but it does so in such a way that messages can only be decrypted once. SeeOnce is also simpler than PassLok.</p>
+  </div>
+  <hr>
+  <div id="aa2" class="helpitem">
+    <h3>How do I use URSA?</h3>
+  </div>
+  <div id="a2" class="helptext">
+    <p>Just type the shared Key in the top box and the plain message in the bottom box. If you paste the plain message in, it will lock automatically, otherwise click <strong>Lock</strong>. If then you click the <strong>Email</strong> button, it will be forwarded to your default email so you can send it out. The recipients only need to click on a link on the email and supply the shared Key.</p>
+    <p>If you want to disguise the result as apparently normal text, click the <strong>Hide</strong> button. You will be prompted for a cover text and directed to complete the result.</p>
+    <p>To unlock a message, enter the shared Key on the top box and then paste the message in the bottom box (it is fine if it is disguised as normal text). The message will unhide and then unlock automatically. Otherwise, click the <strong>Unlock</strong> button.</p>
+    <p>(PC only) If you click the <strong>Save</strong> button, it will be saved locally as an html file so any formatting is preserved.</p>
+    <p>URSA will run from a saved file, so you don't have to be online in order to use it.</p>
+  </div>
+  <hr>
+  <div id="aa3" class="helpitem">
+    <h3>How do I get quantum-resistant encryption?</h3>
+  </div>
+  <div id="a3" class="helptext">
+    <p>As of 2015, reversing the encryption done with a symmetric Key having 256 bits of entropy still takes gazillions of years of computing time, but future quantum computers promise to shorten this (although not as much as they would for asymmetric encryption). URSA has a special "Pad mode" that not even quantum computers will be able to crack.</p>
+    <p>URSA shifts into Pad mode whenever you supply a shared Key that is <em>longer than the plain message</em> being encrypted (the Key must be at lest 43 characters long). Then press <strong>Lock</strong> normally.</p>
+    <p>A pop-up will ask you for the start position, which must be a number in the range given by the pop-up. After you enter this, the encryption proceeds. To decrypt, the recipient must supply the same long shared Key and the same start position. Since security comes mostly from using a long Key, it may be okay to transmit the starting position in plaintext, if you have to.</p>
+    <p>You can disguise the result as apparently normal text as for the normal mode, by clicking the <strong>Hide</strong> button.</p>
+    <p>The long Key, typically, will be copied from a text file or online document, and then pasted in the top box. You can also load a local file into the lower box using the File load button, copy the result, and then paste it into the top box.</p>
+    <p>Pad mode encryption is slower than regular encryption, especially if the text to be encrypted is also long (the length of the Key text doesn't matter so much), but the result is mathematically impossible to decrypt without the Key.</p>
+  </div> 
+  <hr>
+  <div id="aa4" class="helpitem">
+    <h3>How does Chat work?</h3>
+  </div>
+  <div id="a4" class="helptext">
+    <p>If you click the <strong>Chat</strong> button, a dialog asks you what kind of real-time chat you want to set up. There are three choices: text and files, this plus audio, and all this plus video. You can also add a short message, such as a date and time for the chat session.</p>
+    <p>After you click <strong>OK</strong>, URSA makes a chat invite exactly as when locking a message. You then send it to the other participants, keeping a copy for yourself. When the time for the chat comes, unlock the chat invite and then you'll be able to join the chat session like everybody else.</p>
+    <p>When the recipients get your chat invite, they will unlock it like any other URSA message and then the chat window will open and ask for an alias. When they supply this, they'll be connected directly to each of the participants already in the session. They may be asked to grant permission to feed audio or video when the connection takes place.</p>
+    <p>If you get disconnected, click the <strong>Reset Chat</strong> button to reload the chat window and type your alias again. The chat ceases to exist when all participants close their chat windows.</p>
+  </div>
+  <hr>
+  <div id="aa5" class="helpitem">
+    <h3>Can I send files?</h3>
+  </div>
+  <div id="a5" class="helptext">
+    <p>Chat has its own secure file-sending process, so we refer here to sending files by email. You have two choices:</p>
+    <p>1. Encrypt the files using AES with a utility such as <a href="http://www.7-zip.org/" target="_blank">7-zip</a> (Windows), <a href="http://www.kekaosx.com/" target="_blank">Keka</a> (OSX), or p7zip (Linux), then lock the encryption password inside a URSA-locked message, and attach the encrypted archive to your email.</p>
+    <p>2. You can load a file smaller than a megabyte as text, using the button at the lower left corner of the screen (labeled <strong>Select a file</strong> in Chrome, something else in other browsers), and then lock it as a regular message. After unlocking, the recipient can save the file using the <strong>Save file</strong> button.</p>
+  </div>
+  <hr>
+  <div id="aa6" class="helpitem">
+    <h3>Are there any potential insecurities?</h3>
+  </div>
+  <div id="a6" class="helptext">
+    <p>We have tried to make URSA extremely easy to use without impacting security, but tradeoffs do exist. There are two issues that you must be aware of:</p>
+    <p>1. <strong>How to get the shared Key to the recipients.</strong> Just locking it with a previously shared Key before sending is not secure enough, since compromising the previous Key will immediately compromise the new Key. Most likely, you are going to have to meet in person, or exchange Keys using an asymmetric encryption program such as <a href="https://seeonce.net" target="_blank">SeeOnce</a> or <a href="https://passlok.com" target="_blank">PassLok</a>.</p>
+    <p>2. <strong>Hackers could change the code</strong> at the web server, and therefore destroy all security without users realizing it. The native app versions of URSA are code-signed by the respective app stores so this is not a problem with those, but if you are concerned about the authenticity of the web app, you can verify it by following the instructions below.</p>
+    <div id='bb5' class="helpitem">
+      <p><em>Click here for instructions to verify the URSA code.</em></p>
+    </div>
+    <div id="b5" class="helptext">
+      <p>Warning: following the links in these instructions may give away your location; proceed with caution.</p>
+      <p>1. Head to Online-convert.com <a href="http://hash.online-convert.com/sha256-generator" target="_blank">http://hash.online-convert.com/sha256-generator</a> and write https://passlok.com/ursa in the second box from the top, then type Enter or click "Convert File". This will instruct this website to fetch the URSA code from its server and perform a SHA256 operation on it.</p>
+      <p>2. A new screen should appear, displaying the SHA256 string in several formats. Now you want to compare this with the published value, which is available at different places. If both strings are the same, the code is tamper-free. Here are a few locations where this string in published (more to be added):</p>
+      <ul>
+        <li>URSA information page: <a href="http://ursa-app.weebly.com" target="_blank">http://ursa-app.weebly.com</a></li>
+        <li>PR Gomez.com (author's blog): <a href="http://prgomez.com/current-version-of-ursa/" target="_blank">http://prgomez.com/current-version-of-ursa/</a></li>
+      </ul>
+      <p>3. Hackers may also be able to change the published SHA256 string, so this is why a video of F. Ruiz, the URSA developer, reading the string aloud with background music always accompanies the string. Watch it to make double sure the code is authentic.</p>
+    </div>
+  </div>
+  <hr>
+  <div id="aa7" class="helpitem">
+    <h3>What's underneath URSA?</h3>
+  </div>
+  <div id="a7" class="helptext">
+    <p>URSA is a very simplified sibling of PassLok privacy (<a href="https://passlok.com" target="_blank">https://passlok.com</a>), from which it takes its symmetric encryption mode, which is based on the XSalsa20 stream cipher, plus the WiseHash key-stretching algorithm to increase security with weak Keys.</p>
+    <p> PassLok can unlock URSA-locked messages, and lock short messages that URSA can unlock. It also includes a complete directory management system for Keys shared with other users, so you only need to select the correspondent's name from a list on the Main screen.</p>
+    <p>The quantum-resistant mode is not based on XSalsa20, but rather on repeatedly taking the SHA512 hash of a shared Key longer than the message itself, and using the random-looking result as a keystream to encrypt the message.</p>
+    <p>You can get full details on URSA's cryptography and the Chat function from the <a href="http://www.weebly.com/uploads/2/4/1/8/24187628/passlok_technical_document.pdf" target="_blank">PassLok technical document.</a><a href="https://www.seeonce.net/seeonce_technical_document.pdf" target="_blank"></a>.</p>
+  </div>
+  <hr>
+  <div id="aa8" class="helpitem">
+    <h3>Keyboard shortcuts</h3>
+  </div>
+  <div id="a8" class="helptext">
+    <p>The main functions in URSA can be accessed directly from the keyboard. The button tooltips tell you what the shortcut is for each button that has a shortcut, but below is a list just in case:</p>
     <ul>
-    <p>Alt-L: <strong>L</strong>ock    </p>
-    <p>Alt-H: <strong>H</strong>elp and back</p>
-    <p>Alt-R: <strong>R</strong>ich text editing toggle    </p>
-    <p>Alt-C: <strong>C</strong>hat function</p>
+      <p>Alt-L: <strong>L</strong>ock </p>
+      <p>Alt-H: <strong>H</strong>elp and back</p>
+      <p>Alt-R: <strong>R</strong>ich text editing toggle </p>
+      <p>Alt-C: <strong>C</strong>hat function</p>
     </ul>
-</div>
-<hr>
-
-<div id="aa8" class="helpitem">
-<h3>Privacy Policy</h3>
-</div>
-<div id="a8" class="helptext">
-<p>URSA  is a self-contained piece of code that does not rely on servers to do its job. Therefore:</p>
-<p><strong>1. We cannot give your Keys to anyone</strong> (not even yourself) because we don't have them.</p>
-<p><strong>2. We cannot give your private data to anyone</strong> because URSA does not send anything out of your device, either. When you download the app from the web server, you get only the code, without any cookies, plugins, or anything of that sort.</p>
-<p><strong>3. We cannot eavesdrop on your chat sessions, or enable anyone to do so.</strong> Establishing a chat session does involve contacting a signaling server (Firebase) and giving it your IP address and a disposable chatroom name so that others can contact you; the signaling server never sees the content of your chat, which is between participants only. The URSA web server doesn't even see the connection data.</p>
-<p><strong>4. We will never weaken the cryptography methods contained within URSA at the request of a third party, private or public.</strong> This also means no backdoors will ever be added. We would rather shut down URSA than be forced to do this, which would betray the very essence of our efforts. If we learn that a counterfeit version of URSA is circulating, whether placed by hackers or government agencies, we will make the fact known to users.</p>
-<p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
-<p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
-</div>
-<hr>
-
-<address>
-URSA 4.0 &#169; F. Ruiz 2015
-</address>
-<ul>
-  <li> engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
-  <li> tweetNaCl JavaScript implementation by D. Chestnykh and D. Mandiri 2015</li>
-  <li> scrypt key stretching implementation by D. Chestnykh 2014</li>
-  <li> file In/Out based on an article from the This Could Be Better blog 2012</li>
-  <li> webRTC chat by Muaz Khan, modified by F. Ruiz 2015</li>
-  <li>Letters encoding based on Advanced Unicode Stego by Adrian Crenshaw 2013</li>
-</ul>
-<address>
-This document may be used, modified or redistributed under GNU GPL license, version 3.0 or higher.
-</address><br>
-<button class="cssbutton" id="help2mainBtnBottom" value="< Back" style="float:left;" title="return to main screen (alt-M)">&#9668; Back</button>
+  </div>
+  <hr>
+  <div id="aa9" class="helpitem">
+    <h3>Privacy Statement and Warrant Canary</h3>
+  </div>
+  <div id="a9" class="helptext">
+    <p>URSA  is a self-contained piece of code that does not rely on servers to do its job. Therefore:</p>
+    <p><strong>1. We cannot give your Keys to anyone</strong> (not even yourself) because we don't have them.</p>
+    <p><strong>2. We cannot give your private data to anyone</strong> because URSA does not send anything out of your device, either. When you download the app from the web server, you get only the code, without any cookies, plugins, or anything of that sort.</p>
+    <p><strong>3. We cannot eavesdrop on your chat sessions, or enable anyone to do so.</strong> Establishing a chat session does involve contacting a signaling server (Firebase) and giving it your IP address and a disposable chatroom name so that others can contact you; the signaling server never sees the content of your chat, which is between participants only. The URSA web server doesn't even see the connection data.</p>
+    <p><strong>4. We will never weaken the cryptography methods contained within URSA at the request of a third party, private or public.</strong> This also means no backdoors will ever be added. We would rather shut down URSA than be forced to do this, which would betray the very essence of our efforts. If we learn that a counterfeit version of URSA is circulating, whether placed by hackers or government agencies, we will make the fact known to users.</p>
+    <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
+    <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
+    <div id="canary" style="float:left;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
+    <p>This paragraph and the canary logo above attest to the fact that we have never received any requests under gag order for user data or modifications of the code. They will be absent once we receive one of such requests.</p>
+    </div>
+  </div>
+  <hr>
+  <address>
+  URSA 4.0.1 &#169; F. Ruiz 2015
+  </address>
+  <ul>
+    <li> engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
+    <li> tweetNaCl JavaScript implementation by D. Chestnykh and D. Mandiri 2015</li>
+    <li> scrypt key stretching implementation by D. Chestnykh 2014</li>
+    <li>lz-string compression by pieroxy 2014</li>
+    <li> file In/Out based on an article from the This Could Be Better blog 2012</li>
+    <li> webRTC chat by Muaz Khan, modified by F. Ruiz 2015</li>
+    <li>Letters encoding based on Advanced Unicode Stego by Adrian Crenshaw 2013</li>
+  </ul>
+  <address>
+  This document may be used, modified or redistributed under GNU GPL license, version 3.0 or higher.
+  </address>
+  <br>
+  <button class="cssbutton" id="help2mainBtnBottom" value="< Back" style="float:left;" title="return to main screen (alt-M)">&#9668; Back</button>
 </div>
 
 <!--Chat dialog, to enter the chat type and date or other information-->
-<div id="chatDialog" class="white_content" align="center">
-<br><br><br>
-		<span id="chatmsg">Choose the type of chat, then write in the box the date and time</span><br/><br />
-    	<input type="radio" name="chatmodes" id="dataChat"  title="chat with text messages and file exchange" checked/>&nbsp; Text and files&nbsp;&nbsp;
-        <input type="radio" name="chatmodes" id="audioChat" title="like Text chat, plus audio"/>&nbsp; Audio&nbsp;&nbsp;
-        <input type="radio" name="chatmodes" id="videoChat" title="like audio chat, plus video"/>&nbsp; Video
-        <br /><br />
-        <textarea id="chatDate" class="cssbox" style="width:95%;" name="chatDate" rows="1" title="additional information" placeholder="Write here the date and time for the chat"></textarea><br /><br />
-    	<button class="cssbutton" id="cancelChatBtn" value="Cancel" title="cancel chat invitation">Cancel</button>&nbsp;
-       <button class="cssbutton" id="submitChatBtn" value="OK" title="make chat invitation">OK</button>
+<div id="chatDialog" class="white_content" align="center"> <br>
+  <br>
+  <br>
+  <span id="chatmsg">Choose the type of chat, then write in the box the date and time</span><br/>
+  <br />
+  <input type="radio" name="chatmodes" id="dataChat"  title="chat with text messages and file exchange" checked/>
+  &nbsp; Text and files&nbsp;&nbsp;
+  <input type="radio" name="chatmodes" id="audioChat" title="like Text chat, plus audio"/>
+  &nbsp; Audio&nbsp;&nbsp;
+  <input type="radio" name="chatmodes" id="videoChat" title="like audio chat, plus video"/>
+  &nbsp; Video <br />
+  <br />
+  <textarea id="chatDate" class="cssbox" style="width:95%;" name="chatDate" rows="1" title="additional information" placeholder="Write here the date and time for the chat"></textarea>
+  <br />
+  <br />
+  <button class="cssbutton" id="cancelChatBtn" value="Cancel" title="cancel chat invitation">Cancel</button>
+  &nbsp;
+  <button class="cssbutton" id="submitChatBtn" value="OK" title="make chat invitation">OK</button>
 </div>
 
 <!--Cover text entry dialog-->
-<div id="coverScr" class="white_content" align="center" style="display: none;">
+<div id="coverScr" class="white_content" align="center" style="display: none;"> <br />
+  <div align="center"> <span id="coverMsg">Please enter the cover text for hiding and click <strong>OK</strong></span><br />
     <br />
-    <div align="center">
-<span id="coverMsg">Please enter the cover text for hiding and click <strong>OK</strong></span><br /><br />
-		<textarea class="cssbox" rows="5" autocomplete="off" id='coverBox' style="width:95%;max-height:500px" name='coverBox' placeholder="Enter the cover text here." align="center"></textarea><br />
-       <button class="cssbutton" id="cancelCoverBtn" value="cancel" style="" title="close cover text dialog">Cancel</button>&nbsp;
-	 	<button class="cssbutton" id="acceptCoverBtn" value="OK" style="" title="accept cover text">OK</button>
-<br><br><input type="checkbox" id="rememberCoverCheck" title="remember the text for this session"> &nbsp;Remember
-	</div>
+    <textarea class="cssbox" rows="5" autocomplete="off" id='coverBox' style="width:95%;max-height:500px" name='coverBox' placeholder="Enter the cover text here." align="center"></textarea>
+    <br />
+    <button class="cssbutton" id="cancelCoverBtn" value="cancel" style="" title="close cover text dialog">Cancel</button>
+    &nbsp;
+    <button class="cssbutton" id="acceptCoverBtn" value="OK" style="" title="accept cover text">OK</button>
+    <br>
+    <br>
+    <input type="checkbox" id="rememberCoverCheck" title="remember the text for this session">
+    &nbsp;Remember </div>
 </div>
 
 <!--Chat screen, just an iframe for https://www.passlok.com/chat-->
 <div id="chatScr" class="block_page" style="display: none;" align="center">
-<button class="cssbutton" id="closeChatBtn" value="< Back" style="float:left;" title="returns to Main tab">&#9668; Back to URSA</button>
-<button class="cssbutton" id="resetChatBtn" value="Reset" style="float:right;" title="reset the chat">Reset Chat</button>
-
-    <iframe seamless id="chatFrame" src="" style="width:100%;height:900px" border=0 frameborder=0 allowfullscreen></iframe>
-  
+  <button class="cssbutton" id="closeChatBtn" value="< Back" style="float:left;" title="returns to Main tab">&#9668; Back to URSA</button>
+  <button class="cssbutton" id="resetChatBtn" value="Reset" style="float:right;" title="reset the chat">Reset Chat</button>
+  <iframe seamless id="chatFrame" src="" style="width:100%;height:900px" border=0 frameborder=0 allowfullscreen></iframe>
 </div>
 
 <!--Shadow backdrop-->
-<div id="shadow" class="black_overlay" style="display: none;">
-</div>
+<div id="shadow" class="black_overlay" style="display: none;"> </div>
 
 <!--Body script: window reformatting, special functions-->
 <script src="js-body/bodyscript.js"></script>

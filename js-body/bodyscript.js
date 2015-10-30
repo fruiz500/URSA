@@ -1,5 +1,5 @@
 ﻿//this is the part of the javascript code that must be within the body
-	
+
 //detect browser and device
 	var isMobile = (typeof window.orientation != 'undefined'),
 		isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1,
@@ -16,17 +16,17 @@
 		isFile = (window.location.protocol == 'file:');
 	textheight();
 	chatResize();
-	
+
 //  Clear out "sorry, no JavaScript" warning and display the type of source
 	showGreeting();
 
 //clears the no JavaScript warning and displays an initial message depending on the type of source
 function showGreeting(){
 	var protocol = window.location.protocol,
-		msgStart = "<span style='color:lime;font-size:large;'><strong>Welcome to URSA</strong></span><br />",
-		msgEnd = "<br>Enter the shared Key in the top box and the message in the bottom box";	
+		msgStart = "<span style='color:green;font-size:large;'><strong>Welcome to URSA</strong></span><br />",
+		msgEnd = "<br>Enter the shared Key in the top box and the message in the bottom box";
 	if(protocol == 'file:'){
-		mainMsg.innerHTML = msgStart + 'running from a local file' + msgEnd	
+		mainMsg.innerHTML = msgStart + 'running from a local file' + msgEnd
 	}else if(protocol == 'https:'){
 		mainMsg.innerHTML = msgStart + 'downloaded from a secure server' + msgEnd
 	}else{
@@ -38,7 +38,7 @@ function showGreeting(){
 //resizes text boxes so they fit within the window
 function textheight(){
 	var	fullheight = document.documentElement.clientHeight,
-		offsetheight = 440,
+		offsetheight = 380,
 		toolbarheight = 52;
 	if(isiPhone) offsetheight = offsetheight - 70;
 	coverBox.style.height = fullheight - offsetheight + 150 + 'px';
@@ -74,7 +74,7 @@ function saveURLAsFile(){
 	var downloadLink = document.createElement("a");
 	if(content.slice(0,4).toLowerCase()=='data'){							//regular save of encoded file
 
-//first check if the file can lead to problems, and if so request user confirmation	
+//first check if the file can lead to problems, and if so request user confirmation
 		var extension = fileNameToSaveAs.toLowerCase().match(/\.\w+$/);
 		var suspicious =  ['.exe','.scr','.url','.com','.pif','.bat','.xht','.htm','.html','.xml','.xhtml','.js','.sh','.svg','.gadget','.msi','.msp','.hta','.cpl','.msc','.jar','.cmd','.vb','.vbs','.jse','.ws','.wsf','.wsc','.wsh','.ps1','.ps2','.ps1xml','.ps2xml','.psc1','.scf','.lnk','.inf','.reg','.doc','.xls','.ppt','.pdf','.swf','.fla','.docm','.dotm','.xlsm','.xltm','.xlam','.pptm','.potm','.ppam','.ppsm','.sldm','.dll','.dllx','.rar','.zip','.7z','.gzip','.gzip2','.tar','.fon','.svgz','.jnlp'];
 		if(extension){
@@ -86,7 +86,7 @@ function saveURLAsFile(){
 			var reply = confirm('The file you want to save has the extension: ' + suspicious[index] + '  This file might execute code automatically, which may lead to a loss of security. Do you still want to save it?');
 			if(!reply) throw('file save canceled by user')
 		}
-		
+
 		downloadLink.download = fileNameToSaveAs;
 		downloadLink.innerHTML = "Download File";
 	} else {																//to save contents as text file

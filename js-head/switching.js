@@ -26,13 +26,13 @@ function clearMain(){
 
 //for selecting the Main box contents
 function selectMain(){
-    var range, selection;   
+    var range, selection;
     if (document.body.createTextRange) {
         range = document.body.createTextRange();
         range.moveToElementText(mainBox);
         range.select();
     } else if (window.getSelection) {
-        selection = window.getSelection();        
+        selection = window.getSelection();
         range = document.createRange();
         range.selectNodeContents(mainBox);
         selection.removeAllRanges();
@@ -113,7 +113,7 @@ function main2help(){
 		helpScr.style.display = 'block'
 	}else{
 		mainScr.style.display = 'block';
-		helpScr.style.display = 'none'		
+		helpScr.style.display = 'none'
 	}
 }
 
@@ -155,7 +155,7 @@ function openHelp(theID){
 
 //for rich text editing
 function formatDoc(sCmd, sValue) {
-	  document.execCommand(sCmd, false, sValue); mainBox.focus(); 
+	  document.execCommand(sCmd, false, sValue); mainBox.focus();
 }
 
 var niceEditor = false;

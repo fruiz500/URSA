@@ -3,25 +3,25 @@ function keyStrength(pwd,display) {
 	var entropy = entropycalc(pwd);
 
 	if(entropy == 0){
-		var msg = 'This is a known <span style="color:purple">bad Key!</span>';
+		var msg = 'This is a known <span style="color:magenta">bad Key!</span>';
 	}else if(entropy < 20){
-		var msg = '<span style="color:purple">Terrible!</span>';
+		var msg = '<span style="color:magenta">Terrible!</span>';
 	}else if(entropy < 40){
-		var msg = '<span style="color:magenta">Weak!</span>';
+		var msg = '<span style="color:red">Weak!</span>';
 	}else if(entropy < 60){
 		var msg = '<span style="color:orange">Medium</span>';
 	}else if(entropy < 90){
-		var msg = '<span style="color:skyblue">Good!</span>';
+		var msg = '<span style="color:green">Good!</span>';
 	}else if(entropy < 120){
 		var msg = '<span style="color:lime">Great!</span>';
 	}else{
 		var msg = '<span style="color:cyan">Overkill  !!</span>';
 	}
-	
+
 	var iter = Math.max(1,Math.min(20,Math.ceil(24 - entropy/5)));			//set the scrypt iteration exponent based on entropy: 1 for entropy >= 120, 20(max) for entropy <= 20
-	
+
 	var seconds = time10/10000*Math.pow(2,iter-8);			//to tell the user how long it will take, in seconds
-	
+
 	if(pwd.trim()==''){
 		msg = 'Enter your Key below'
 	}else{
@@ -103,7 +103,7 @@ function wiseHash(pwd,salt){
 		secArray = new Uint8Array(32),
 		keyBytes;
 	if(salt.length == 43) iter = 1;								//random salt: no extra stretching needed
-	scrypt(pwd,salt,iter,8,32,1000,function(x){keyBytes=x;});
+	scrypt(pwd,salt,iter,8,32,0,function(x){keyBytes=x;});
 	for(var i=0;i<32;i++){
 			secArray[i] = keyBytes[i]
 	}
@@ -114,7 +114,7 @@ function wiseHash(pwd,salt){
 function hashTime10(){
 	var before = Date.now();
 	for (var i=0; i<10; i++){
-		scrypt('hello','world',10,8,32,1000,function(){});
+		scrypt('hello','world',10,8,32,0,function(){});
 	}
 	return Date.now() - before
 }
@@ -162,7 +162,7 @@ function randomToken(){
 
 //takes appropriate UI action if decryption fails
 function failedDecrypt(){
-	if(lockBox.value.slice(0,1) == '~' || isList || nameBeingUnlocked != ''){				
+	if(lockBox.value.slice(0,1) == '~' || isList || nameBeingUnlocked != ''){
 		any2key();					//this displays the Key entry dialog
 		keyMsg.innerHTML = "<span style='color:orange'>This Key won't unlock the item </span>" + nameBeingUnlocked;
 		allowCancelWfullAccess = true;

@@ -1,5 +1,5 @@
 ﻿//display button labels according to item nature
-function btnLabels(){	
+function btnLabels(){
 	var text = mainBox.innerHTML.split("=").sort(function (a, b) { return b.length - a.length; })[0],		//get type
 		type = text.charAt(0);
 	if(type == '@'){
@@ -16,10 +16,10 @@ function sendMail() {
 	var cipherstr = mainBox.innerHTML;
 	cipherstr = cipherstr.split("=").sort(function (a, b) { return b.length - a.length; })[0].replace(/-/g,'');		//remove tags
 	var type = cipherstr.slice(0,1);
-	
+
 	var hashTag = encodeURIComponent(mainBox.innerHTML.replace(/-/g,'')).replace(/%3Cbr%3E/g,'%0D%0A');		//item ready for link
 	var linkText = "Click the link below if you wish to process this automatically using the web app (the app will open in a new tab), or simply copy it and paste it into URSA:%0D%0A%0D%0Ahttps://passlok.com/ursa#" + hashTag;
-	
+
 	if (type=="@"){
 		var link = "mailto:"+ "?subject= " + "&body=Message locked with URSA v.4.0 %0D%0A%0D%0AUnlock with shared Key.%0D%0A%0D%0A" + linkText;
 	} else {
@@ -54,7 +54,7 @@ function Chat(){
 		chatScr.style.display = 'block';
 		return
 	}
-	var text = mainBox.innerHTML.trim();	
+	var text = mainBox.innerHTML.trim();
 	if(text.slice(6,10) == 'chat'){										//there is already a chat invitation, so open it
 		lockUnlock();
 		return

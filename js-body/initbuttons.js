@@ -8,7 +8,7 @@ window.onload = function() {
 	} else {
 		sendSMSBtn.style.display = 'none';
 	}
-  
+
   //event listeners for buttons etc.
 	window.addEventListener('resize',textheight);
 
@@ -52,11 +52,11 @@ window.onload = function() {
 
 	mainBox.addEventListener('paste', pasteItem);
 	function pasteItem() {setTimeout(function(){unlockItem();}, 0);}
-		
+
 	suggestKeyBtn.addEventListener('click', suggestKey);
 
    	randomBtn.addEventListener('click', randomToken);
-	
+
 	clearKeyBtn.addEventListener('click', function() {pwd.value = ''; if(showKey.checked) showKey.click();});
 
 	coverBox.addEventListener('paste', enableCover);
@@ -69,7 +69,7 @@ window.onload = function() {
 //but this must be removed for the Chrome app and replaced with those commented below
 
 //	pwd.addEventListener('keyup', function() {pwdKeyup(event)}, false);
-	
+
 //for the rich text editor boxes and buttons
 	formatBlock.addEventListener("change", function() {formatDoc('formatBlock',this[this.selectedIndex].value);this.selectedIndex=0;});
 	fontName.addEventListener("change", function() {formatDoc('fontName',this[this.selectedIndex].value);this.selectedIndex=0;});
@@ -98,7 +98,7 @@ window.onload = function() {
 	document.images[18].addEventListener("click", function() {formatDoc('removeFormat')});
 	document.images[19].addEventListener("click", function() {formatDoc('undo')});
 	document.images[20].addEventListener("click", function() {formatDoc('redo')});
-	
+
 //for the help screens
 	aa1.addEventListener('click', function() {openHelp('a1')});
 	aa2.addEventListener('click', function() {openHelp('a2')});
@@ -108,6 +108,7 @@ window.onload = function() {
 	aa6.addEventListener('click', function() {openHelp('a6')});
 	aa7.addEventListener('click', function() {openHelp('a7')});
 	aa8.addEventListener('click', function() {openHelp('a8')});
+	aa9.addEventListener('click', function() {openHelp('a9')});
 
 	bb5.addEventListener('click', function() {openClose('b5')});
 
