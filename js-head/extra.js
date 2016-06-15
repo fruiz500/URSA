@@ -1,14 +1,19 @@
 ﻿//display button labels according to item nature
 function btnLabels(){
-	var text = mainBox.innerHTML.split("=").sort(function (a, b) { return b.length - a.length; })[0],		//get type
+	var text = mainBox.innerHTML.split("==").sort(function (a, b) { return b.length - a.length; })[0],		//get type
 		type = text.charAt(0);
 	if(type == '@'){
-		decryptBtn.innerHTML = 'Unlock';
+		decryptBtn.innerHTML = 'Decrypt';
 		hideBtn.disabled = false
 	}else{
-		decryptBtn.innerHTML = '&nbsp;Lock&nbsp;';
+		decryptBtn.innerHTML = '&nbsp;Encrypt&nbsp;';
 		hideBtn.disabled = true
 	}
+}
+
+//removes spurious characters from key material
+function cleanKey(){
+	pwd.innerHTML = pwd.innerHTML.replace(/<br>/g,'\n').replace(/\<(?!\/?a).*?\>/g,'').trim().replace(/\n/g,'<br>').replace(/&nbsp;/g,' ')		//removes tags except anchors and newlines
 }
 
 //formats results depending on tags present and sends to default email
@@ -21,9 +26,9 @@ function sendMail() {
 	var linkText = "Click the link below if you wish to process this automatically using the web app (the app will open in a new tab), or simply copy it and paste it into URSA:%0D%0A%0D%0Ahttps://passlok.com/ursa#" + hashTag;
 
 	if (type=="@"){
-		var link = "mailto:"+ "?subject= " + "&body=Message locked with URSA v.4.0 %0D%0A%0D%0AUnlock with shared Key.%0D%0A%0D%0A" + linkText;
+		var link = "mailto:"+ "?subject= " + "&body=Message encrypted with URSA v.4.1 %0D%0A%0D%0ADecrypt with shared Key.%0D%0A%0D%0A" + linkText;
 	} else {
-		mainMsg.innerHTML = "A valid locked item must be in the box before it can be emailed"
+		mainMsg.innerHTML = "A valid encrypted item must be in the box before it can be emailed"
 	}
 
 	if(isMobile){ 	 											//new window for PC, same window for mobile
@@ -80,7 +85,7 @@ function makeChat(){
 	var chatRoom = makeChatRoom();
 	mainBox.innerHTML = date + type + chatRoom + password;
 	Encrypt();
-	mainBox.innerHTML = mainBox.innerHTML.replace(/URSA40msg/g,'URSA40chat');			//change the tags
+	mainBox.innerHTML = mainBox.innerHTML.replace(/URSA41msg/g,'URSA41chat');			//change the tags
 	mainMsg.innerHTML = 'Invitation to chat in the box.<br>Send it to the recipients.'
 }
 

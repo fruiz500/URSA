@@ -61,69 +61,6 @@ function chatResize(){
 	chatFrame.height = document.documentElement.clientHeight - 60
 }
 
-//functions for reading a file into the box, and for saving it later
-function saveURLAsFile(){
-	var URLToWrite = mainBox.innerHTML.trim().replace(/<br>/g,'\n'),
-		URLToWriteSplit = URLToWrite.split('\n'),
-		fileNameToSaveAs = URLToWriteSplit[0].split(':')[1];
-	if(URLToWriteSplit.length > 1){
-		var content = URLToWriteSplit[1].trim()
-	} else {
-		var content = URLToWriteSplit[0].trim()
-	};
-	var downloadLink = document.createElement("a");
-	if(content.slice(0,4).toLowerCase()=='data'){							//regular save of encoded file
-
-//first check if the file can lead to problems, and if so request user confirmation
-		var extension = fileNameToSaveAs.toLowerCase().match(/\.\w+$/);
-		var suspicious =  ['.exe','.scr','.url','.com','.pif','.bat','.xht','.htm','.html','.xml','.xhtml','.js','.sh','.svg','.gadget','.msi','.msp','.hta','.cpl','.msc','.jar','.cmd','.vb','.vbs','.jse','.ws','.wsf','.wsc','.wsh','.ps1','.ps2','.ps1xml','.ps2xml','.psc1','.scf','.lnk','.inf','.reg','.doc','.xls','.ppt','.pdf','.swf','.fla','.docm','.dotm','.xlsm','.xltm','.xlam','.pptm','.potm','.ppam','.ppsm','.sldm','.dll','.dllx','.rar','.zip','.7z','.gzip','.gzip2','.tar','.fon','.svgz','.jnlp'];
-		if(extension){
-			var index = suspicious.indexOf(extension[0])
-		} else {
-			var index = -1
-		}
-		if(index >= 0){
-			var reply = confirm('The file you want to save has the extension: ' + suspicious[index] + '  This file might execute code automatically, which may lead to a loss of security. Do you still want to save it?');
-			if(!reply) throw('file save canceled by user')
-		}
-
-		downloadLink.download = fileNameToSaveAs;
-		downloadLink.innerHTML = "Download File";
-	} else {																//to save contents as text file
-		var textFileAsBlob = new Blob([mainBox.innerHTML.trim()], {type:'text/plain'});
-		fileNameToSaveAs = prompt("The box contents will be saved as a text file. Please enter a name for it.");
-		if(fileNameToSaveAs.indexOf('.') == -1){
-			downloadLink.download = fileNameToSaveAs + '.txt';
-		}else{
-			downloadLink.download = fileNameToSaveAs;
-		}
-		downloadLink.innerHTML = "Download File";
-		content = window.URL.createObjectURL(textFileAsBlob);
-	}
-	if (window.URL != null)
-	{
-		// Chrome allows the link to be clicked
-		// without actually adding it to the DOM.
-		downloadLink.href = content;
-	}
-	else
-	{
-		// Firefox requires the link to be added to the DOM
-		// before it can be clicked.
-		downloadLink.href = content;
-		downloadLink.onclick = destroyClickedElement;
-		downloadLink.style.display = "none";
-		document.body.appendChild(downloadLink);
-	}
-	downloadLink.click();
-	mainMsg.innerHTML = 'File saved with filename ' + downloadLink.download
-}
-
-function destroyClickedElement(event)
-{
-	document.body.removeChild(event.target);
-}
-
 //this one is called by window.onload below
 function loadFileAsURL()
 {
@@ -134,17 +71,47 @@ function loadFileAsURL()
 	{
 		var fileName = fileToLoad.name;
 		var URLFromFileLoaded = fileLoadedEvent.target.result;
+		if(URLFromFileLoaded.length > 2000000){
+			var reply = confirm("This file is larger than 1.5MB and Chrome won't save it. Do you want to continue loading it?");
+			if(!reply){
+				mainMsg.innerHTML = 'File load canceled';
+				throw('file load canceled')
+			}
+		}
 		if(fileToLoad.type.slice(0,4) == "text"){
-			mainBox.innerHTML = URLFromFileLoaded.replace(/  /g,' &nbsp;');
+			if(URLFromFileLoaded.slice(0,2) == '==' && URLFromFileLoaded.slice(-2) == '=='){
+				mainBox.innerHTML += '<br><a download="' + fileName + '" href="data:,' + URLFromFileLoaded + '">' + fileName + '&nbsp;&nbsp;<button onClick="followLink(this);">Save</button></a>'
+			}else{
+				mainBox.innerHTML += "<br><br>" + URLFromFileLoaded.replace(/  /g,' &nbsp;')
+			}
 		}else{
-			mainBox.innerHTML = "filename:" + fileName + "<br>" + URLFromFileLoaded;
+			mainBox.innerHTML += '<a download="' + fileName + '" href="' + URLFromFileLoaded + '">' + fileName + '&nbsp;&nbsp;<button onClick="followLink(this);">Save</button></a>'
 		}
 	};
 	if(fileToLoad.type.slice(0,4) == "text"){
 		fileReader.readAsText(fileToLoad, "UTF-8");
-		mainMsg.innerHTML = 'This is the content of file <strong>' + fileToLoad.name + '</strong>'
+		mainMsg.innerHTML = 'This is the content of file <strong>' + fileToLoad.name + '</strong>';
 	}else{
 		fileReader.readAsDataURL(fileToLoad, "UTF-8");
-		mainMsg.innerHTML = 'The file has been loaded in encoded form. It is <strong>not encrypted.</strong>'
+		mainMsg.innerHTML = 'The file has been loaded in encoded form. It is <strong>not encrypted.</strong>';
 	}
+}
+
+//used to download a packaged file
+function followLink(thisLink){
+	var downloadLink = document.createElement("a");
+	downloadLink.download = thisLink.parentElement.download;
+	downloadLink.href = thisLink.parentElement.href;
+	if (isFirefox){
+		// Firefox requires the link to be added to the DOM before it can be clicked
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+	}
+	downloadLink.click();
+}
+
+function destroyClickedElement(event)
+{
+	document.body.removeChild(event.target);
 }

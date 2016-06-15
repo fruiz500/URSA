@@ -3,7 +3,7 @@ window.onload = function() {
 
 	if(isMobile){
 		niceEditBtn.style.display = 'none';		//no rich text editing on mobile
-		fileBtns.style.display = 'none';
+		fileBtn.style.display = 'none';
 		selectMainBtn.style.display = 'none';
 	} else {
 		sendSMSBtn.style.display = 'none';
@@ -38,8 +38,6 @@ window.onload = function() {
 
    	sendSMSBtn.addEventListener('click', sendSMS);
 
-   	saveFileBtn.addEventListener('click', saveURLAsFile);
-
    	closeChatBtn.addEventListener('click', chat2main);
 
    	resetChatBtn.addEventListener('click', resetChat);
@@ -52,12 +50,17 @@ window.onload = function() {
 
 	mainBox.addEventListener('paste', pasteItem);
 	function pasteItem() {setTimeout(function(){unlockItem();}, 0);}
+	
+	pwd.addEventListener('paste',pasteKey);
+	function pasteKey() {setTimeout(function(){cleanKey();}, 0);}
+
+	swapBtn.addEventListener('click', swapBoxes);
 
 	suggestKeyBtn.addEventListener('click', suggestKey);
 
    	randomBtn.addEventListener('click', randomToken);
 
-	clearKeyBtn.addEventListener('click', function() {pwd.value = ''; if(showKey.checked) showKey.click();});
+	clearKeyBtn.addEventListener('click', function() {pwd.innerHTML = ''; if(showKey.checked) showKey.click();});
 
 	coverBox.addEventListener('paste', enableCover);
 
@@ -117,7 +120,7 @@ window.onload = function() {
 if(window.location.hash.length > 1){
 	mainBox.innerHTML = window.location.hash.slice(1);			//correspondent's message from address bar
 	btnLabels();
-	mainMsg.innerHTML = 'Enter the shared Key in the top box and click <strong>Unlock</strong>'
+	mainMsg.innerHTML = 'Enter the shared Key in the top box and click <strong>Decrypt</strong>'
 }
 
 //this one is for mobile only. Remove for the Chrome app

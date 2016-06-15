@@ -127,18 +127,26 @@ function makeNonce24(nonce){
 }
 
 //encrypt string with a shared Key
-function PLencrypt(plainstr,nonce24,sharedKey){
-	var plain = nacl.util.decodeUTF8(plainstr),
+function PLencrypt(plainstr,nonce24,sharedKey,isCompressed){
+	if(isCompressed){
+		var plain = LZString.compressToUint8Array(plainstr)
+	}else{
+		var plain = nacl.util.decodeUTF8(plainstr)
+	}
 		cipher = nacl.secretbox(plain,nonce24,sharedKey);
 	return nacl.util.encodeBase64(cipher).replace(/=+$/,'')
 }
 
 //decrypt string with a shared Key
-function PLdecrypt(cipherstr,nonce24,sharedKey){
+function PLdecrypt(cipherstr,nonce24,sharedKey,isCompressed){
 	var cipher = nacl.util.decodeBase64(cipherstr),
 		plain = nacl.secretbox.open(cipher,nonce24,sharedKey);
 		if(!plain) failedDecrypt();
-	return nacl.util.encodeUTF8(plain)
+	if(isCompressed){
+		return LZString.decompressFromUint8Array(plain)
+	}else{
+		return nacl.util.encodeUTF8(plain)
+	}
 }
 
 //this strips initial and final tags, plus spaces and non-base64 characters in the middle
@@ -152,9 +160,9 @@ function striptags(string){
 //puts an 42-character random string in the key box (not 43 so it's not mistaken for a PassLok Lock)
 function randomToken(){
 	var token = nacl.util.encodeBase64(nacl.randomBytes(32)).slice(0,42);
-	pwd.value = token;
+	pwd.innerHTML = token;
 	setTimeout(function(){
-		keyStrength(pwd.value.trim(),true);
+		keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim(),true);
 		pwd.type="TEXT";
 		showKey.checked = true;
 	},50)
@@ -162,20 +170,6 @@ function randomToken(){
 
 //takes appropriate UI action if decryption fails
 function failedDecrypt(){
-	if(lockBox.value.slice(0,1) == '~' || isList || nameBeingUnlocked != ''){
-		any2key();					//this displays the Key entry dialog
-		keyMsg.innerHTML = "<span style='color:orange'>This Key won't unlock the item </span>" + nameBeingUnlocked;
-		allowCancelWfullAccess = true;
-	}else if(keyChange.style.display == 'block'){
-		keyChange.style.display = 'none';
-		keyMsg.innerHTML = "<span style='color:orange'>The Old Key is wrong</span>"
-	}else if (checkingKey){
-		shadow.style.display = 'block';
-		keyScr.style.display = 'block';
-		keyMsg.innerHTML = "<span style='color:orange'>Please write the last Key you used</span><br>You can change the Key in Options";
-		checkingKey = false;
-	}else{
-		mainMsg.innerHTML = '<span>Unlock has Failed</span>';
-	}
+	mainMsg.innerHTML = '<span>Decryption has Failed</span>';
 	throw('decryption failed')
 }

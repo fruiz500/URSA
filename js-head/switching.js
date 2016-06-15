@@ -1,9 +1,9 @@
 ﻿//this is for showing and hiding text in key box and other password input boxes
 function showsec(){
 	if(showKey.checked){
-		pwd.type="TEXT";
+		pwd.style.webkitTextSecurity = "none"
 	}else{
-		pwd.type="PASSWORD";
+		pwd.style.webkitTextSecurity = "disc"
 	}
 }
 
@@ -38,6 +38,7 @@ function selectMain(){
         selection.removeAllRanges();
         selection.addRange(range);
     }
+	document.execCommand('copy')
 }
 
 //these close the chat
@@ -55,8 +56,17 @@ function cancelChat(){
 function pwdKeyup(evt){
 	evt = evt || window.event
 	if (evt.keyCode == 13){lockUnlock()} else{
-		 return keyStrength(pwd.value,true);
+		 return keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim(),true);
 	}
+}
+
+//swaps contents of the key box and the main box
+function swapBoxes(){
+	var text = mainBox.innerHTML.replace(/<br>$/,"").trim().replace(/<span(.*?)>/,'').replace(/<\/span>$/,'');
+	text = text.replace(/&nbsp;&nbsp;<button onclick="followLink\(this\);">Save<\/button><\/a>$/,'</a>');					//take out button from loaded file
+	mainBox.innerHTML = pwd.innerHTML.replace(/<br>$/,"").trim();
+	pwd.innerHTML = text;
+	cleanKey()
 }
 
 //writes five random dictionary words in the Password box
@@ -68,9 +78,9 @@ function suggestKey(){
 		rand = rand.replace(/0/g,'o').replace(/1/g,'i').replace(/2/g,'z').replace(/3/g,'e').replace(/4/g,'a').replace(/5/g,'s').replace(/7/g,'t').replace(/8/g,'b').replace(/9/g,'g');
 		output = output + ' ' + rand;
 	}
-	pwd.value = output.trim();
+	pwd.innerHTML = output.trim();
 	setTimeout(function() {
-		keyStrength(pwd.value.trim(),true);
+		keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim().trim(),true);
 		pwd.type="TEXT";
 		showKey.checked = true;
 	},50);

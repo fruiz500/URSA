@@ -355,11 +355,12 @@ img.intLink {
     <div id="mainMsg" style="height:20px;"><span style="color:red;font-weight:bold">JAVASCRIPT OFF, PASSLOK CANNOT RUN</span></div>
     <br />
     <br />
-    <input type="password" class="cssbox" autocomplete="off" id="pwd" onKeyUp="pwdKeyup(event);" style="width:95%; padding: 2px;" name="text" placeholder="Enter your shared Key here and the message in the box below." align="center">
+    <div contenteditable="true" class="cssbox" autocomplete="off" id="pwd" onKeyUp="pwdKeyup(event);" style="width:95%; padding: 2px;" name="text" placeholder="Enter your shared Key here and the message in the box below." align="left"></div>
     <br />
     <input type="checkbox" id="showKey" title="reveal box contents">
     &nbsp; Show
-    <button class="cssbutton" id="suggestKeyBtn" value="Suggest" style="padding:6px;font-size:large;" title="suggest a Key made of five common words">5 Words</button><!--
+    <button class="cssbutton" id="swapBtn" value="Swap" style="padding:6px;font-size:large;" title="swap contents with main box">Swap</button><!--
+--><button class="cssbutton" id="suggestKeyBtn" value="Suggest" style="padding:6px;font-size:large;" title="suggest a Key made of five common words">5 Words</button><!--
 --><button class="cssbutton" id="randomBtn" value="Random" style="padding:6px;font-size:large;" title="display a random Key">Random</button><!--
 --><button class="cssbutton" id="clearKeyBtn" value="Clear" style="padding:6px;font-size:large;" title="clear the Key">Clear</button>
     <br />
@@ -367,7 +368,7 @@ img.intLink {
 
     <!--buttons above the main box-->
     <div id="mainBtnsTop" style="">
-      <button class="cssbutton" id="decryptBtn" value="Lock/Unlock" style="padding-right:7px;padding-left:7px;color:green;" title="lock plain text in the box, unlock locked text (alt-L)" accesskey="l">Lock</button><!--
+      <button class="cssbutton" id="decryptBtn" value="Encrypt/Decrypt" style="padding-right:7px;padding-left:7px;color:green;" title="encrypt plain text in the box, decrypt encrypted text (alt-L)" accesskey="l">Encrypt</button><!--
 --><button class="cssbutton" id="sendMailBtn" value="Email" style="padding-right:7px;padding-left:7px;" title="put the box contents in an email using the default client (alt-E)">Email</button><!--
 --><button class="cssbutton" id="hideBtn" value="Hide" style="" title="switch recipients, or turn the message into regular text (alt-S)" accesskey="s" disabled>Hide</button><!--
 --><button class="cssbutton" id="chatBtn" value="Chat" style="" title="make a chat invitation or open it (alt-C)" accesskey="c">Chat</button>
@@ -451,12 +452,8 @@ img.intLink {
 --><button class="cssbutton" id="niceEditBtn" value="Rich" style="" title="toggle rich text editor (alt-R)" accesskey="r">Rich</button><!--
 --><button class="cssbutton" id="selectMainBtn" value="Select" style="" title="select the text in the box">Select</button><!--
 --><button class="cssbutton" id="clearMainBtn" value="Clear" style="" title="clear the text in the box">Clear</button><!--
---><button class="cssbutton" id="helpBtn" value="Help" style="" title="get help on using URSA (alt-H)" accesskey="h">Help</button>
-    </div>
-    <div id="fileBtns" style="display: block;">
-      <hr style="width:25%;">
-      <input class="custom-file-input" type="file" id="fileBtn" style="" title="open dialog to select file to load"/>
-      <button class="cssbutton" id="saveFileBtn" value="Save file" title="save file to default Downloads folder in original format, or as a text file if type is not recognized">Save file</button>
+--><button class="cssbutton" id="helpBtn" value="Help" style="" title="get help on using URSA (alt-H)" accesskey="h">Help</button><!--
+--><input class="custom-file-input" type="file" id="fileBtn" style="overflow:hidden;width:150px;position:absolute;" title="open dialog to select file to load"/>
     </div>
   </div>
 </div>
@@ -473,21 +470,21 @@ img.intLink {
     <h3>What is URSA?</h3>
   </div>
   <div id="a1" class="helptext">
-    <p>URSA makes your favorite email private by encrypting it with a shared Key so only the intended recipients can see it. You don't need to make an account anywhere, but you need to get the shared Key to the recipients by some secure means (unencrypted email or texting won't do). Once this Key is forgotten by all participants the content remains locked forever.</p>
+    <p>URSA makes your favorite email private by encrypting it with a shared Key so only the intended recipients can see it. You don't need to make an account anywhere, but you need to get the shared Key to the recipients by some secure means (unencrypted email or texting won't do). Once this Key is forgotten by all participants the content remains encrypted forever.</p>
     <p>In other apps "forever" means a really, really long time, because of the computational difficulty of recovering a high-entropy encryption key. In URSA, it really means forever, whenever the Key is longer than the message being encrypted.</p>
     <p>You can also use URSA to set up real-time secure chat sessions involving text, files, audio, or even video. The connection is direct between participants, with a server getting involved only at the start so you can find each other.</p>
     <p>URSA runs on a browser and is platform-independent. The chat component, however, does not yet run on IE or Safari, or under iOS.</p>
     <p>URSA is <em>still in experimental phase</em>, as it has not yet been duly vetted by experts. Bear this in mind before entrusting sensitive information to it.</p>
-    <p>If you want more capability, you may want to try SeeOnce, from <a href="https://SeeOnce.net" target="_blank">https://SeeOnce.net</a>, or PassLok, from <a href="https://PassLok.com" target="_blank">https://PassLok.com</a>. In addition to read-once encryption and Letters encoding for a single recipient, PassLok implements three more encryption and five more steganography modes, plus signatures and secret splitting. PassLok can also encrypt for several recipients at once. SeeOnce encrypts for only one person at a time, but it does so in such a way that messages can only be decrypted once. SeeOnce is also simpler than PassLok.</p>
+    <p>If you want more capability, you may want to try SeeOnce, from <a href="https://SeeOnce.net" target="_blank">https://SeeOnce.net</a>, or PassLok, from <a href="https://PassLok.com" target="_blank">https://PassLok.com</a>. In addition to read-once encryption and Letters encoding for a single recipient, PassLok implements three more encryption and five more steganography modes, plus signatures and secret splitting. PassLok can also encrypt for several recipients at once. SeeOnce encrypts for only one person at a time, but it does so in such a way that messages can only be decrypted once. URSA is fully compatible with PassLok, but not with SeeOnce.</p>
   </div>
   <hr>
   <div id="aa2" class="helpitem">
     <h3>How do I use URSA?</h3>
   </div>
   <div id="a2" class="helptext">
-    <p>Just type the shared Key in the top box and the plain message in the bottom box. If you paste the plain message in, it will lock automatically, otherwise click <strong>Lock</strong>. If then you click the <strong>Email</strong> button, it will be forwarded to your default email so you can send it out. The recipients only need to click on a link on the email and supply the shared Key.</p>
+    <p>Just type the shared Key in the top box and the plain message in the bottom box. If you paste the plain message in, it will be encrypted automatically, otherwise click <strong>Encrypt</strong>. If then you click the <strong>Email</strong> button, it will be forwarded to your default email so you can send it out. The recipients only need to click on a link on the email and supply the shared Key.</p>
     <p>If you want to disguise the result as apparently normal text, click the <strong>Hide</strong> button. You will be prompted for a cover text and directed to complete the result.</p>
-    <p>To unlock a message, enter the shared Key on the top box and then paste the message in the bottom box (it is fine if it is disguised as normal text). The message will unhide and then unlock automatically. Otherwise, click the <strong>Unlock</strong> button.</p>
+    <p>To decrypt a message, enter the shared Key on the top box and then paste the message in the bottom box (it is fine if it is disguised as normal text). The message will unhide and then decrypt automatically. Otherwise, click the <strong>Decrypt</strong> button.</p>
     <p>(PC only) If you click the <strong>Save</strong> button, it will be saved locally as an html file so any formatting is preserved.</p>
     <p>URSA will run from a saved file, so you don't have to be online in order to use it.</p>
   </div>
@@ -496,11 +493,11 @@ img.intLink {
     <h3>How do I get quantum-resistant encryption?</h3>
   </div>
   <div id="a3" class="helptext">
-    <p>As of 2015, reversing the encryption done with a symmetric Key having 256 bits of entropy still takes gazillions of years of computing time, but future quantum computers promise to shorten this (although not as much as they would for asymmetric encryption). URSA has a special "Pad mode" that not even quantum computers will be able to crack.</p>
-    <p>URSA shifts into Pad mode whenever you supply a shared Key that is <em>longer than the plain message</em> being encrypted (the Key must be at lest 43 characters long). Then press <strong>Lock</strong> normally.</p>
+    <p>As of 2016, reversing the encryption done with a symmetric Key having 256 bits of entropy still takes gazillions of years of computing time, but future quantum computers promise to shorten this (although not as much as they would for asymmetric encryption). URSA has a special "Pad mode" that not even quantum computers will be able to crack.</p>
+    <p>URSA shifts into Pad mode whenever you supply a shared Key that is <em>longer than the plain message</em> being encrypted (the Key must be at lest 43 characters long). Then press <strong>Encrypt</strong> normally.</p>
     <p>A pop-up will ask you for the start position, which must be a number in the range given by the pop-up. After you enter this, the encryption proceeds. To decrypt, the recipient must supply the same long shared Key and the same start position. Since security comes mostly from using a long Key, it may be okay to transmit the starting position in plaintext, if you have to.</p>
     <p>You can disguise the result as apparently normal text as for the normal mode, by clicking the <strong>Hide</strong> button.</p>
-    <p>The long Key, typically, will be copied from a text file or online document, and then pasted in the top box. You can also load a local file into the lower box using the File load button, copy the result, and then paste it into the top box.</p>
+    <p>The long Key, typically, will be copied from a text file or online document, and then pasted in the top box. You can also load a local file into the lower box using the File load button, and then click the <b>Swap</b> button to move the text to the top box (formatting is removed).</p>
     <p>Pad mode encryption is slower than regular encryption, especially if the text to be encrypted is also long (the length of the Key text doesn't matter so much), but the result is mathematically impossible to decrypt without the Key.</p>
   </div> 
   <hr>
@@ -509,8 +506,8 @@ img.intLink {
   </div>
   <div id="a4" class="helptext">
     <p>If you click the <strong>Chat</strong> button, a dialog asks you what kind of real-time chat you want to set up. There are three choices: text and files, this plus audio, and all this plus video. You can also add a short message, such as a date and time for the chat session.</p>
-    <p>After you click <strong>OK</strong>, URSA makes a chat invite exactly as when locking a message. You then send it to the other participants, keeping a copy for yourself. When the time for the chat comes, unlock the chat invite and then you'll be able to join the chat session like everybody else.</p>
-    <p>When the recipients get your chat invite, they will unlock it like any other URSA message and then the chat window will open and ask for an alias. When they supply this, they'll be connected directly to each of the participants already in the session. They may be asked to grant permission to feed audio or video when the connection takes place.</p>
+    <p>After you click <strong>OK</strong>, URSA makes a chat invite exactly as when encrypting a message. You then send it to the other participants, keeping a copy for yourself. When the time for the chat comes, decrypt the chat invite and then you'll be able to join the chat session like everybody else.</p>
+    <p>When the recipients get your chat invite, they will decrypt it like any other URSA message and then the chat window will open and ask for an alias. When they supply this, they'll be connected directly to each of the participants already in the session. They may be asked to grant permission to feed audio or video when the connection takes place.</p>
     <p>If you get disconnected, click the <strong>Reset Chat</strong> button to reload the chat window and type your alias again. The chat ceases to exist when all participants close their chat windows.</p>
   </div>
   <hr>
@@ -519,8 +516,10 @@ img.intLink {
   </div>
   <div id="a5" class="helptext">
     <p>Chat has its own secure file-sending process, so we refer here to sending files by email. You have two choices:</p>
-    <p>1. Encrypt the files using AES with a utility such as <a href="http://www.7-zip.org/" target="_blank">7-zip</a> (Windows), <a href="http://www.kekaosx.com/" target="_blank">Keka</a> (OSX), or p7zip (Linux), then lock the encryption password inside a URSA-locked message, and attach the encrypted archive to your email.</p>
-    <p>2. You can load a file smaller than a megabyte as text, using the button at the lower left corner of the screen (labeled <strong>Select a file</strong> in Chrome, something else in other browsers), and then lock it as a regular message. After unlocking, the recipient can save the file using the <strong>Save file</strong> button.</p>
+    <p>1. Encrypt the files using AES with a utility such as <a href="http://www.7-zip.org/" target="_blank">7-zip</a> (Windows), <a href="http://www.kekaosx.com/" target="_blank">Keka</a> (OSX), or p7zip (Linux), then encrypt the encryption password inside a URSA-encrypted message, and attach the encrypted archive to your email.</p>
+    <p>2. You can also load files using the button at the lower left corner of the screen (labeled <strong>Select a file</strong> in Chrome, something else in other browsers), which will load each file as a link, and then encrypt them as a regular message. After decryption, the recipient can save each file by right-clicking it and selecting Save as...</p>
+    <p>If the file loaded is text, it will load as text rather than as a link. You can also load text into the Key box. Just load it first into the main box, and then click the <b>Swap</b> button.</p>
+    <p>Be aware that Chrome cannot save files larger than 1.5MB, even if they have been correctly decrypted. Firefox and Safari don't have this limitation.</p>
   </div>
   <hr>
   <div id="aa6" class="helpitem">
@@ -528,7 +527,7 @@ img.intLink {
   </div>
   <div id="a6" class="helptext">
     <p>We have tried to make URSA extremely easy to use without impacting security, but tradeoffs do exist. There are two issues that you must be aware of:</p>
-    <p>1. <strong>How to get the shared Key to the recipients.</strong> Just locking it with a previously shared Key before sending is not secure enough, since compromising the previous Key will immediately compromise the new Key. Most likely, you are going to have to meet in person, or exchange Keys using an asymmetric encryption program such as <a href="https://seeonce.net" target="_blank">SeeOnce</a> or <a href="https://passlok.com" target="_blank">PassLok</a>.</p>
+    <p>1. <strong>How to get the shared Key to the recipients.</strong> Just encrypting it with a previously shared Key before sending is not secure enough, since compromising the previous Key will immediately compromise the new Key. Most likely, you are going to have to meet in person, or exchange Keys using an asymmetric encryption program such as <a href="https://seeonce.net" target="_blank">SeeOnce</a> or <a href="https://passlok.com" target="_blank">PassLok</a>.</p>
     <p>2. <strong>Hackers could change the code</strong> at the web server, and therefore destroy all security without users realizing it. The native app versions of URSA are code-signed by the respective app stores so this is not a problem with those, but if you are concerned about the authenticity of the web app, you can verify it by following the instructions below.</p>
     <div id='bb5' class="helpitem">
       <p><em>Click here for instructions to verify the URSA code.</em></p>
@@ -549,8 +548,8 @@ img.intLink {
     <h3>What's underneath URSA?</h3>
   </div>
   <div id="a7" class="helptext">
-    <p>URSA is a very simplified sibling of PassLok privacy (<a href="https://passlok.com" target="_blank">https://passlok.com</a>), from which it takes its symmetric encryption mode, which is based on the XSalsa20 stream cipher, plus the WiseHash key-stretching algorithm to increase security with weak Keys.</p>
-    <p> PassLok can unlock URSA-locked messages, and lock short messages that URSA can unlock. It also includes a complete directory management system for Keys shared with other users, so you only need to select the correspondent's name from a list on the Main screen.</p>
+    <p>URSA is a very simplified sibling of PassLok privacy (<a href="https://passlok.com/app" target="_blank">https://passlok.com/app</a>), from which it takes its symmetric encryption mode, which is based on the XSalsa20 stream cipher, plus the WiseHash key-stretching algorithm to increase security with weak Keys.</p>
+    <p> PassLok can decrypt URSA-encrypted messages, and encrypt short messages that URSA can decrypt. It also includes a complete directory management system for Keys shared with other users, so you only need to select the correspondent's name from a list on the Main screen.</p>
     <p>The quantum-resistant mode is not based on XSalsa20, but rather on repeatedly taking the SHA512 hash of a shared Key longer than the message itself, and using the random-looking result as a keystream to encrypt the message.</p>
     <p>You can get full details on URSA's cryptography and the Chat function from the <a href="http://www.weebly.com/uploads/2/4/1/8/24187628/passlok_technical_document.pdf" target="_blank">PassLok technical document.</a><a href="https://www.seeonce.net/seeonce_technical_document.pdf" target="_blank"></a>.</p>
   </div>
@@ -572,7 +571,7 @@ img.intLink {
     <h3>Privacy Statement and Warrant Canary</h3>
   </div>
   <div id="a9" class="helptext">
-    <p>URSA  is a self-contained piece of code that does not rely on servers to do its job. Therefore:</p>
+    <p>URSA is a self-contained piece of code that does not rely on servers to do its job. Therefore:</p>
     <p><strong>1. We cannot give your Keys to anyone</strong> (not even yourself) because we don't have them.</p>
     <p><strong>2. We cannot give your private data to anyone</strong> because URSA does not send anything out of your device, either. When you download the app from the web server, you get only the code, without any cookies, plugins, or anything of that sort.</p>
     <p><strong>3. We cannot eavesdrop on your chat sessions, or enable anyone to do so.</strong> Establishing a chat session does involve contacting a signaling server (Firebase) and giving it your IP address and a disposable chatroom name so that others can contact you; the signaling server never sees the content of your chat, which is between participants only. The URSA web server doesn't even see the connection data.</p>
@@ -585,15 +584,15 @@ img.intLink {
   </div>
   <hr>
   <address>
-  URSA 4.0.1 &#169; F. Ruiz 2015
+  URSA 4.1.2 &#169; F. Ruiz 2016
   </address>
   <ul>
-    <li> engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
-    <li> tweetNaCl JavaScript implementation by D. Chestnykh and D. Mandiri 2015</li>
-    <li> scrypt key stretching implementation by D. Chestnykh 2014</li>
+    <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
+    <li>tweetNaCl JavaScript implementation by D. Chestnykh and D. Mandiri 2015</li>
+    <li>scrypt key stretching implementation by D. Chestnykh 2014</li>
     <li>lz-string compression by pieroxy 2014</li>
-    <li> file In/Out based on an article from the This Could Be Better blog 2012</li>
-    <li> webRTC chat by Muaz Khan, modified by F. Ruiz 2015</li>
+    <li>file In/Out based on an article from the This Could Be Better blog 2012</li>
+    <li>webRTC chat by Muaz Khan, modified by F. Ruiz 2015</li>
     <li>Letters encoding based on Advanced Unicode Stego by Adrian Crenshaw 2013</li>
   </ul>
   <address>

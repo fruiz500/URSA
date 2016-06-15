@@ -27,38 +27,41 @@ function lockUnlock(){
 
 //Encryption process
 function Encrypt(){
-	var keystr = pwd.value.trim(),
-		nonce = nacl.randomBytes(9),
-		nonce24 = makeNonce24(nonce),
-		noncestr = nacl.util.encodeBase64(nonce).replace(/=+$/,''),
-		text = encodeURI(mainBox.innerHTML).replace(/%20/g,' ');
+	var keystr = pwd.innerHTML.replace(/<br>$/,"").trim(),
+		text = mainBox.innerHTML.trim();
 	if (text == ""){
-		mainMsg.innerHTML = 'Nothing to lock or unlock';
+		mainMsg.innerHTML = 'Nothing to encrypt or decrypt';
 		throw("main box empty");
 	}
 	else if(keystr.length*entropyPerChar > (text.length+9)*8 && keystr.length > 43){		//special mode for long keys, first cut
-		if(entropycalc(keystr) > (text.length+9)*8){										//more proper entropy test, conservative
-			padEncrypt();
-			return
-		}
-	}
+		padEncrypt();
+		return
+	}		
+	var	nonce = nacl.randomBytes(9),
+		nonce24 = makeNonce24(nonce),
+		noncestr = nacl.util.encodeBase64(nonce).replace(/=+$/,'');
 
 	var sharedKey = wiseHash(keystr,noncestr);		//use the nonce for stretching the user-supplied Key
-	var cipherstr = PLencrypt(text,nonce24,sharedKey);
-	mainBox.innerHTML = "URSA40msg=@" + noncestr + cipherstr + "=URSA40msg";
 
-	mainMsg.innerHTML = 'Locking successful. Click <strong>Email</strong> or copy and send.';
-	if(!isMobile) selectMain();
+	var cipherstr = PLencrypt(text,nonce24,sharedKey,true);
+	mainBox.innerHTML = "URSA41msg==@" + noncestr + cipherstr + "==URSA41msg";
+
+	if(!isMobile){
+		selectMain();
+		mainMsg.innerHTML = 'Encryption successful' + (isFirefox ? ' and selected. You may copy it now.' : ' and copied to clipboard')
+	}else{
+		mainMsg.innerHTML = 'Encryption successful. Select and copy.'
+	}
 	btnLabels();
 };
 
 //decryption process. Calls Encrypt as appropriate
 function Decrypt(){
 	mainMsg.innerHTML = "";
-	var keystr = pwd.value.trim(),
+	var keystr = pwd.innerHTML.replace(/<br>$/,"").trim(),
 		cipherstr = XSSfilter(mainBox.innerHTML.trim().replace(/&[^;]+;/g,'').replace(/\s/g,''));	//remove HTML tags that might have been introduced and extra spaces
 	if (cipherstr == ""){
-		mainMsg.innerHTML = 'Nothing to lock or unlock';
+		mainMsg.innerHTML = 'Nothing to encrypt or decrypt';
 		throw("main box empty");
 	}
 	cipherstr = cipherstr.split("=").sort(function (a, b) { return b.length - a.length; })[0];				//remove tags
@@ -69,30 +72,34 @@ function Decrypt(){
 	}
 	else if(cipherstr.slice(0,2) == '@@' && keystr.length > 43){padDecrypt();return}		//special mode for long keys
 
+	if(cipherstr.length != 160) var isCompressed = true;						//compression unless it's a PassLok short message
+	
 	cipherstr = cipherstr.replace(/[^a-zA-Z0-9+\/ ]+/g, '');					//remove anything that is not base64
 
 	if (keystr == ''){
 		mainMsg.innerHTML = '<span style="color:orange">Enter shared Key</span>';
 		throw("symmetric key empty");
 	}
+
 	var	noncestr = cipherstr.slice(0,12),
 		nonce24 = makeNonce24(nacl.util.decodeBase64(noncestr));
 	cipherstr = cipherstr.slice(12);
 
 	var sharedKey = wiseHash(keystr,noncestr);						//real shared Key
 
-	try{
-		var plain = PLdecrypt(cipherstr,nonce24,sharedKey);
-		if(!plain) failedDecrypt();
-		mainBox.innerHTML = decodeURI(plain).trim();
-	}catch(err){failedDecrypt()};
+	var plain = PLdecrypt(cipherstr,nonce24,sharedKey,isCompressed);
+	if(isCompressed){
+			mainBox.innerHTML = plain.trim()
+	}else{																//PassLok short mode
+			mainBox.innerHTML = decodeURI(plain).trim()
+	}
 
-	mainMsg.innerHTML = 'Unlock successful';
+	mainMsg.innerHTML = 'Decryption successful';
 	btnLabels();
 	openChat();
 }
 
-//extracts locked item from a piece of text
+//extracts encrypted item from a piece of text
 function extractCipher(string){
 	var cipherstr = XSSfilter(string.replace(/&[^;]+;/g,'').replace(/\s/g,''));
 	if(cipherstr.match('=(.*)=')) cipherstr = cipherstr.match('=(.*)=')[1];		//remove URL and text around item
@@ -104,14 +111,14 @@ function extractCipher(string){
 var entropyPerChar = 1.58;			//expected entropy of the key text in bits per character, from Shannon, as corrected by Guerrero; for true random UTF8 text this value is 8
 //function for encrypting with long key
 function padEncrypt(){
-	var nonce = nacl.randomBytes(9),
+	var nonce = nacl.randomBytes(15),
 		noncestr = nacl.util.encodeBase64(nonce).replace(/=+$/,''),
-		text = LZString.compressToBase64(mainBox.innerHTML.trim()),
-		keyText = pwd.value.trim();
+		text = mainBox.innerHTML.trim(),
+		keyText = pwd.innerHTML.replace(/<br>$/,"").trim();
 
-	var textBin = nacl.util.decodeBase64(text),
+	var textBin = LZString.compressToUint8Array(text),
 		keyTextBin = nacl.util.decodeUTF8(keyText),
-		keyLengthNeed = Math.ceil((textBin.length + 9) * 8 / entropyPerChar);
+		keyLengthNeed = Math.ceil((textBin.length + 15) * 8 / entropyPerChar);
 	if(keyLengthNeed > keyTextBin.length){
 		mainMsg.innerHTML = "The key Text is too short";
 		throw('key text too short')
@@ -124,10 +131,14 @@ function padEncrypt(){
 	var cipherBin = padResult(textBin, keyTextBin, nonce, startIndex);
 	var cipherstr = nacl.util.encodeBase64(cipherBin).replace(/=/g,'');
 	var macstr = padMac(textBin, keyTextBin, nonce, startIndex);
-	mainBox.innerHTML = "URSA40msg=@@" + noncestr + macstr + cipherstr + "=URSA40msg";
+	mainBox.innerHTML = "URSA41msg==@@" + noncestr + macstr + cipherstr + "==URSA41msg";
 
-	mainMsg.innerHTML = 'Locking successful. Click <strong>Email</strong> or copy and send.';
-	if(!isMobile) selectMain();
+	if(!isMobile){
+		selectMain();
+		mainMsg.innerHTML = 'Encryption successful' + (isFirefox ? ' and selected. You may copy it now.' : ' and copied to clipboard') + '. Click <strong>Email</strong> or paste into another app.';
+	}else{
+		mainMsg.innerHTML = 'Encryption successful. Click <strong>Email</strong> or copy and send.';
+	}
 	btnLabels();
 }
 
@@ -216,10 +227,10 @@ function padMac(textBin, keyTextBin, nonce, startIndex){					//startIndex is the
 //for decrypting with long key
 function padDecrypt(){
 	mainMsg.innerHTML = "";
-	var keyText = pwd.value.trim(),
+	var keyText = pwd.innerHTML.replace(/<br>$/,"").trim(),
 		cipherstr = XSSfilter(mainBox.innerHTML.trim().replace(/&[^;]+;/g,'').replace(/\s/g,''));	//remove HTML tags that might have been introduced and extra spaces
 	if (cipherstr == ""){
-		mainMsg.innerHTML = 'Nothing to lock or unlock';
+		mainMsg.innerHTML = 'Nothing to encrypt or decrypt';
 		throw("main box empty");
 	}
 	cipherstr = cipherstr.split("=").sort(function (a, b) { return b.length - a.length; })[0];				//remove tags
@@ -229,15 +240,15 @@ function padDecrypt(){
 		mainMsg.innerHTML = '<span style="color:orange">Enter shared Key</span>';
 		throw("symmetric key empty");
 	}
-	var	noncestr = cipherstr.slice(0,12),
+	var	noncestr = cipherstr.slice(0,20),
 		nonce = nacl.util.decodeBase64(noncestr),
-		macstr = cipherstr.slice(12,24);
-	cipherstr = cipherstr.slice(24);
+		macstr = cipherstr.slice(20,32);
+	cipherstr = cipherstr.slice(32);
 	try{
 		var cipherBin = nacl.util.decodeBase64(cipherstr),
 			keyTextBin = nacl.util.decodeUTF8(keyText);
 	}catch(err){
-		mainMsg.innerHTML = "This is corrupt or not locked"
+		mainMsg.innerHTML = "This is corrupt or not encrypted"
 	}
 	if(cipherBin.length > keyTextBin.length){
 		mainMsg.innerHTML = "The key Text is too short";
@@ -251,25 +262,20 @@ function padDecrypt(){
 	var plainBin = padResult(cipherBin, keyTextBin, nonce, startIndex);
 	var macNew = padMac(plainBin, keyTextBin, nonce, startIndex);
 	try{
-		var plain = nacl.util.encodeBase64(plainBin).replace(/=/g,'');
+		var plain = LZString.decompressFromUint8Array(plainBin);
 	}catch(err){
-		mainMsg.innerHTML = "Unlock has failed"
+		mainMsg.innerHTML = "Decryption has failed"
 	}
 	if(plain){
-		plain = LZString.decompressFromBase64(plain);
-		if(plain){
-			if(macstr == macNew){										//check authentication
-				mainBox.innerHTML = plain;
-				mainMsg.innerHTML = 'Unlock successful';
-			}else{
-				mainMsg.innerHTML = 'Message authentication has failed';
-			}
+		if(macstr == macNew){										//check authentication
+			mainBox.innerHTML = plain;
+			mainMsg.innerHTML = 'Decryption successful';
 		}else{
-			mainMsg.innerHTML = 'Unlock has failed';
+			mainMsg.innerHTML = 'Message authentication has failed';
 		}
 		btnLabels();
 		openChat()	
 	}else{
-		mainMsg.innerHTML = "Unlock has failed"
+		mainMsg.innerHTML = "Decryption has failed"
 	}
 }
