@@ -54,8 +54,9 @@ function cancelChat(){
 
 //displays Key strength and decrypts
 function pwdKeyup(evt){
-	evt = evt || window.event
-	if (evt.keyCode == 13){lockUnlock()} else{
+	evt = evt || window.event;
+	var key = evt.keyCode || evt.which || evt.keyChar;
+	if (key == 13){lockUnlock()} else{
 		 return keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim(),true);
 	}
 }

@@ -68,10 +68,7 @@ window.onload = function() {
 
 	acceptCoverBtn.addEventListener('click', textStego);
 
-//Firefox requires the keyup code to be inline if it refers to the event
-//but this must be removed for the Chrome app and replaced with those commented below
-
-//	pwd.addEventListener('keyup', function() {pwdKeyup(event)}, false);
+	pwd.addEventListener('keyup', function(event) {pwdKeyup(event)}, false);
 
 //for the rich text editor boxes and buttons
 	formatBlock.addEventListener("change", function() {formatDoc('formatBlock',this[this.selectedIndex].value);this.selectedIndex=0;});
