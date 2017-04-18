@@ -126,41 +126,86 @@ function makeNonce24(nonce){
 	return result
 }
 
-//encrypt string with a shared Key
+//encrypt string with a shared Key, returns a uint8 array
 function PLencrypt(plainstr,nonce24,sharedKey,isCompressed){
-	if(isCompressed){
-		var plain = LZString.compressToUint8Array(plainstr)
-	}else{
+	if(!isCompressed || plainstr.match('="data:')){						//no compression if it includes a file
 		var plain = nacl.util.decodeUTF8(plainstr)
+	}else{
+		var plain = LZString.compressToUint8Array(plainstr)
 	}
-		cipher = nacl.secretbox(plain,nonce24,sharedKey);
-	return nacl.util.encodeBase64(cipher).replace(/=+$/,'')
+	return nacl.secretbox(plain,nonce24,sharedKey)
 }
 
-//decrypt string with a shared Key
-function PLdecrypt(cipherstr,nonce24,sharedKey,isCompressed){
-	var cipher = nacl.util.decodeBase64(cipherstr),
-		plain = nacl.secretbox.open(cipher,nonce24,sharedKey);
-		if(!plain) failedDecrypt();
-	if(isCompressed){
-		return LZString.decompressFromUint8Array(plain)
+//decrypt string (or uint8 array) with a shared Key. Var 'label' is to display messages
+function PLdecrypt(cipherStr,nonce24,sharedKey,isCompressed,label){
+	if(typeof cipherStr == 'string'){
+		var cipher = nacl.util.decodeBase64(cipherStr)
 	}else{
+		var cipher = cipherStr
+	}
+	var	plain = nacl.secretbox.open(cipher,nonce24,sharedKey);					//decryption instruction
+	if(!plain) failedDecrypt(label);
+
+	if(!isCompressed || plain.join().match(",61,34,100,97,116,97,58,")){		//this is '="data:' after encoding
 		return nacl.util.encodeUTF8(plain)
+	}else{
+		return LZString.decompressFromUint8Array(plain)
 	}
 }
 
 //this strips initial and final tags, plus spaces and non-base64 characters in the middle
 function striptags(string){
 	string = string.replace(/\s/g,'');															//remove spaces
-	string = string.split("=").sort(function (a, b) { return b.length - a.length; })[0];		//remove tags
+	string = string.split("==").sort(function (a, b) { return b.length - a.length; })[0];		//remove tags
 	string = string.replace(/[^a-zA-Z0-9+\/]+/g,''); 											//takes out anything that is not base64
+	return string
+}
+
+//removes stuff between angle brackets
+function removeHTMLtags(string){
+	return string.replace(/<(.*?)>/gi, "")
+}
+
+//this one escapes dangerous characters, preserving non-breaking spaces
+function escapeHTML(str){
+	escapeHTML.replacements = { "&": "&amp;", '"': "&quot;", "'": "&#039;", "<": "&lt;", ">": "&gt;" };
+	str = str.replace(/&nbsp;/gi,'non-breaking-space')
+	str = str.replace(/[&"'<>]/g, function (m){
+		return escapeHTML.replacements[m];
+	});
+	return str.replace(/non-breaking-space/g,'&nbsp;')
+}
+
+//mess up all tags except those whitelisted: formatting, images, and links containing a web reference or a file
+function safeHTML(string){
+	//first mess up attributes with values not properly enclosed within quotes, because Chrome likes to complete those; extra replaces needed to preserve encrypted material
+	string = string.replace(/==/g,'double-equal').replace(/<(.*?)=[^"'](.*?)>/g,'').replace(/double-equal/g,'==');
+	//now escape every dangerous character; we'll recover tags and attributes on the whitelist later on
+	string = escapeHTML(string);
+	//make regular expressions containing whitelisted tags, attributes, and origins; sometimes two versions to account for single quotes
+	var allowedTags = '(b|i|strong|em|u|strike|sub|sup|blockquote|ul|ol|li|pre|div|span|a|h1|h2|h3|h4|h5|h6|p|pre|table|tbody|tr|td|img|br|wbr|hr|font)',
+		tagReg = new RegExp('&lt;(\/?)' + allowedTags + '(.*?)&gt;','gi'),
+		allowedAttribs = '(download|style|src|target|name|id|class|color|size|cellpadding|tabindex|type|start|align)',
+		attribReg1 = new RegExp(allowedAttribs + '=\&quot;(.*?)\&quot;','gi'),
+		attribReg2 = new RegExp(allowedAttribs + '=\&#039;(.*?)\&#039;','gi'),
+		allowedOrigins = '(http:\/\/|https:\/\/|mailto:\/\/|#)',
+		origReg1 = new RegExp('href=\&quot;' + allowedOrigins + '(.*?)\&quot;','gi'),
+		origReg2 = new RegExp('href=\&#039;' + allowedOrigins + '(.*?)\&#039;','gi');
+	//recover allowed tags
+	string = string.replace(tagReg,'<$1$2$3>');
+	//recover allowed attributes
+	string = string.replace(attribReg1,'$1="$2"').replace(attribReg2,"$1='$2'");
+	//recover file-containing links
+	string = string.replace(/href=\&quot;data:(.*?),(.*?)\&quot;/gi,'href="data:$1,$2"').replace(/href=\&#039;data:(.*?),(.*?)\&#039;/gi,"href='data:$1,$2'");
+	//recover web links and local anchors
+	string = string.replace(origReg1,'href="$1$2"').replace(origReg2,"href='$1$2'");
 	return string
 }
 
 //puts an 42-character random string in the key box (not 43 so it's not mistaken for a PassLok Lock)
 function randomToken(){
 	var token = nacl.util.encodeBase64(nacl.randomBytes(32)).slice(0,42);
-	pwd.innerHTML = token;
+	pwd.textContent = token;
 	setTimeout(function(){
 		keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim(),true);
 		pwd.type="TEXT";
@@ -170,6 +215,6 @@ function randomToken(){
 
 //takes appropriate UI action if decryption fails
 function failedDecrypt(){
-	mainMsg.innerHTML = '<span>Decryption has Failed</span>';
+	mainMsg.textContent = 'Decryption has Failed';
 	throw('decryption failed')
 }

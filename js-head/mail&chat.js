@@ -1,40 +1,19 @@
-﻿//display button labels according to item nature
-function btnLabels(){
-	var text = mainBox.innerHTML.split("==").sort(function (a, b) { return b.length - a.length; })[0],		//get type
-		type = text.charAt(0);
-	if(type == '@'){
-		decryptBtn.innerHTML = 'Decrypt';
-		hideBtn.disabled = false
-	}else{
-		decryptBtn.innerHTML = '&nbsp;Encrypt&nbsp;';
-		hideBtn.disabled = true
-	}
-}
-
-//removes spurious characters from key material
-function cleanKey(){
-	pwd.innerHTML = pwd.innerHTML.replace(/<br>/g,'\n').replace(/\<(?!\/?a).*?\>/g,'').trim().replace(/\n/g,'<br>').replace(/&nbsp;/g,' ')		//removes tags except anchors and newlines
-}
-
-//formats results depending on tags present and sends to default email
+﻿//formats results depending on tags present and sends to default email
 function sendMail() {
-	var cipherstr = mainBox.innerHTML;
-	cipherstr = cipherstr.split("=").sort(function (a, b) { return b.length - a.length; })[0].replace(/-/g,'');		//remove tags
-	var type = cipherstr.slice(0,1);
+	var array = getType(mainBox.innerHTML.trim());
+	
+	if(array[0]){
+		var hashTag = encodeURIComponent(mainBox.textContent.trim()).replace(/%0A/g,'%0D%0A');		//item ready for link
+		var linkText = "Click the link below if you wish to process this automatically using the web app (the app will open in a new tab), or simply copy it and paste it into URSA:%0D%0A%0D%0Ahttps://passlok.com/ursa#==" + hashTag + "==";
+		var link = "mailto:"+ "?subject= " + "&body=Message encrypted with URSA v.4.2 %0D%0A%0D%0ADecrypt with shared Key.%0D%0A%0D%0A" + linkText;
 
-	var hashTag = encodeURIComponent(mainBox.innerHTML.replace(/-/g,'')).replace(/%3Cbr%3E/g,'%0D%0A');		//item ready for link
-	var linkText = "Click the link below if you wish to process this automatically using the web app (the app will open in a new tab), or simply copy it and paste it into URSA:%0D%0A%0D%0Ahttps://passlok.com/ursa#" + hashTag;
-
-	if (type=="@"){
-		var link = "mailto:"+ "?subject= " + "&body=Message encrypted with URSA v.4.1 %0D%0A%0D%0ADecrypt with shared Key.%0D%0A%0D%0A" + linkText;
+		if(isMobile){ 	 											//new window for PC, same window for mobile
+			window.open(link,"_parent")
+		}else{
+			window.open(link,"_blank")
+		}
 	} else {
-		mainMsg.innerHTML = "A valid encrypted item must be in the box before it can be emailed"
-	}
-
-	if(isMobile){ 	 											//new window for PC, same window for mobile
-		window.open(link,"_parent")
-	} else {
-		window.open(link,"_blank")
+		mainMsg.textContent = "A valid encrypted item must be in the box before it can be emailed"
 	}
 }
 
@@ -49,7 +28,7 @@ function sendSMS(){
     	}
 		window.open("SMS:","_parent")							//open SMS on mobile
 	} else {
-		mainMsg.innerHTML = 'SMS function is only available on mobile devices'
+		mainMsg.textContent = 'SMS function is only available on mobile devices'
 	}
 };
 
@@ -59,10 +38,16 @@ function Chat(){
 		chatScr.style.display = 'block';
 		return
 	}
-	var text = mainBox.innerHTML.trim();
+	var text = mainBox.textContent.trim();
+	if(!pwd.textContent.trim()){
+		mainMsg.textContent = "Please write in a Key before clicking Chat";
+		return
+	}
 	if(text.slice(6,10) == 'chat'){										//there is already a chat invitation, so open it
 		lockUnlock();
 		return
+	}else{
+		chatDate.value = text
 	}
 	openClose('shadow');
 	openClose('chatDialog');												//stop to get chat type
@@ -83,10 +68,9 @@ function makeChat(){
 	while(date.length < 43) date += ' ';
 	var password = nacl.util.encodeBase64(nacl.randomBytes(32)).replace(/=+$/,'');
 	var chatRoom = makeChatRoom();
-	mainBox.innerHTML = date + type + chatRoom + password;
-	Encrypt();
-	mainBox.innerHTML = mainBox.innerHTML.replace(/URSA41msg/g,'URSA41chat');			//change the tags
-	mainMsg.innerHTML = 'Invitation to chat in the box.<br>Send it to the recipients.'
+	Encrypt(date + type + chatRoom + password);
+	mainBox.textContent = mainBox.textContent.replace(/URSA42msg/g,'URSA42chat');			//change the tags
+	mainMsg.textContent = 'Invitation to chat in the box.\nSend it to the recipients.'
 }
 
 //makes a mostly anonymous chatRoom name from words on the blacklist
@@ -101,9 +85,9 @@ function makeChatRoom(){
 
 //to open chat window once invitation is decrypted
 function openChat(){
-	var typetoken = mainBox.innerHTML;
-	if (typetoken.length == 107){											//chat invite detected, so open chat
-		mainBox.innerHTML = '';
+	var typetoken = mainBox.textContent.trim();
+	if (typetoken.length == 107 && !typetoken.slice(-43).match(' ')){
+		mainBox.textContent = '';
 		var date = typetoken.slice(0,43).trim();				//the first 43 characters are for the date and time etc.
 		if(date != 'noDate'){
 			var msgStart = "This chat invitation says:\n\n" + date + "\n\n"
@@ -112,11 +96,11 @@ function openChat(){
 		}
 		var reply = confirm(msgStart + "If you go ahead, the chat session will open now.\nWARNING: this involves going online, which might give away your location.");
 		if(!reply){
-			mainBox.innerHTML = '';
+			mainBox.textContent = '';
 			throw("chat start canceled");
 		}
 		if(isSafari || isIE || isiOS){
-			mainMsg.innerHTML = 'Sorry, but chat is not yet supported by your browser or OS';
+			mainMsg.textContent = 'Sorry, but chat is not yet supported by your browser or OS';
 			throw('browser does not support webRTC')
 		}
 		main2chat(typetoken.slice(43));

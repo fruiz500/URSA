@@ -1,4 +1,23 @@
-﻿//this is for showing and hiding text in key box and other password input boxes
+﻿//display button labels according to item nature
+function btnLabels(){
+	var string = mainBox.innerHTML.trim().replace(/&[^;]+;/g,'').replace(/<a(.*?).(plk|txt)" href="data:(.*?),/,'').replace(/"(.*?)\/a>$/,'').replace(/<(.*?)>/g,'');
+
+	if(string.match('==')) string = string.split('==')[1];				//remove tags
+	var	type = string.charAt(0),
+		isBase64 = !string.match(/[^a-zA-Z0-9+\/]/),
+		isBase26 = !string.match(/[^A-Z]/);
+
+	if((type.match(/[dg]/) && isBase64) || isBase26){
+		decryptBtn.textContent = 'Decrypt';
+		imageBtn.textContent = 'Email'
+	}else{
+		decryptBtn.textContent = 'Encrypt';
+		imageBtn.textContent = 'Encr. to Img'
+	}
+	if(!string)imageBtn.textContent = 'Decrypt Img'
+}
+
+//this is for showing and hiding text in key box and other password input boxes
 function showsec(){
 	if(showKey.checked){
 		pwd.style.webkitTextSecurity = "none"
@@ -11,17 +30,28 @@ function chat2main(){
 	chatScr.style.display = 'none'
 }
 
+//close image screen
+function image2main(){
+	if(imageScr.style.display=='block'){
+		openClose('imageScr');
+		openClose('shadow');
+		Decrypt(mainBox.textContent);
+		setTimeout(function(){mainMsg.textContent = 'Image box closed. Did you save the image by right-clicking?'},100)
+	}
+}
+
 function resetChat(){
 	var frame = document.getElementById('chatFrame');
 	var src = frame.src;
 	frame.src = '';
-	setTimeout(function(){frame.src = src;}, 0);
+	setTimeout(function(){frame.src = src;}, 0)
 }
 
 //for clearing different boxes
 function clearMain(){
-	mainBox.innerHTML = '';
-	mainMsg.innerHTML = '';
+	mainBox.textContent = '';
+	mainMsg.textContent = 'Ready to encrypt';
+	btnLabels()
 }
 
 //for selecting the Main box contents
@@ -30,26 +60,35 @@ function selectMain(){
     if (document.body.createTextRange) {
         range = document.body.createTextRange();
         range.moveToElementText(mainBox);
-        range.select();
+        range.select()
     } else if (window.getSelection) {
         selection = window.getSelection();
         range = document.createRange();
         range.selectNodeContents(mainBox);
         selection.removeAllRanges();
-        selection.addRange(range);
+        selection.addRange(range)
     }
 	document.execCommand('copy')
+}
+
+//reveals or hides file output options
+function toggleFileOptions(){
+	if(fileMode.checked){
+		fileOptions.style.display = ''
+	}else{
+		fileOptions.style.display = 'none'
+	}
 }
 
 //these close the chat
 function closeChat() {
 	shadow.style.display = "none";
-	chatDialog.style.display = "none";
+	chatDialog.style.display = "none"
 }
 
 function cancelChat(){
 	closeChat();
-	mainMsg.innerHTML = 'Chat canceled';
+	mainMsg.textContent = 'Chat canceled'
 }
 
 //displays Key strength and decrypts
@@ -57,17 +96,15 @@ function pwdKeyup(evt){
 	evt = evt || window.event;
 	var key = evt.keyCode || evt.which || evt.keyChar;
 	if (key == 13){lockUnlock()} else{
-		 return keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim(),true);
+		 return keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim(),true)
 	}
 }
 
 //swaps contents of the key box and the main box
 function swapBoxes(){
 	var text = mainBox.innerHTML.replace(/<br>$/,"").trim().replace(/<span(.*?)>/,'').replace(/<\/span>$/,'');
-	text = text.replace(/&nbsp;&nbsp;<button onclick="followLink\(this\);">Save<\/button><\/a>$/,'</a>');					//take out button from loaded file
 	mainBox.innerHTML = pwd.innerHTML.replace(/<br>$/,"").trim();
-	pwd.innerHTML = text;
-	cleanKey()
+	pwd.innerHTML = text
 }
 
 //writes five random dictionary words in the Password box
@@ -77,44 +114,32 @@ function suggestKey(){
 	for(var i = 1; i <=5 ; i++){
 		var rand = wordlist[Math.floor(Math.random()*wordlist.length)];
 		rand = rand.replace(/0/g,'o').replace(/1/g,'i').replace(/2/g,'z').replace(/3/g,'e').replace(/4/g,'a').replace(/5/g,'s').replace(/7/g,'t').replace(/8/g,'b').replace(/9/g,'g');
-		output = output + ' ' + rand;
+		output = output + ' ' + rand
 	}
-	pwd.innerHTML = output.trim();
 	setTimeout(function() {
-		keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim().trim(),true);
+		keyStrength(output.replace(/<br>$/,"").trim().trim(),true);
 		pwd.type="TEXT";
 		showKey.checked = true;
-	},50);
-}
-
-//enables OK button if a sufficiently long cover text is loaded
-function enableCover(){
-	setTimeout(function(){
-		var text = coverBox.value.trim();
-		if(text.length > 1400){
-			acceptCoverBtn.disabled = false
-		}else{
-			coverMsg.innerHTML = 'The cover text must be at least 1400 characters long'
-		}
-	},20)
+		pwd.textContent = output.trim()
+	},100);
 }
 
 function cancelCover(){
 	shadow.style.display = "none";
 	coverScr.style.display = "none";
-	mainMsg.innerHTML = 'Text hide canceled';
+	mainMsg.textContent = 'Text hide canceled'
 }
 
 //loads the chat frame
 function main2chat(token){
 	if(isAndroid){
 		var reply = confirm('On Android, the chat function works from a browser page, but not yet from the app. Please cancel if you are running URSA as a native app.');
-		if(!reply) throw('chat canceled by user');
+		if(!reply) throw('chat canceled by user')
 	}
 	document.getElementById('chatFrame').src = 'https://www.passlok.com/chat/index.html#' + token;
-	chatBtn.innerHTML = 'Back to Chat';
+	chatBtn.textContent = 'Back to Chat';
 	chatBtn.style.color = 'orange';
-	chatScr.style.display = 'block';
+	chatScr.style.display = 'block'
 }
 
 //for opening the help screen and back
@@ -135,11 +160,6 @@ function focusBox(){
 	}
 }
 
-//simple XSS filter for use in innerHTML-editing statements. Removes stuff between angle brackets
-function XSSfilter(string){
-	return string.replace(/<(.*?)>/gi, "")
-}
-
 <!-- Text hide trick, by Sandeep Gangadharan 2005-->
 if (document.getElementById) {
  document.writeln('<style type="text/css"><!--')
@@ -148,7 +168,7 @@ if (document.getElementById) {
 
 function openClose(theID) {
  if (document.getElementById(theID).style.display === "block") { document.getElementById(theID).style.display = "none" }
- else { document.getElementById(theID).style.display = "block" } };
+ else { document.getElementById(theID).style.display = "block" } }
 // end of hide trick
 
 //as above, but closes everything else in help
@@ -176,13 +196,13 @@ function toggleRichText() {
 		toolBar1.style.display = 'none';
 		mainBox.style.borderTopLeftRadius = '15px';
 		mainBox.style.borderTopRightRadius = '15px';
-		niceEditBtn.innerHTML = 'Rich';
+		niceEditBtn.textContent = 'Rich';
 		niceEditor = false
 	} else {
 		toolBar1.style.display = 'block';
 		mainBox.style.borderTopLeftRadius = '0';
 		mainBox.style.borderTopRightRadius = '0';
-		niceEditBtn.innerHTML = 'Plain';
+		niceEditBtn.textContent = 'Plain';
 		niceEditor = true
 	}
 	textheight();
