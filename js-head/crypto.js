@@ -59,11 +59,11 @@ function Encrypt(text){
 		mainMsg.textContent = 'Nothing to encrypt or decrypt';
 		return
 	}
-	else if(keyStr.length*entropyPerChar > (text.length+9)*8 && keyStr.length > 43){		//special mode for long keys
+	else if(keyStr.length*entropyPerChar > (text.length + 64) * 8 && keyStr.length > 43){		//special mode for long keys
 		padEncrypt();
 		return
 	}
-	if(keyStr.split(',').length == 3){														//key is three strings separated by commas: human-computable encryption
+	if(keyStr.split('~').length == 3){														//key is three strings separated by tildes: human-computable encryption
 		humanEncrypt(text,true);
 		return
 	}		
@@ -112,8 +112,8 @@ function Decrypt(cipherStr){
 	}
 	
 	if(!cipherStr.match(/[^A-Z]/)){														//only base26: special human encrypted mode
-		if(pwd.textContent.split(',').length != 3){
-			mainMsg.textContent = 'Please supply a correct Key for human decryption: three strings separated by commas';
+		if(pwd.textContent.split('~').length != 3){
+			mainMsg.textContent = 'Please supply a correct Key for human decryption: three strings separated by tildes';
 			return
 		}
 		humanEncrypt(cipherStr,false);													//when set to false the process decrypts
@@ -154,7 +154,7 @@ function padEncrypt(){
 		var textBin = LZString.compressToUint8Array(text)
 	}
 	var	keyTextBin = nacl.util.decodeUTF8(keyText),
-		keyLengthNeed = Math.ceil((textBin.length + 15) * 8 / entropyPerChar);
+		keyLengthNeed = Math.ceil((textBin.length + 64) * 8 / entropyPerChar);
 	if(keyLengthNeed > keyTextBin.length){
 		mainMsg.textContent = "The key Text is too short";
 		throw('key text too short')
@@ -229,9 +229,9 @@ function padResult(textBin, keyTextBin, nonce, startIndex){
 }
 
 //makes a 16-byte message authentication code; becomes 12 chars in Base64
-function padMac(textBin, keyTextBin, nonce, startIndex){					//startIndex is the one from the prompt
+function padMac(textBin, keyTextBin, nonce, startIndex){						//startIndex is the one from the prompt
 	var textKeyLength = Math.ceil(textBin.length * 8 / entropyPerChar),
-		macKeyLength = Math.ceil(9 * 8 / entropyPerChar);
+		macKeyLength = Math.ceil(64 * 8 / entropyPerChar);						//collect enough entropy so the probability of a positive is the same for correct and incorrect decryptions
 	var macBin = new Uint8Array(textBin.length + macKeyLength + nonce.length),
 		i;
 	var macStartIndex = (startIndex + textKeyLength) % keyTextBin.length		//mod because it may have wrapped
@@ -411,7 +411,7 @@ function humanEncrypt(text,isEncrypt){
 	}
 	text = text.replace(/[^A-Z]/g,'');																				//only base26 anyway
 
-	var rawKeys = pwd.textContent.split(',');
+	var rawKeys = pwd.textContent.split('~');
 	for(var i = 0; i < 3; i++) rawKeys[i] = rawKeys[i].toUpperCase().removeDiacritics().replace(/[^A-Z]/g,'');	//remove accents, spaces, and all punctuation
 
 	var	base26B1arrays = makeAlphabet(compressKey(rawKeys[0],25)),
@@ -423,30 +423,33 @@ function humanEncrypt(text,isEncrypt){
 		seed = rawKeys[2] ? rawKeys[2] : rawKeys[0];			//if seed is empty, use key 1
 
 	var seedLength = seed.length;
-	seedArray = new Array(seedLength);
+	seedArray = new Array(seedLength);				//this is actually the seed mask
 	for(var i = 0; i < seedLength; i++){
 		seedArray[i] = base26.indexOf(seed.charAt(i))
 	}
 
+	var isGoodSeed = false,							//so it calculates at least once. No iteration when decrypting
+		extendedText = text;							//initialize for decryption
+  while(!isGoodSeed){
 	var	rndSeedArray = new Array(seedLength);	
-	if(isEncrypt){										//per-message random seed if so chosen
+	if(isEncrypt){										//per-message random seed
 		var	dummySeed = '',
 			newIndex;
 		for(var i = 0; i < seedLength; i++){
-			newIndex = Math.floor(Math.random()*26);
+			newIndex = Math.floor(betterRandom()*26);	//avoid using Math.random() since this must be cryptographically secure
 			rndSeedArray[i] = newIndex;					//this contains the random seed		
 			dummySeed += base26.charAt(newIndex)
 		}
-		text = dummySeed + text
+		extendedText = dummySeed + text
 	}		
 		
-	var	length = text.length,
+	var	length = extendedText.length,
 		textArray = new Array(length),
 		cipherArray = new Array(length);
 
 	//now fill row 1 with numbers representing letters; this will be a lot faster than doing string operations
 	for(var i = 0; i < length; i++){
-		textArray[i] = base26.indexOf(text.charAt(i))
+		textArray[i] = base26.indexOf(extendedText.charAt(i))
 	}
 	
 	//if decrypting, extract the random seed
@@ -462,6 +465,19 @@ function humanEncrypt(text,isEncrypt){
 	for(var i = seedLength; i < length; i++){
 		stream[i] = base26BArray1[(26 - base26Binverse2[stream[i-seedLength]] + stream[i-seedLength+1]) % 26]
 	}
+	
+	//now test that the cipherstream obtained has sufficient quality, otherwise make another guess for the seed and repeat the process
+	if(isEncrypt){
+		var freqArray = frequencies(stream,26),											//first compute the frequency histogram
+			chiNumber = chiSquared(stream,freqArray,26),									//single letter chi-squared. Must be smaller than 34.4
+			corNumber = corrAtDistance(stream,freqArray,26,1);							//correlation chi-squared for consecutive letters. Must be smaller than 671
+		
+		isGoodSeed = (chiNumber < 34.4) && (corNumber < 671)							//this is the test for randomness of the keystream
+	}else{
+		isGoodSeed = true																	//automatic pass when decrypting
+	}
+  }																						//end of iteration for good seed
+	
 	stream = seedArray.concat(stream.slice(seedLength));											//replace random seed with original seed before the final operation
 
 	//now combine the plaintext (ciphertext) and the keystream using the Tabula Prava, and convert back to letters
@@ -494,6 +510,15 @@ function humanEncrypt(text,isEncrypt){
 	btnLabels()
 }
 
+//alternative to Math.random based on nacl.randomBytes. Used to generate floating point numbers between 0 and 1. Uses 8 bytes as space, which is enough for double precision
+function betterRandom(){
+	var randomArray = nacl.randomBytes(8),
+		integer = 0,
+		maxInt = 18446744073709551616; 				//this is 256^8
+	for(var i = 0; i < 8; i++) integer = integer * 256 + randomArray[i];
+	return integer / maxInt
+}
+
 //makes a high-entropy base26 key of a given length from a piece of regular text
 function compressKey(string,length){
 	var indexArray = new Array(string.length),
@@ -512,4 +537,49 @@ function compressKey(string,length){
 	
 	for(var i = 0; i < length; i++) if(outputArray[i] != undefined) outStr += base26.charAt(outputArray[i]);
 	return outStr
+}
+
+//counts frequency for each digit in the given base. The input array contains numbers from 0 to base - 1
+function frequencies(array,base){
+	var length = array.length,
+		freqArray = new Array(base).fill(0);
+	for(var i = 0; i < length; i++) freqArray[array[i]]++;
+	return freqArray
+}
+
+//chi-squared statistic of a array in a given base
+function chiSquared(array,freqArray,base){
+	var	result = 0,
+		length = array.length,
+		expected = length / base,
+		operand;
+	for(var i = 0; i < base; i++){
+		operand = freqArray[i] - expected;
+		result += (operand * operand) / expected
+	}
+	return result
+}
+
+//two-digit test of dependence at different distance, for a given base. Minimum distance is 1
+function corrAtDistance(array,freqArray,base,distance){
+	var	length = array.length,
+		highIndex = length - distance,
+		result = 0,
+		operand,
+		expected,
+		freqTable = new Array(base);
+	for(var i = 0; i < base; i++) freqTable[i] = new Array(base).fill(0);
+	for(var k = 0; k < highIndex; k++){			//fill the table with data
+		freqTable[array[k]][array[k + distance]]++
+	}
+	for(var i = 0; i < base; i++){					//each first character
+		for(var j = 0; j < base; j++){				//each second character
+			expected = freqArray[i] * freqArray[j] / length;		//expected P(xy) = P(x)*P(y)
+			if(expected > 0){										//in case a letter does not appear at all
+				operand = freqTable[i][j] - expected;
+				result += (operand * operand) / expected
+			}
+		}
+	}
+	return result
 }

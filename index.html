@@ -480,8 +480,8 @@ img.intLink {
     <p>Just type the shared Key in the top box and the plain message in the bottom box. If you paste the plain message in, it will be encrypted automatically, otherwise click <strong>Encrypt</strong>. If then you click the <strong>Email</strong> button, it will be forwarded to your default email so you can send it out. The recipients only need to click on a link on the email and supply the shared Key.</p>
     <p>If you want to disguise the result as apparently normal text, click the <strong>Text hide</strong> button. You will be prompted for a cover text and directed to complete the result.</p>
     <p>To decrypt a message, enter the shared Key on the top box and then paste the message in the bottom box (it is fine if it is disguised as normal text). The message will unhide and then decrypt automatically. Otherwise, click the <strong>Decrypt</strong> button.</p>
-    <p>You can also embed the encrypted message inside an image so that its presence cannot be detected. Start the process with the <strong>Encr. to Img</strong> button if your are encrypting, <strong>Decrypt Img</strong> if decrypting, with the main box empty. When encrypting, you can choose the image format to be PNG or JPG.</p>
-    <p>When encrypting to image, you can embed a second message in addition to the main message, by writing the following in the key box before clicking the button: main Key,folowed by a vertical bar "|", Key for the second message, another vertical bar, second message. To extract the hidden message, the key box should contain the following before clicking the button: main Key, vertical bar, Key for the second message.<p>
+    <p>You can also embed the encrypted message inside an image so that its presence cannot be detected. Start the process with the <strong>Encr. to Img</strong> button if you are encrypting, <strong>Decrypt Img</strong> if decrypting, with the main box empty. When encrypting, you can choose the image format to be PNG or JPG.</p>
+    <p>When encrypting to image, you can embed a second message in addition to the main message, by writing the following in the key box before clicking the button: main Key,followed by a vertical bar "|", Key for the second message, another vertical bar, second message. To extract the hidden message, the key box should contain the following before clicking the button: main Key, vertical bar, Key for the second message.<p>
     <p>URSA will run from a saved file, so you don't have to be online in order to use it.</p>
   </div>
   <hr>
@@ -502,7 +502,7 @@ img.intLink {
   </div>
   <div id="a4" class="helptext">
     <p>If you or your friends don't have access to a computer that hasn't been compromised, you can still communicate in Human mode, which can be performed simply with paper and pencil. This mode is explained in detail in this page, which also does encryption and decryption for you: <a href="https://passlok.com/human" target="_blank">https://passlok.com/human</a>.</p>
-    <p>URSA shifts into Human mode whenever you supply a shared Key that consists of <em>three strings separated by commas</em> (or two commas after a single string). Type your message in Latin characters, then press <strong>Encrypt</strong> normally. Bear in mind that all punctuation will be represented as periods upon decryption.</p>
+    <p>URSA shifts into Human mode whenever you supply a shared Key that consists of <em>three strings separated by tildes</em> &quot;~&quot; (or two tildes after a single string). Type your message in Latin characters, then press <strong>Encrypt</strong> normally. Bear in mind that all punctuation will be represented as periods upon decryption.</p>
     <p>You can disguise the result as apparently normal text as for the normal mode, by clicking the <strong>Text hide</strong> button.</p>
     <p>If the appropriate key is loaded, decryption happens automatically as soon as you paste in the encrypted message. Otherwise, click the <strong>Decrypt</strong> button. Unlike in other modes, you won't get a message telling you whether or not the decryption has been successful.</p>
     <p>Messages encrypted by URSA in Human mode can be decrypted in PassLok, and vice-versa, plus the page linked above.</p>
@@ -569,7 +569,7 @@ img.intLink {
     <p>URSA is a very simplified sibling of PassLok Privacy (<a href="https://passlok.com/app" target="_blank">https://passlok.com/app</a>), from which it takes its symmetric encryption mode, which is based on the XSalsa20 stream cipher, plus the WiseHash key-stretching algorithm to increase security with weak Keys.</p>
     <p> PassLok can decrypt URSA-encrypted messages, and encrypt short messages that URSA can decrypt. It also includes a complete directory management system for Keys shared with other users, so you only need to select the correspondent's name from a list on the Main screen.</p>
     <p>The quantum-resistant mode is not based on XSalsa20, but rather on repeatedly taking the SHA512 hash of a shared Key longer than the message itself, and using the random-looking result as a keystream to encrypt the message.</p>
-    <p>You can get full details on URSA's cryptography and the Chat function from the <a href="http://www.weebly.com/uploads/2/4/1/8/24187628/passlok_technical_document.pdf" target="_blank">PassLok technical document.</a><a href="https://www.seeonce.net/seeonce_technical_document.pdf" target="_blank"></a>.</p>
+    <p>You can get full details on URSA's cryptography and the Chat function from the <a href="http://www.weebly.com/uploads/2/4/1/8/24187628/passlok_technical_document.pdf" target="_blank">PassLok technical document.</a>.</p>
   </div>
   <hr>
   <div id="aa10" class="helpitem">
@@ -597,12 +597,12 @@ img.intLink {
     <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
     <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
     <div id="canary" style="float:left;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
-    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2 (March 2017) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
+    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.1 (September 2017) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
     </div>
   </div>
   <hr>
   <address>
-  URSA 4.2 &#169; F. Ruiz 2017
+  URSA 4.2.1 &#169; F. Ruiz 2017
   </address>
   <ul>
     <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
