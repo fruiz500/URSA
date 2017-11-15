@@ -3,7 +3,7 @@ window.onload = function() {
 
 	if(isMobile){
 		niceEditBtn.style.display = 'none';		//no rich text editing on mobile
-		fileBtn.style.display = 'none';
+		mainFile.style.display = 'none';
 		selectMainBtn.style.display = 'none';
 	} else {
 		sendSMSBtn.style.display = 'none';
@@ -12,7 +12,14 @@ window.onload = function() {
   //event listeners for buttons etc.
 	window.addEventListener('resize',textheight);
 
-    fileBtn.addEventListener('change', loadFileAsURL);
+    mainFile.addEventListener('change', loadFileAsURL);
+	mainFile.addEventListener('click', function(){this.value = '';});
+	
+	imgFile.addEventListener('change', loadImage);
+	imgFile.addEventListener('click', function(){this.value = '';});
+	
+	imageFile.addEventListener('change', importImage);
+	imageFile.addEventListener('click', function(){this.value = ''; imageOrEmail()});
 
    	showKey.addEventListener('click', showsec);
 
@@ -23,10 +30,16 @@ window.onload = function() {
    	decryptBtn.addEventListener('click', lockUnlock);
 
    	niceEditBtn.addEventListener('click', toggleRichText);
+	
+	image2mainBtn.addEventListener('click', image2main);
+	
+	encodePNGBtn.addEventListener('click', encode);
 
-   	sendMailBtn.addEventListener('click', sendMail);
+	encodeJPGBtn.addEventListener('click', encode);
 
    	chatBtn.addEventListener('click', Chat);
+	
+	fileMode.addEventListener('click', toggleFileOptions);
 
 	hideBtn.addEventListener('click', textStego);
 
@@ -50,9 +63,6 @@ window.onload = function() {
 
 	mainBox.addEventListener('paste', pasteItem);
 	function pasteItem() {setTimeout(function(){unlockItem();}, 0);}
-	
-	pwd.addEventListener('paste',pasteKey);
-	function pasteKey() {setTimeout(function(){cleanKey();}, 0);}
 
 	swapBtn.addEventListener('click', swapBoxes);
 
@@ -60,9 +70,7 @@ window.onload = function() {
 
    	randomBtn.addEventListener('click', randomToken);
 
-	clearKeyBtn.addEventListener('click', function() {pwd.innerHTML = ''; if(showKey.checked) showKey.click();});
-
-	coverBox.addEventListener('paste', enableCover);
+	clearKeyBtn.addEventListener('click', function() {pwd.textContent = ''; if(showKey.checked) showKey.click();});
 
 	cancelCoverBtn.addEventListener('click', cancelCover);
 
@@ -109,22 +117,24 @@ window.onload = function() {
 	aa7.addEventListener('click', function() {openHelp('a7')});
 	aa8.addEventListener('click', function() {openHelp('a8')});
 	aa9.addEventListener('click', function() {openHelp('a9')});
+	aa10.addEventListener('click', function() {openHelp('a10')});
+	aa11.addEventListener('click', function() {openHelp('a11')});
 
-	bb5.addEventListener('click', function() {openClose('b5')});
+	bb8.addEventListener('click', function() {openClose('b8')});
 
 };
 
 if(window.location.hash.length > 1){
-	mainBox.innerHTML = window.location.hash.slice(1);			//correspondent's message from address bar
+	mainBox.textContent = window.location.hash.slice(1);			//correspondent's message from address bar
 	btnLabels();
-	mainMsg.innerHTML = 'Enter the shared Key in the top box and click <strong>Decrypt</strong>'
+	mainMsg.textContent = 'Enter the shared Key in the top box and click Decrypt'
 }
-
+/*
 //this one is for mobile only. Remove for the Chrome app
 window.addEventListener('load', function() {
 	FastClick.attach(document.body);
 }, false);
-
+*/
 var time10 = hashTime10();													//get milliseconds for 10 wiseHash at iter = 10
 
 //end of body script.

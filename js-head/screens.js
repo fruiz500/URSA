@@ -44,7 +44,7 @@ function resetChat(){
 	var frame = document.getElementById('chatFrame');
 	var src = frame.src;
 	frame.src = '';
-	setTimeout(function(){frame.src = src;}, 0)
+	setTimeout(function(){frame.src = src;}, 10)
 }
 
 //for clearing different boxes

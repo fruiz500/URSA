@@ -120,7 +120,7 @@ function Decrypt(cipherStr){
 		return
 	}
 
-	if(cipherStr.length != 160) var isCompressed = true;						//compression unless it's a PassLok short message
+	var isCompressed = (cipherStr.length == 160 && !mainBox.textContent.match('=')) ? false: true;	//compression unless it's a PassLok short message
 
 	var fullArray = nacl.util.decodeBase64(cipherStr),
 		nonce = fullArray.slice(1,10),

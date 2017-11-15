@@ -23,12 +23,14 @@
 //clears the no JavaScript warning and displays an initial message depending on the type of source
 function showGreeting(){
 	var protocol = window.location.protocol,
-		msgStart = "<span style='color:green;font-size:large;'><strong>Welcome to URSA</strong></span><br />",
+		msgStart = "<span style='color:green;font-size:large;'><strong>Welcome to URSA</strong></span><br>",
 		msgEnd = "<br>Enter the shared Key in the top box and the message in the bottom box";
 	if(protocol == 'file:'){
 		mainMsg.innerHTML = msgStart + 'running from a local file' + msgEnd
 	}else if(protocol == 'https:'){
 		mainMsg.innerHTML = msgStart + 'downloaded from a secure server' + msgEnd
+	}else if(protocol == 'chrome-extension:'){
+		mainMsg.innerHTML = msgStart + 'running as a Chrome app' + msgEnd
 	}else{
 		mainScr.style.backgroundColor = '#ffd0ff';
 		mainMsg.innerHTML = msgStart + '<span style="color:orange">WARNING: running from an insecure source!</span>' + msgEnd
@@ -64,7 +66,7 @@ function chatResize(){
 //this one is called by window.onload below
 function loadFileAsURL()
 {
-	var fileToLoad = fileBtn.files[0];
+	var fileToLoad = mainFile.files[0];
 
 	var fileReader = new FileReader();
 	fileReader.onload = function(fileLoadedEvent)
@@ -74,44 +76,45 @@ function loadFileAsURL()
 		if(URLFromFileLoaded.length > 2000000){
 			var reply = confirm("This file is larger than 1.5MB and Chrome won't save it. Do you want to continue loading it?");
 			if(!reply){
-				mainMsg.innerHTML = 'File load canceled';
+				mainMsg.textContent = 'File load canceled';
 				throw('file load canceled')
 			}
 		}
 		if(fileToLoad.type.slice(0,4) == "text"){
 			if(URLFromFileLoaded.slice(0,2) == '==' && URLFromFileLoaded.slice(-2) == '=='){
-				mainBox.innerHTML += '<br><a download="' + fileName + '" href="data:,' + URLFromFileLoaded + '">' + fileName + '&nbsp;&nbsp;<button onClick="followLink(this);">Save</button></a>'
+				mainBox.innerHTML += '<br><a download="' + fileName + '" href="data:,' + URLFromFileLoaded + '">' + fileName + '</a>'
 			}else{
 				mainBox.innerHTML += "<br><br>" + URLFromFileLoaded.replace(/  /g,' &nbsp;')
 			}
 		}else{
-			mainBox.innerHTML += '<a download="' + fileName + '" href="' + URLFromFileLoaded + '">' + fileName + '&nbsp;&nbsp;<button onClick="followLink(this);">Save</button></a>'
+			mainBox.innerHTML += '<a download="' + fileName + '" href="' + URLFromFileLoaded + '">' + fileName + '</a>'
 		}
 	};
 	if(fileToLoad.type.slice(0,4) == "text"){
 		fileReader.readAsText(fileToLoad, "UTF-8");
-		mainMsg.innerHTML = 'This is the content of file <strong>' + fileToLoad.name + '</strong>';
+		mainMsg.textContent = 'This is the content of file ' + fileToLoad.name;
 	}else{
 		fileReader.readAsDataURL(fileToLoad, "UTF-8");
-		mainMsg.innerHTML = 'The file has been loaded in encoded form. It is <strong>not encrypted.</strong>';
+		mainMsg.textContent = 'The file has been loaded in encoded form. It is NOT ENCRYPTED.';
 	}
+	setTimeout(function(){
+		btnLabels();
+		if(decryptBtn.textContent == 'Decrypt') mainMsg.textContent = 'This file contains an encrypted item'
+	},300);
 }
 
-//used to download a packaged file
-function followLink(thisLink){
-	var downloadLink = document.createElement("a");
-	downloadLink.download = thisLink.parentElement.download;
-	downloadLink.href = thisLink.parentElement.href;
-	if (isFirefox){
-		// Firefox requires the link to be added to the DOM before it can be clicked
-		downloadLink.onclick = destroyClickedElement;
-		downloadLink.style.display = "none";
-		document.body.appendChild(downloadLink);
-	}
-	downloadLink.click();
-}
+//to load an image into the main box
+function loadImage(){
+	var fileToLoad = imgFile.files[0],
+		fileReader = new FileReader();
+	fileReader.onload = function(fileLoadedEvent){
+		var URLFromFileLoaded = fileLoadedEvent.target.result;
+		if(URLFromFileLoaded.slice(0,10) != 'data:image'){
+			mainMsg.textContent = 'This file is not a recognized image type';
+			return
+		}
+		mainBox.innerHTML += safeHTML('<img style="width:100%;" src="' + URLFromFileLoaded.replace(/=+$/,'') + '">')
+	};
 
-function destroyClickedElement(event)
-{
-	document.body.removeChild(event.target);
+	fileReader.readAsDataURL(fileToLoad, "UTF-8");
 }
