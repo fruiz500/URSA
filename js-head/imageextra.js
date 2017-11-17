@@ -168,7 +168,11 @@ function decode(){
 	setTimeout(function(){
 		decodeImage(previewImg,password,function(textBin,msg){
 			mainMsg.textContent = msg;
-			Decrypt(fromBin(textBin));
+			if(textBin.length == 300 || textBin.length == 256){
+				mainBox.textContent = fromBin(textBin) 									//don't try to decrypt PassLok Locks
+			}else{
+				Decrypt(fromBin(textBin))
+			}
 			image2main()
 			},
 			true,0,
