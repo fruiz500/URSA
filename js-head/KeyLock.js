@@ -2,21 +2,30 @@
 function keyStrength(pwd,display) {
 	var entropy = entropycalc(pwd);
 
+if(display){
 	if(entropy == 0){
-		var msg = 'This is a known <span style="color:magenta">bad Key!</span>';
+		var msg = 'This is a known bad Key!';
+		var colorName = 'magenta'
 	}else if(entropy < 20){
-		var msg = '<span style="color:magenta">Terrible!</span>';
+		var msg = 'Terrible!';
+		var colorName = 'magenta'
 	}else if(entropy < 40){
-		var msg = '<span style="color:red">Weak!</span>';
+		var msg = 'Weak!';
+		var colorName = 'red'
 	}else if(entropy < 60){
-		var msg = '<span style="color:orange">Medium</span>';
+		var msg = 'Medium';
+		var colorName = 'orange'
 	}else if(entropy < 90){
-		var msg = '<span style="color:green">Good!</span>';
+		var msg = 'Good!';
+		var colorName = 'green'
 	}else if(entropy < 120){
-		var msg = '<span style="color:lime">Great!</span>';
+		var msg = 'Great!';
+		var colorName = 'blue'
 	}else{
-		var msg = '<span style="color:cyan">Overkill  !!</span>';
+		var msg = 'Overkill  !';
+		var colorName = 'cyan'
 	}
+}
 
 	var iter = Math.max(1,Math.min(20,Math.ceil(24 - entropy/5)));			//set the scrypt iteration exponent based on entropy: 1 for entropy >= 120, 20(max) for entropy <= 20
 
@@ -28,7 +37,8 @@ function keyStrength(pwd,display) {
 		msg = 'Key entropy: ' + Math.round(entropy*100)/100 + ' bits. ' + msg + '<br>Up to ' + Math.max(0.01,seconds.toPrecision(3)) + ' sec. to process'
 	}
 if(display){																//display the appropriate messages
-	mainMsg.innerHTML = msg;
+	mainMsg.innerHTML = msg;				//innerHTML to preserve the line break
+	mainMsg.style.color = colorName;
 }
 	return iter
 };
@@ -200,6 +210,20 @@ function safeHTML(string){
 	//recover web links and local anchors
 	string = string.replace(origReg1,'href="$1$2"').replace(origReg2,"href='$1$2'");
 	return string
+}
+
+//detects the presence of data URI scheme and offers to use the safeHTML filter rather than DOMPurify, which removes that content
+function decryptSanitizer(string){
+	if(string.indexOf('href="data:') == -1){		//check the absence of a link containing data
+		var result = DOMPurify.sanitize(string)
+	}else{											//otherwise ask the user what to do
+		if(confirm('The decrypted material seems to contain binary data, which might lead to unsafe execution in Firefox. If you click OK, it will be preserved, otherwise it will be removed.')){
+			var result = safeHTML(string)
+		}else{
+			var result = DOMPurify.sanitize(string)
+		}		
+	}
+	return result
 }
 
 //puts an 42-character random string in the key box (not 43 so it's not mistaken for a PassLok Lock)

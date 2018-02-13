@@ -17,270 +17,8 @@
 
 <!--Note to those wishing to read the JavaScript code: the code is divided into blocks, each one within its own script tag. You will read it more easily if you use an editor capable of folding code blocks-->
 
-<!--CSS stylesheet containing the Red color scheme-->
-<style>
-html {
-	-webkit-text-size-adjust: 100%;
-	overflow-y: scroll;
-}
-body {
-	font-family: Sans-Serif;
-	font-size: large;
-	margin-left: 1%;
-	margin-right: 1%;
-	overflow: auto;
-	background-color: #FFFFFF;
-	color: #000000;
-}
-.black_overlay {
-	display: none;
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	width: 100%;
-	height: 100%;
-	z-index: 1001;
-	-moz-opacity: 0.5;
-	opacity: .50;
-	filter: alpha(opacity=50);
-	background-color: black;
-}
-.white_content {
-	display: none;
-	position: absolute;
-	top: 10%;
-	left: 10%;
-	width: 80%;
-	height: 80%;
-	padding: 0px;
-	border: 0px solid gray;
-	z-index: 1002;
-	overflow: auto;
-	background-color: #FFFFFF;
-}
-.block_page {
-	display: none;
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	width: 100%;
-	height: 100%;
-	padding: 0px;
-	border: 0px solid gray;
-	z-index: 1002;
-	overflow: auto;
-	background-color: white;
-}
-.cssbutton {
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 10px;
-	font-family: Arial;
-	font-size: 22px;
-	padding: 10px;
-	text-decoration: none;
-	border: 0px;
-	margin-right: -2px;
-	color: #666666;
-	background: #e6e6e6;
-}
-.cssbutton:hover {
-	text-decoration: none;
-	cursor: pointer;
-	background: #d8d8d8;
-}
-.cssbutton:disabled {
-	color: #b7b7b7;
-	background: #f4f4f4;
-	cursor: default;
-}
-.cssbutton:disabled:hover {
-	color: #b7b7b7;
-	background: #f4f4f4;
-	cursor: default;
-}
-.cssbox {
-	-webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
-	font-size: medium;
-	padding: 15px;
-	text-decoration: none;
-	width: 100%;
-	-webkit-appearance: none;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	color: #000000;
-	background: #ffffee;
-	border: 1px solid #D3D3D3;
-	overflow: auto;
-}
-.helpitem {
-	font-size: medium;
-	cursor: pointer;
-	padding: 1px;
-}
-.helpitem:hover {
-	background-color: #eeeeee;
-}
-.helptext {
-	font-size: medium;
-	display: none;
-}
-.intLink {
-	cursor: pointer;
-}
-.blink {
-	-webkit-animation: blink .75s linear infinite;
-	-moz-animation: blink .75s linear infinite;
-	-ms-animation: blink .75s linear infinite;
-	-o-animation: blink .75s linear infinite;
-	animation: blink .75s linear infinite;
-}
- @-webkit-keyframes blink {
- 0% {
-opacity: 1;
-}
- 50% {
-opacity: 1;
-}
- 50.01% {
-opacity: 0;
-}
- 100% {
-opacity: 0;
-}
-}
- @-moz-keyframes blink {
- 0% {
-opacity: 1;
-}
- 50% {
-opacity: 1;
-}
- 50.01% {
-opacity: 0;
-}
- 100% {
-opacity: 0;
-}
-}
- @-ms-keyframes blink {
- 0% {
-opacity: 1;
-}
- 50% {
-opacity: 1;
-}
- 50.01% {
-opacity: 0;
-}
- 100% {
-opacity: 0;
-}
-}
- @-o-keyframes blink {
- 0% {
-opacity: 1;
-}
- 50% {
-opacity: 1;
-}
- 50.01% {
-opacity: 0;
-}
- 100% {
-opacity: 0;
-}
-}
- @keyframes blink {
- 0% {
-opacity: 1;
-}
- 50% {
-opacity: 1;
-}
- 50.01% {
-opacity: 0;
-}
- 100% {
-opacity: 0;
-}
-}
-input[type=checkbox] {
-	/* Larger checkboxes */
-	-ms-transform: scale(1.7); /* IE */
-	-moz-transform: scale(1.7); /* FF */
-	-webkit-transform: scale(1.7); /* Safari and Chrome */
-	-o-transform: scale(1.7); /* Opera */
-	padding: 0px;
-	cursor: pointer;
-	border: 1px solid #eeeeee;
-}
-input[type=radio] {
-	/* Larger radio buttons */
-	-ms-transform: scale(1.7); /* IE */
-	-moz-transform: scale(1.7); /* FF */
-	-webkit-transform: scale(1.7); /* Safari and Chrome */
-	-o-transform: scale(1.7); /* Opera */
-	padding: 0px;
-	cursor: pointer;
-	border: 1px solid #eeeeee;
-}
-select {
-	-webkit-appearance: button;
-	-moz-appearance: button;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	font-size: medium;
-	width: 30%;
-	margin: 0;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	border: 1px solid #dedede;
-	color: #111111;
-	background: #ffffee;
-}
-img.intLink {
-	border: 0;
-}
-#toolBar1 {
-	padding-top: 1px;
-	padding-left: 2px;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
-	background: #e6e6e6;
-}
-#toolBar1 select {
-	font-size: 10px;
-	width: 80px;
-	padding: 4px;
-	border-radius: 8px;
-}
-#mainBox {
-	width: 100%;
-	padding: 12px;
-	margin-left: auto;
-	margin-right: auto;
-}
-#pwd {
-	text-security:disc;
-	min-height: 25px;
-	-moz-text-security: disc;
-    -webkit-text-security: disc;
-    -webkit-appearance: textfield;
-    -webkit-user-select: text;
-}
-[contenteditable=true]:empty:before{
-  content: attr(placeholder);
-  display: block; /* For Firefox */
-  color: #999999;
-}
-</style>
+<!--CSS stylesheet containing the Light color scheme-->
+<link rel="stylesheet" href="style.css">
 
 <!--License notice and SSL force-->
 <script src="js-head/license.js"></script>
@@ -293,6 +31,9 @@ img.intLink {
 
 <!--lz-string compression algorithm. https://github.com/pieroxy/lz-string-->
 <script src="js-opensrc/lz-string.js"></script>
+
+<!--dompurify, used to sanitize decrypted material before putting in DOM. https://github.com/cure53/DOMPurify-->
+<script src="js-opensrc/purify.js"></script>
 
 <!--jpeg image steganography by Owen Campbell-Moore and others. https://github.com/owencm/js-steg. First jsstegencoder-1.0.js-->
 <script src="js-opensrc/jsstegencoder-1.0.js"></script>
@@ -340,35 +81,35 @@ img.intLink {
 <body>
 
 <!--Main screen-->
-<div id="mainScr" style="max-width: 1000px;	margin-left: auto; margin-right: auto; display:block;">
+<div id="mainScr">
   <div align="center"> <br>
 
     <!--message area and local directory box, plus buttons-->
-    <div id="mainMsg" style="height:20px;"><span style="color:red;font-weight:bold">JAVASCRIPT OFF, PASSLOK CANNOT RUN</span></div>
+    <div id="mainMsg"><span id="JSmsg">JAVASCRIPT OFF, PASSLOK CANNOT RUN</span></div>
     <br>
     <br>
-    <div contenteditable="true" class="cssbox" id="pwd" style="width:95%; padding: 2px;" name="text" placeholder="" align="left"></div>
+    <div contenteditable="true" class="cssbox" id="pwd" name="text" placeholder="" align="left"></div>
     <br>
     <input type="checkbox" id="showKey" title="reveal box contents">
     &nbsp; Show
-    <button class="cssbutton" id="swapBtn" value="Swap" style="padding:6px;font-size:large;" title="swap contents with main box">Swap</button><!--
---><button class="cssbutton" id="suggestKeyBtn" value="Suggest" style="padding:6px;font-size:large;" title="suggest a Key made of five common words">5 Words</button><!--
---><button class="cssbutton" id="randomBtn" value="Random" style="padding:6px;font-size:large;" title="display a random Key">Random</button><!--
---><button class="cssbutton" id="clearKeyBtn" value="Clear" style="padding:6px;font-size:large;" title="clear the Key">Clear</button>
+    <button class="cssbutton" id="swapBtn" value="Swap" title="swap contents with main box">Swap</button><!--
+--><button class="cssbutton" id="suggestKeyBtn" value="Suggest" title="suggest a Key made of five common words">5 Words</button><!--
+--><button class="cssbutton" id="randomBtn" value="Random" title="display a random Key">Random</button><!--
+--><button class="cssbutton" id="clearKeyBtn" value="Clear" title="clear the Key">Clear</button>
     <br>
     <br>
 
     <!--buttons above the main box-->
-    <div id="mainBtnsTop" style="">
-      <button class="cssbutton" id="decryptBtn" value="Encrypt/Decrypt" style="padding-right:7px;padding-left:7px;color:green;" title="encrypt plain text in the box, decrypt encrypted text (alt-E)" accesskey="e">Encrypt</button><!--
---><label for="imageFile"><span class="cssbutton" id="imageBtn" style="padding-bottom:13px" title="encrypt or decrypt to image">Decrypt Img</span></label><!--
---><input type='file' id='imageFile' style="display:none;"/><!--
---><button class="cssbutton" id="hideBtn" value="Hide" style="" title="hide encrypted message as regular text (alt-T)" accesskey="t">Text hide</button><!--
---><button class="cssbutton" id="chatBtn" value="Chat" style="" title="make a chat invitation or open it (alt-C)" accesskey="c">Chat</button>
+    <div id="mainBtnsTop">
+      <button class="cssbutton" id="decryptBtn" value="Encrypt/Decrypt" title="encrypt plain text in the box, decrypt encrypted text (alt-E)" accesskey="e">Encrypt</button><!--
+--><label for="imageFile"><span class="cssbutton" id="imageBtn" title="encrypt or decrypt to image">Decrypt Img</span></label><!--
+--><input type='file' id="imageFile"/><!--
+--><button class="cssbutton" id="hideBtn" value="Hide" title="hide encrypted message as regular text (alt-T)" accesskey="t">Text hide</button><!--
+--><button class="cssbutton" id="chatBtn" value="Chat" title="make a chat invitation or open it (alt-C)" accesskey="c">Chat</button>
       &nbsp;
       <input type="checkbox" id="fileMode" title="output is turned into files" accesskey=""/>
 &nbsp; to File
-	<span id='fileOptions' style='display:none'>
+	<span id="fileOptions">
 	&nbsp; &nbsp; <input type="radio" name="fileModes" id="binaryMode" title="output file is binary" checked/>
       &nbsp; Binary&nbsp;&nbsp;
       <input type="radio" name="fileModes" id="textMode" title="output file is text" />
@@ -378,7 +119,7 @@ img.intLink {
   </div>
 
   <!--toolbar for rich text editing; this first section contains lists for style, fonts, etc.-->
-  <div id="toolBar1" style="display:none;">
+  <div id="toolBar1">
     <select id="formatBlock" title="headings, etc.">
       <option selected>- formatting -</option>
       <option value="h1">Title 1 &lt;h1&gt;</option>
@@ -448,30 +189,30 @@ img.intLink {
 <label for="imgFile">
 <img class="intLink" title="Insert image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAMAAABhEH5lAAAAbFBMVEUAAAAAAAAmJibm5uaJiYnZ2dnn5+e5ubmBgYHNzc3z8/Pr6+vW1ta2trZ/f3/y8vLQ0NDPz8/Dw8OgoKCOjo54eHgcHBwGBgb+/v7T09PIyMi+vr6srKyEhIRqampiYmJbW1tPT08qKioRERGLOctyAAAAAXRSTlMAQObYZgAAAHJJREFUGNOtzkkShCAQRNFKbLsVsZ3nWe9/R8EAYeHSv6u3qEh6qo0/TkUiKULNbCglfZGSjf0vCvWZLTmxwBBXVGG1NO2D+hoIQ6IHmrKrciJDfgxIBGbPId12E//pUjOiyHydCGtFyQG3kWTcc4ro1U7vPAUU4TAxJQAAAABJRU5ErkJggg==" />
 </label>
-<input type="file" id="imgFile" style="display:none" />  
+<input type="file" id="imgFile"/>  
 <label for="mainFile">
 <img class="intLink" title="Load a file" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAMAAABhEH5lAAAATlBMVEUAAAAAAAD19fVcXFwbGxsTExP8/PzT09NxcXFaWlo4ODg1NTUEBAT5+fnw8PDr6+vU1NTIyMi+vr6Xl5dsbGxnZ2dXV1dISEghISEMDAw0f0rSAAAAAXRSTlMAQObYZgAAAFBJREFUGNO9yEkOgCAQBMBmUxDc9/9/VJ2EjgkHb9axcJuceqQRtMq4aAdWkDr6xtW5jJRFx2MBu23fdS7eG6Vz0U8VytrKmhMnVoDQlOfbBQLIAl4FF2fyAAAAAElFTkSuQmCC" />
 </label>
-<input type="file" id="mainFile" style="display:none" />
+<input type="file" id="mainFile"/>
     </div>
   </div>
-  <div id="mainBox" contenteditable="true" class="cssbox" style="min-height:100px;" accesskey=";" placeholder="Enter your message here and the shared Key in the top box, then click Encrypt. You can also enter images and files after you click the Rich button."></div>
+  <div id="mainBox" contenteditable="true" class="cssbox" accesskey=";" placeholder="Enter your message here and the shared Key in the top box, then click Encrypt. You can also enter images and files after you click the Rich button."></div>
   <div align="center">
     <!--buttons below the main box-->
-    <div id="mainbuttonsbot" style="display: block;">
-      <button class="cssbutton" id="sendSMSBtn" value="SMS" style="" title="mobile: open the default Texting app">SMS</button><!--
---><button class="cssbutton" id="niceEditBtn" value="Rich" style="" title="toggle rich text editor (alt-R)" accesskey="r">Rich</button><!--
---><button class="cssbutton" id="selectMainBtn" value="Select" style="" title="select the text in the box">Copy</button><!--
---><button class="cssbutton" id="clearMainBtn" value="Clear" style="" title="clear the text in the box">Clear</button><!--
---><button class="cssbutton" id="helpBtn" value="Help" style="" title="get help on using URSA (alt-H)" accesskey="h">Help</button>
+    <div id="mainbuttonsbot">
+      <button class="cssbutton" id="sendSMSBtn" value="SMS" title="mobile: open the default Texting app">SMS</button><!--
+--><button class="cssbutton" id="niceEditBtn" value="Rich" title="toggle rich text editor (alt-R)" accesskey="r">Rich</button><!--
+--><button class="cssbutton" id="selectMainBtn" value="Select" title="select the text in the box, or paste clipboard">Paste</button><!--
+--><button class="cssbutton" id="clearMainBtn" value="Clear" title="clear the text in the box">Clear</button><!--
+--><button class="cssbutton" id="helpBtn" value="Help" title="get help on using URSA (alt-H)" accesskey="h">Help</button>
     </div>
   </div>
 </div>
 
 <!--Help screen-->
-<div id="helpScr" style="max-width:1200px;margin-left:auto;margin-right:auto;display:none;">
-  <h2 style="color:green;font-size:x-large;">Welcome to URSA</h2>
-  <button class="cssbutton" id="help2mainBtnTop" value="< Back" style="float:left;" title="return to main screen (alt-M)" accesskey='m'>&#9668; Back</button>
+<div id="helpScr">
+  <h2 id="helpWelcome">Welcome to URSA</h2>
+  <button class="cssbutton" id="help2mainBtnTop" value="< Back" title="return to main screen (alt-M)" accesskey='m'>&#9668; Back</button>
   <br>
   &nbsp;&nbsp;&nbsp;<span id='helpmsg'>For help on how to do things, click on each title.</span><br>
   <br>
@@ -565,7 +306,7 @@ img.intLink {
     <div id='bb8' class="helpitem">
       <p><em>Click here for instructions to verify the URSA code.</em></p>
     </div>
-    <div id="b8" class="helptext">
+    <div id="b8" class="helptext2">
       <p>Warning: following the links in these instructions may give away your location; proceed with caution.</p>
       <p>1. Head to Online-convert.com <a href="http://hash.online-convert.com/sha256-generator" target="_blank">http://hash.online-convert.com/sha256-generator</a> and write https://passlok.com/ursa in the second box from the top, then type Enter or click "Convert File". This will instruct this website to fetch the URSA code from its server and perform a SHA256 operation on it.</p>
       <p>2. A new screen should appear, displaying the SHA256 string in several formats. Now you want to compare this with the published value, which is available at different places. If both strings are the same, the code is tamper-free. Here are a few locations where this string in published (more to be added):</p>
@@ -611,22 +352,23 @@ img.intLink {
     <p><strong>4. We will never weaken the cryptography methods contained within URSA at the request of a third party, private or public.</strong> This also means no backdoors will ever be added. We would rather shut down URSA than be forced to do this, which would betray the very essence of our efforts. If we learn that a counterfeit version of URSA is circulating, whether placed by hackers or government agencies, we will make the fact known to users.</p>
     <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
     <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
-    <div id="canary" style="float:left;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
-    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.1 (November 2017) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
+    <div id="canary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
+    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.2 (February 2018) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
     </div>
   </div>
   <hr>
   <address>
-  URSA 4.2.1 &#169; F. Ruiz 2017
+  URSA 4.2.2 &#169; F. Ruiz 2018
   </address>
   <ul>
     <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
     <li>tweetNaCl JavaScript implementation by D. Chestnykh and D. Mandiri 2015</li>
     <li>scrypt key stretching implementation by D. Chestnykh 2014</li>
     <li>lz-string compression by pieroxy 2014</li>
-    <li> image steganography based on F5 by Andreas Westfeld 2001</li>
-    <li> jpeg image hiding libraries js-steg by Owen Campbell-Moore et al. 2014</li>
-    <li> isaac seedable PRNG by Yves-Marie Rinquin 2012</li>
+    <li>DOMPurify XSS sanitizer by cure53 2017</li>
+    <li>image steganography based on F5 by Andreas Westfeld 2001</li>
+    <li>jpeg image hiding libraries js-steg by Owen Campbell-Moore et al. 2014</li>
+    <li>isaac seedable PRNG by Yves-Marie Rinquin 2012</li>
     <li>file In/Out based on an article from the This Could Be Better blog 2012</li>
     <li>webRTC chat by Muaz Khan, modified by F. Ruiz 2015</li>
     <li>Letters encoding based on Advanced Unicode Stego by Adrian Crenshaw 2013</li>
@@ -635,7 +377,7 @@ img.intLink {
   This document may be used, modified or redistributed under GNU GPL license, version 3.0 or higher.
   </address>
   <br>
-  <button class="cssbutton" id="help2mainBtnBottom" value="< Back" style="float:left;" title="return to main screen (alt-M)">&#9668; Back</button>
+  <button class="cssbutton" id="help2mainBtnBottom" value="< Back" title="return to main screen (alt-M)">&#9668; Back</button>
 </div>
 
 <!--Chat dialog, to enter the chat type and date or other information-->
@@ -651,7 +393,7 @@ img.intLink {
   <input type="radio" name="chatmodes" id="videoChat" title="like audio chat, plus video"/>
   &nbsp; Video <br>
   <br>
-  <textarea id="chatDate" class="cssbox" style="width:95%;" name="chatDate" rows="1" title="additional information" placeholder="Write here the date and time for the chat"></textarea>
+  <textarea id="chatDate" class="cssbox" name="chatDate" rows="1" title="additional information" placeholder="Write here the date and time for the chat"></textarea>
   <br>
   <br>
   <button class="cssbutton" id="cancelChatBtn" value="Cancel" title="cancel chat invitation">Cancel</button>
@@ -660,30 +402,30 @@ img.intLink {
 </div>
 
 <!--Cover text entry dialog-->
-<div id="coverScr" class="white_content" align="center" style="display:none;">
+<div id="coverScr" class="white_content" align="center">
   	<br>
   	<span id="coverMsg">Please enter the cover text for hiding and click <strong>OK</strong></span>
     <br>
     <br>
-    <div class="cssbox" contenteditable="true" align= "left" rows="5" autocomplete="off" id="coverBox" style="width:95%;max-height:500px" name="coverBox" placeholder="Enter the cover text here"></div>
+    <div class="cssbox" contenteditable="true" align= "left" rows="5" autocomplete="off" id="coverBox" name="coverBox" placeholder="Enter the cover text here"></div>
     <br>
-    <button class="cssbutton" id="cancelCoverBtn" value="cancel" style="" title="close cover text dialog">Cancel</button>&nbsp;
-    <button class="cssbutton" id="acceptCoverBtn" value="OK" style="" title="accept cover text">OK</button>
+    <button class="cssbutton" id="cancelCoverBtn" value="cancel" title="close cover text dialog">Cancel</button>&nbsp;
+    <button class="cssbutton" id="acceptCoverBtn" value="OK" title="accept cover text">OK</button>
     <br>
     <br>
     <input type="checkbox" id="rememberCoverCheck" title="remember the text for this session">&nbsp;Remember
 </div>
 
 <!--Chat screen, just an iframe for https://www.passlok.com/chat-->
-<div id="chatScr" class="block_page" style="display: none;" align="center">
-  <button class="cssbutton" id="closeChatBtn" value="< Back" style="float:left;" title="returns to Main tab">&#9668; Back to URSA</button>
-  <button class="cssbutton" id="resetChatBtn" value="Reset" style="float:right;" title="reset the chat">Reset Chat</button>
-  <iframe seamless id="chatFrame" src="" style="width:100%;height:900px" border=0 frameborder=0 allowfullscreen></iframe>
+<div id="chatScr" class="block_page" align="center">
+  <button class="cssbutton" id="closeChatBtn" value="< Back" title="returns to Main tab">&#9668; Back to URSA</button>
+  <button class="cssbutton" id="resetChatBtn" value="Reset" title="reset the chat">Reset Chat</button>
+  <iframe seamless id="chatFrame" src="" border=0 frameborder=0 allowfullscreen></iframe>
 </div>
 
 <!--Image hiding dialog-->
-<div id='imageScr' class="white_content" align="center" style="display: none;">
-  <button class="cssbutton" id="image2mainBtn" value="< Done" style="float:left;" title="return to main screen (alt-I)" accesskey="i">&#9668; Done</button>
+<div id='imageScr' class="white_content" align="center">
+  <button class="cssbutton" id="image2mainBtn" value="< Done" title="return to main screen (alt-I)" accesskey="i">&#9668; Done</button>
   <span id="imgSpacer"><br>
   <br>
   <br>
@@ -693,13 +435,13 @@ img.intLink {
   <button class="cssbutton" id="encodeJPGBtn" value="JPG Hide" title="hide main box contents into JPG image">Encrypt to JPG</button>
   <br>
   <br>
-  <div id="imageMsg" style="height:30px;"></div>
+  <div id="imageMsg" ></div>
   <br>
   <img id="previewImg" src="" width="100%"/>
 </div>
 
 <!--Shadow backdrop-->
-<div id="shadow" class="black_overlay" style="display: none;"> </div>
+<div id="shadow" class="black_overlay"> </div>
 
 <!--Body script: window reformatting, special functions-->
 <script src="js-body/bodyscript.js"></script>

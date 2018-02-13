@@ -14,7 +14,8 @@ function btnLabels(){
 		decryptBtn.textContent = 'Encrypt';
 		imageBtn.textContent = 'Encr. to Img'
 	}
-	if(!string)imageBtn.textContent = 'Decrypt Img'
+	if(!string)imageBtn.textContent = 'Decrypt Img';
+	if(string){ selectMainBtn.textContent = 'Copy' }else{ selectMainBtn.textContent = 'Paste' }
 }
 
 //this is for showing and hiding text in key box and other password input boxes
@@ -33,8 +34,8 @@ function chat2main(){
 //close image screen
 function image2main(){
 	if(imageScr.style.display=='block'){
-		openClose('imageScr');
-		openClose('shadow');
+		imageScr.style.display = 'none';
+		shadow.style.display = 'none';
 		Decrypt(mainBox.textContent);
 		setTimeout(function(){mainMsg.textContent = 'Image box closed. Did you save the image by right-clicking?'},100)
 	}
@@ -56,6 +57,7 @@ function clearMain(){
 
 //for selecting the Main box contents
 function selectMain(){
+  if(mainBox.textContent.trim() != ''){
     var range, selection;
     if (document.body.createTextRange) {
         range = document.body.createTextRange();
@@ -69,6 +71,10 @@ function selectMain(){
         selection.addRange(range)
     }
 	document.execCommand('copy')
+  }else{
+	document.execCommand("paste");
+	selectMainBtn.textContent = 'Copy'
+  }
 }
 
 //reveals or hides file output options
@@ -160,18 +166,7 @@ function focusBox(){
 	}
 }
 
-<!-- Text hide trick, by Sandeep Gangadharan 2005-->
-if (document.getElementById) {
- document.writeln('<style type="text/css"><!--')
- document.writeln('.texter {display:none} @media print {.texter {display:block;}}')
- document.writeln('//--></style>') }
-
-function openClose(theID) {
- if (document.getElementById(theID).style.display === "block") { document.getElementById(theID).style.display = "none" }
- else { document.getElementById(theID).style.display = "block" } }
-// end of hide trick
-
-//as above, but closes everything else in help
+//closes everything else in help
 function openHelp(theID){
 	var helpItems = document.getElementsByClassName('helptext');
 	for(var i=0; i < helpItems.length; i++){
@@ -181,6 +176,18 @@ function openHelp(theID){
 	if(isMobile){									//scroll to the item
 		location.href = '#';
 		location.href = '#a' + theID;
+	}
+}
+//2nd level
+function openHelp2(theID){
+	var helpItems = document.getElementsByClassName('helptext2');
+	for(var i=0; i < helpItems.length; i++){
+		helpItems[i].style.display = 'none'
+	}
+	document.getElementById(theID).style.display = "block";
+	if(isMobile){									//scroll to the item
+		location.href = '#';
+		location.href = '#a' + theID
 	}
 }
 

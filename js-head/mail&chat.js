@@ -49,8 +49,8 @@ function Chat(){
 	}else{
 		chatDate.value = text
 	}
-	openClose('shadow');
-	openClose('chatDialog');												//stop to get chat type
+	shadow.style.display = "block";
+	chatDialog.style.display = "block"												//stop to get chat type
 }
 
 //continues making a chat invite after the user has chosen the chat type

@@ -1,6 +1,6 @@
 ﻿//this starts when an item is pasted
 function unlockItem(){
-	mainMsg.innerHTML = '<span class="blink" style="color:cyan">PROCESSING</span>';
+	mainMsg.innerHTML = '<span class="blink">PROCESSING</span>';
 	setTimeout(function(){
 		var array = getType(mainBox.innerHTML.trim()),
 			type = array[0],
@@ -19,7 +19,7 @@ function unlockItem(){
 
 //gets recognized type of string, if any, otherwise returns false. Also returns cleaned-up string
 function lockUnlock(){
-	mainMsg.innerHTML = '<span class="blink" style="color:cyan">PROCESSING</span>';				//Get blinking message started
+	mainMsg.innerHTML = '<span class="blink">PROCESSING</span>';				//Get blinking message started
 	setTimeout(function(){
 	var array = getType(mainBox.innerHTML.trim());
 	if(array[0]){
@@ -50,6 +50,7 @@ function getType(stringIn){
 
 //Encryption process
 function Encrypt(text){
+	mainMsg.style.color = "";
 	var keyStr = pwd.innerHTML.replace(/<br>$/,"").split('|')[0].trim();
 	if(!keyStr){
 		mainMsg.textContent = 'Enter shared Key';
@@ -99,6 +100,11 @@ function concatUint8Arrays(array1,array2){
 //decryption process. Calls Encrypt as appropriate
 function Decrypt(cipherStr){
 	mainMsg.textContent = "";
+	mainMsg.style.color = "";
+	if(!cipherStr){
+		mainMsg.textContent = 'Nothing to decrypt';
+		return
+	}
 	var keyStr = pwd.innerHTML.replace(/<br>$/,"").split('|')[0].trim();
 	if(!keyStr){
 		mainMsg.textContent = 'Enter shared Key';
@@ -131,9 +137,9 @@ function Decrypt(cipherStr){
 
 	var plain = PLdecrypt(cipher,nonce24,sharedKey,isCompressed);
 	if(isCompressed){
-			mainBox.innerHTML = safeHTML(plain.trim())
+			mainBox.innerHTML = decryptSanitizer(plain.trim())
 	}else{																//PassLok short mode
-			mainBox.innerHTML = safeHTML(decodeURI(plain).trim())
+			mainBox.innerHTML = decryptSanitizer(decodeURI(plain).trim())
 	}
 
 	mainMsg.textContent = 'Decryption successful';
@@ -318,7 +324,7 @@ function padDecrypt(cipherStr){
 			macChecks = macChecks && (macBin[i] == macNew[i])
 		}
 		if(macChecks){																//check authentication
-			mainBox.innerHTML = safeHTML(plain);
+			mainBox.innerHTML = decryptSanitizer(plain);
 			mainMsg.textContent = 'Decryption successful';
 		}else{
 			mainMsg.textContent = 'Message authentication has failed';

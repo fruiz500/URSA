@@ -120,8 +120,12 @@ window.onload = function() {
 	aa10.addEventListener('click', function() {openHelp('a10')});
 	aa11.addEventListener('click', function() {openHelp('a11')});
 
-	bb8.addEventListener('click', function() {openClose('b8')});
+	bb8.addEventListener('click', function() {openHelp2('b8')});
 
+//fixes after inline styles were moved to css file
+
+	mainScr.style.display = 'block';
+	b8.style.display = 'none'
 };
 
 if(window.location.hash.length > 1){
@@ -129,12 +133,12 @@ if(window.location.hash.length > 1){
 	btnLabels();
 	mainMsg.textContent = 'Enter the shared Key in the top box and click Decrypt'
 }
-/*
+
 //this one is for mobile only. Remove for the Chrome app
 window.addEventListener('load', function() {
 	FastClick.attach(document.body);
 }, false);
-*/
+
 var time10 = hashTime10();													//get milliseconds for 10 wiseHash at iter = 10
 
 //end of body script.
