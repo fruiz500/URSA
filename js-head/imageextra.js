@@ -14,7 +14,7 @@ function imageOrEmail(){
 	}else{
 		if(!pwd.textContent.trim()){
 			setTimeout(function(){mainMsg.textContent = 'You must enter a Key first, plus a message if you want to encrypt. To decrypt, leave the main box empty.'},0);
-			throw('password box empty')
+			return
 		}
 	}
 }
@@ -109,11 +109,11 @@ function encode(){
 
 	if(!text){
 		imageMsg.textContent = 'There is nothing to hide';
-		throw("box empty of content")
+		return
 	}
 	if(previewImg.src.length < 100){																			//no image loaded
 		imageMsg.textContent = 'Please load an image before clicking this button';
-		throw("no image loaded")
+		return
 	}
 	imageMsg.innerHTML = '<span class="blink">PROCESSING</span>';				//Get blinking message started
 

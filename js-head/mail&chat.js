@@ -97,11 +97,11 @@ function openChat(){
 		var reply = confirm(msgStart + "If you go ahead, the chat session will open now.\nWARNING: this involves going online, which might give away your location.");
 		if(!reply){
 			mainBox.textContent = '';
-			throw("chat start canceled");
+			return
 		}
 		if(isSafari || isIE || isiOS){
 			mainMsg.textContent = 'Sorry, but chat is not yet supported by your browser or OS';
-			throw('browser does not support webRTC')
+			return
 		}
 		main2chat(typetoken.slice(43));
 	}

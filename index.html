@@ -202,7 +202,7 @@
     <div id="mainbuttonsbot">
       <button class="cssbutton" id="sendSMSBtn" value="SMS" title="mobile: open the default Texting app">SMS</button><!--
 --><button class="cssbutton" id="niceEditBtn" value="Rich" title="toggle rich text editor (alt-R)" accesskey="r">Rich</button><!--
---><button class="cssbutton" id="selectMainBtn" value="Select" title="select the text in the box, or paste clipboard">Paste</button><!--
+--><button class="cssbutton" id="selectMainBtn" value="Select" title="select the text in the box and copy it to clipboard">Copy</button><!--
 --><button class="cssbutton" id="clearMainBtn" value="Clear" title="clear the text in the box">Clear</button><!--
 --><button class="cssbutton" id="helpBtn" value="Help" title="get help on using URSA (alt-H)" accesskey="h">Help</button>
     </div>
@@ -222,7 +222,7 @@
   </div>
   <div id="a1" class="helptext">
     <p>URSA makes your favorite email private by encrypting it with a shared Key so only the intended recipients can see it. You don't need to make an account anywhere, but you need to get the shared Key to the recipients by some secure means (unencrypted email or texting won't do). Once this Key is forgotten by all participants the content remains encrypted forever.</p>
-    <p>In other apps "forever" means a really, really long time, because of the computational difficulty of recovering a high-entropy encryption key. In URSA, it really means forever, whenever the Key is longer than the message being encrypted.</p>
+    <p>In other apps "forever" means a really, really long time, because of the computational difficulty of recovering a high-entropy encryption Key. In URSA, it really means forever, whenever the Key is longer than the message being encrypted.</p>
     <p>You can also use URSA to set up real-time secure chat sessions involving text, files, audio, or even video. The connection is direct between participants, with a server getting involved only at the start so you can find each other.</p>
     <p>URSA runs on a browser and is platform-independent. The chat component, however, does not yet run on IE or Safari, or under iOS.</p>
     <p>URSA is <em>still in experimental phase</em>, as it has not yet been duly vetted by experts. Bear this in mind before entrusting sensitive information to it.</p>
@@ -237,7 +237,7 @@
     <p>If you want to disguise the result as apparently normal text, click the <strong>Text hide</strong> button. You will be prompted for a cover text and directed to complete the result.</p>
     <p>To decrypt a message, enter the shared Key on the top box and then paste the message in the bottom box (it is fine if it is disguised as normal text). The message will unhide and then decrypt automatically. Otherwise, click the <strong>Decrypt</strong> button.</p>
     <p>You can also embed the encrypted message inside an image so that its presence cannot be detected. Start the process with the <strong>Encr. to Img</strong> button if you are encrypting, <strong>Decrypt Img</strong> if decrypting, with the main box empty. When encrypting, you can choose the image format to be PNG or JPG.</p>
-    <p>When encrypting to image, you can embed a second message in addition to the main message, by writing the following in the key box before clicking the button: main Key,followed by a vertical bar "|", Key for the second message, another vertical bar, second message. To extract the hidden message, the key box should contain the following before clicking the button: main Key, vertical bar, Key for the second message.<p>
+    <p>When encrypting to image, you can embed a second message in addition to the main message, by writing the following in the Key box before clicking the button: main Key,followed by a vertical bar "|", Key for the second message, another vertical bar, second message. To extract the hidden message, the Key box should contain the following before clicking the button: main Key, vertical bar, Key for the second message.<p>
     <p>URSA will run from a saved file, so you don't have to be online in order to use it.</p>
   </div>
   <hr>
@@ -353,12 +353,12 @@
     <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
     <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
     <div id="canary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
-    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.2 (February 2018) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
+    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.3 (October 2018) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
     </div>
   </div>
   <hr>
   <address>
-  URSA 4.2.2 &#169; F. Ruiz 2018
+  URSA 4.2.3 &#169; F. Ruiz 2018
   </address>
   <ul>
     <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>

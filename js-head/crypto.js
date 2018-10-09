@@ -163,7 +163,7 @@ function padEncrypt(){
 		keyLengthNeed = Math.ceil((textBin.length + 64) * 8 / entropyPerChar);
 	if(keyLengthNeed > keyTextBin.length){
 		mainMsg.textContent = "The key Text is too short";
-		throw('key text too short')
+		return
 	}
 	while(isNaN(startIndex) || startIndex < 0 || startIndex > keyTextBin.length){
 		var reply = prompt("Pad mode in use.\nPlease enter the position in the key text where we should start (0 to " + keyTextBin.length + ")",0);
@@ -275,7 +275,7 @@ function padDecrypt(cipherStr){
 
 	if (keyText == ''){
 		mainMsg.textContent = 'Click Enter and enter long shared Key, then try again';
-		throw("symmetric key empty")
+		return
 	}
 	try{
 		var inputBin = nacl.util.decodeBase64(cipherStr),
@@ -295,7 +295,7 @@ function padDecrypt(cipherStr){
 	}
 	if(cipherBin.length > keyTextBin.length){
 		mainMsg.textContent = "The key Text is too short";
-		throw('key text too short')
+		return
 	}
 	while(isNaN(startIndex) || startIndex < 0 || startIndex > keyTextBin.length){
 		var reply = prompt("Pad mode in use.\nPlease enter the position in the key text where we should start (0 to " + keyTextBin.length + ")",0);

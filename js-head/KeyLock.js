@@ -34,7 +34,7 @@ if(display){
 	if(pwd.trim()==''){
 		msg = 'Enter your Key below'
 	}else{
-		msg = 'Key entropy: ' + Math.round(entropy*100)/100 + ' bits. ' + msg + '<br>Up to ' + Math.max(0.01,seconds.toPrecision(3)) + ' sec. to process'
+		msg = 'Key entropy: ' + Math.round(entropy*100)/100 + ' bits. ' + msg + '<br>Up to ' + Math.max(0.01,seconds.toPrecision(3)) + ' sec. to process<br>' + hashili(pwd.trim())
 	}
 if(display){																//display the appropriate messages
 	mainMsg.innerHTML = msg;				//innerHTML to preserve the line break
@@ -105,6 +105,22 @@ function entropycalc(pwd){
 //take into account common substitutions, ignore spaces and case
 function reduceVariants(string){
 	return string.toLowerCase().replace(/[óòöôõo]/g,'0').replace(/[!íìïîi]/g,'1').replace(/[z]/g,'2').replace(/[éèëêe]/g,'3').replace(/[@áàäâãa]/g,'4').replace(/[$s]/g,'5').replace(/[t]/g,'7').replace(/[b]/g,'8').replace(/[g]/g,'9').replace(/[úùüû]/g,'u');
+}
+
+//makes 'pronounceable' hash of a string, so user can be sure the password was entered correctly
+var vowel = 'aeiou',
+	consonant = 'bcdfghjklmnprstvwxyz';
+function hashili(string){
+	var code = nacl.hash(nacl.util.decodeUTF8(string.trim())).slice(-4),			//take last 8 bytes of the SHA512		
+		code10 = ((((code[0]*256)+code[1])*256+code[2])*256+code[3]) % 100000000,		//convert to decimal
+		output = '';
+
+	for(var i = 0; i < 4; i++){
+		var remainder = code10 % 100;								//there are 5 vowels and 20 consonants; encode every 2 digits into a pair
+		output += consonant[Math.floor(remainder / 5)] + vowel[remainder % 5];
+		code10 = (code10 - remainder) / 100
+	}
+	return output
 }
 
 //stretches a password string with a salt string to make a 256-bit Uint8Array Key
@@ -240,5 +256,5 @@ function randomToken(){
 //takes appropriate UI action if decryption fails
 function failedDecrypt(){
 	mainMsg.textContent = 'Decryption has Failed';
-	throw('decryption failed')
+	return
 }

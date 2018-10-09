@@ -94,7 +94,7 @@ function encodePNG(imageElement,msgBin,password,callback,encryptToggle,iter,msgB
 
 	var lastIndex = encodeToCoefficients('png', msgBin, 0, function(msg){				//call to unified encoding function (does matrix encoding for both jpg and png) starting from 0
 		if(msg) callback(msg);
-		throw('insufficient cover image capacity')
+		return
 	});
 	
 	if(msgBin2){													//this is done only if there is a second message, to be added immediately after the main message
@@ -110,7 +110,7 @@ function encodePNG(imageElement,msgBin,password,callback,encryptToggle,iter,msgB
 
 		encodeToCoefficients('png', msgBin2, lastIndex + 1, function(msg){		//encoding starts where the previous encoding ended
 			if(msg) callback(msg);
-			throw('insufficient cover image capacity')
+			return
 		});
 		
 		unShuffleCoefficients(lastIndex + 1);
@@ -225,7 +225,7 @@ var decodeJPG = function(imageElement,password,callback,encryptToggle,iter,passw
 		var length = coefficients[1].length;
 		if(coefficients[2].length != length){							//there's chrome subsampling, therefore it was not made by this process
 			callback('','This image does not contain anything, or perhaps the password is wrong');		//actually, just the former
-			throw('image is chroma subsampled')
+			return
 		}
 
 		var	rawLength = 3*length*64,
@@ -295,7 +295,7 @@ var modifyCoefficients = function(coefficients) {
 	
 	var lastIndex = encodeToCoefficients('jpeg', msgBin,0, function(msg){				//call to unified encoding function (does matrix encoding for both jpg and png)
 		showError(msg);
-		throw('insufficient cover image capacity')
+		return
 	});
 	
 	if(globalBin2){													//this is done only if there is a second message, to be added immediately after the main message
@@ -311,7 +311,7 @@ var modifyCoefficients = function(coefficients) {
 
 		encodeToCoefficients('jpeg', msgBin2, lastIndex + 1, function(msg){		//encoding starts where the previous encoding ended
 			showError(msg);
-			throw('insufficient cover image capacity')
+			return
 		});
 		
 		unShuffleCoefficients(lastIndex + 1);

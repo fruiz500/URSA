@@ -14,8 +14,7 @@ function btnLabels(){
 		decryptBtn.textContent = 'Encrypt';
 		imageBtn.textContent = 'Encr. to Img'
 	}
-	if(!string)imageBtn.textContent = 'Decrypt Img';
-	if(string){ selectMainBtn.textContent = 'Copy' }else{ selectMainBtn.textContent = 'Paste' }
+	if(!string)imageBtn.textContent = 'Decrypt Img'
 }
 
 //this is for showing and hiding text in key box and other password input boxes
@@ -70,10 +69,8 @@ function selectMain(){
         selection.removeAllRanges();
         selection.addRange(range)
     }
-	document.execCommand('copy')
-  }else{
-	document.execCommand("paste");
-	selectMainBtn.textContent = 'Copy'
+	document.execCommand('copy');
+	mainMsg.textContent = "main Box copied to clipboard"
   }
 }
 
@@ -140,7 +137,7 @@ function cancelCover(){
 function main2chat(token){
 	if(isAndroid){
 		var reply = confirm('On Android, the chat function works from a browser page, but not yet from the app. Please cancel if you are running URSA as a native app.');
-		if(!reply) throw('chat canceled by user')
+		if(!reply) return
 	}
 	document.getElementById('chatFrame').src = 'https://www.passlok.com/chat/index.html#' + token;
 	chatBtn.textContent = 'Back to Chat';
