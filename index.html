@@ -88,10 +88,17 @@
     <div id="mainMsg"><span id="JSmsg">JAVASCRIPT OFF, PASSLOK CANNOT RUN</span></div>
     <br>
     <br>
+    <table>
+    <tr>
+    <td width="100%">
     <div contenteditable="true" class="cssbox" id="pwd" name="text" placeholder="" align="left"></div>
+    </td>
+    <td width="0%">
+    <img id='showKey' class="field-icon" src="" title="click this to see/hide the Key">
+    </td>
+    </tr>
+    </table>
     <br>
-    <input type="checkbox" id="showKey" title="reveal box contents">
-    &nbsp; Show
     <button class="cssbutton" id="swapBtn" value="Swap" title="swap contents with main box">Swap</button><!--
 --><button class="cssbutton" id="suggestKeyBtn" value="Suggest" title="suggest a Key made of five common words">5 Words</button><!--
 --><button class="cssbutton" id="randomBtn" value="Random" title="display a random Key">Random</button><!--
@@ -233,7 +240,8 @@
     <h3>How do I use URSA?</h3>
   </div>
   <div id="a2" class="helptext">
-    <p>Just type the shared Key in the top box and the plain message in the bottom box. If you paste the plain message in, it will be encrypted automatically, otherwise click <strong>Encrypt</strong>. If then you click the <strong>Email</strong> button, it will be forwarded to your default email so you can send it out. The recipients only need to click on a link on the email and supply the shared Key.</p>
+    <p>Just type the shared Key in the top box and the plain message in the bottom box. As you type the Key in, it is evaluated for strength, and a message above it tells you how good it is. If you click the eye icon, you'll also see a mnemonic "hashili" word based on the Key, to reassure you that you typed it correctly. Clicking the eye icon again reveals the whole Key.</p>
+    <p>If you paste the plain message in, it will be encrypted automatically, otherwise click <strong>Encrypt</strong>. If then you click the <strong>Email</strong> button, it will be forwarded to your default email so you can send it out. The recipients only need to click on a link on the email and supply the shared Key.</p>
     <p>If you want to disguise the result as apparently normal text, click the <strong>Text hide</strong> button. You will be prompted for a cover text and directed to complete the result.</p>
     <p>To decrypt a message, enter the shared Key on the top box and then paste the message in the bottom box (it is fine if it is disguised as normal text). The message will unhide and then decrypt automatically. Otherwise, click the <strong>Decrypt</strong> button.</p>
     <p>You can also embed the encrypted message inside an image so that its presence cannot be detected. Start the process with the <strong>Encr. to Img</strong> button if you are encrypting, <strong>Decrypt Img</strong> if decrypting, with the main box empty. When encrypting, you can choose the image format to be PNG or JPG.</p>
@@ -245,7 +253,7 @@
     <h3>How do I get quantum-resistant encryption?</h3>
   </div>
   <div id="a3" class="helptext">
-    <p>As of 2017, reversing the encryption done with a symmetric Key having 256 bits of entropy still takes gazillions of years of computing time, but future quantum computers promise to shorten this (although not as much as they would for asymmetric encryption). URSA has a special "Pad mode" that not even quantum computers will be able to crack.</p>
+    <p>As of 2019, reversing the encryption done with a symmetric Key having 256 bits of entropy still takes gazillions of years of computing time, but future quantum computers promise to shorten this (although not as much as they would for asymmetric encryption). URSA has a special "Pad mode" that not even quantum computers will be able to crack.</p>
     <p>URSA shifts into Pad mode whenever you supply a shared Key that is <em>longer than the plain message</em> being encrypted (the Key must be at least 43 characters long). Then press <strong>Encrypt</strong> normally.</p>
     <p>A pop-up will ask you for the start position, which must be a number in the range given by the pop-up. After you enter this, the encryption proceeds. To decrypt, the recipient must supply the same long shared Key and the same start position. Since security comes mostly from using a long Key, it may be okay to transmit the starting position in plaintext, if you have to.</p>
     <p>You can disguise the result as apparently normal text as for the normal mode, by clicking the <strong>Text hide</strong> button.</p>
@@ -353,12 +361,12 @@
     <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
     <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
     <div id="canary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
-    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.3 (October 2018) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
+    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.4 (February 2019) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
     </div>
   </div>
   <hr>
   <address>
-  URSA 4.2.3 &#169; F. Ruiz 2018
+  URSA 4.2.4 &#169; F. Ruiz 2019
   </address>
   <ul>
     <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>

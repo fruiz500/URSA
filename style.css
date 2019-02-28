@@ -112,6 +112,11 @@ button:focus {
 	border: 1px solid #D3D3D3;
 	overflow: auto;
 }
+.field-icon {
+  margin-left: -30px;
+  height: 16px;
+  z-index: 2;
+}
 .helpitem {
 	font-size: medium;
 	cursor: pointer;
@@ -268,9 +273,7 @@ img.intLink {
 	min-height: 25px;
 	-moz-text-security: disc;
     -webkit-text-security: disc;
-    -webkit-appearance: textfield;
     -webkit-user-select: text;
-	width: 95%;
 	padding: 2px;
 }
 [contenteditable=true]:empty:before{
