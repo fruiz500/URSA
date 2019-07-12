@@ -49,7 +49,8 @@ var importImage = function(e){
 function updateCapacity(){
 	var	textSize = mainBox.textContent.length * 6;							//text size in bits
 
-	imageMsg.innerHTML = '<span class="blink">PROCESSING</span>';				//Get blinking message started
+	imageMsg.style.color = '';
+	blinkMsg(imageMsg);	
 	setTimeout(function(){																				//give it 2 seconds to complete
 		if(imageMsg.textContent == 'PROCESSING') imageMsg.textContent = 'There was an error calculating the capacity, but the image is still usable'
 	},2000)	
@@ -105,7 +106,7 @@ setTimeout(function(){
 
 //function to encode mainBox into the image
 function encode(){
-	var text = mainBox.textContent.trim();
+	var text = mainBox.textContent.trim().replace(/[-\s]/g,'');
 
 	if(!text){
 		imageMsg.textContent = 'There is nothing to hide';
@@ -115,7 +116,7 @@ function encode(){
 		imageMsg.textContent = 'Please load an image before clicking this button';
 		return
 	}
-	imageMsg.innerHTML = '<span class="blink">PROCESSING</span>';				//Get blinking message started
+	blinkMsg(imageMsg);
 
 	var array2embed = toBin(text),
 		pwdArray = pwd.textContent.trim().replace(/\n/g,' ').split('|'),
@@ -155,7 +156,7 @@ function encode(){
 
 //extract text from the image
 function decode(){	
-	imageMsg.innerHTML = '<span class="blink">PROCESSING</span>';				//Get blinking message started
+	blinkMsg(imageMsg);
 
 	var pwdArray = pwd.textContent.trim().replace(/\n/g,' ').split('|'),
 		password = pwdArray[0].trim();

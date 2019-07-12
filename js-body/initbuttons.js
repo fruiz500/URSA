@@ -136,9 +136,11 @@ if(window.location.hash.length > 1){
 }
 
 //this one is for mobile only. Remove for the Chrome app
-window.addEventListener('load', function() {
-	FastClick.attach(document.body);
-}, false);
+if(isMobile){
+	window.addEventListener('load', function() {
+		FastClick.attach(document.body);
+	}, false);
+}
 
 var time10 = hashTime10();													//get milliseconds for 10 wiseHash at iter = 10
 

@@ -1,6 +1,6 @@
 ﻿//this starts when an item is pasted
 function unlockItem(){
-	mainMsg.innerHTML = '<span class="blink">PROCESSING</span>';
+	blinkMsg(mainMsg);
 	setTimeout(function(){
 		var array = getType(mainBox.innerHTML.trim()),
 			type = array[0],
@@ -19,7 +19,7 @@ function unlockItem(){
 
 //gets recognized type of string, if any, otherwise returns false. Also returns cleaned-up string
 function lockUnlock(){
-	mainMsg.innerHTML = '<span class="blink">PROCESSING</span>';				//Get blinking message started
+	blinkMsg(mainMsg);
 	setTimeout(function(){
 	var array = getType(mainBox.innerHTML.trim());
 	if(array[0]){
@@ -34,7 +34,7 @@ function lockUnlock(){
 function getType(stringIn){
 	var string = stringIn.replace(/&[^;]+;/g,'').replace(/<a(.*?).(plk|txt)" href="data:(.*?),/,'').replace(/"(.*?)\/a>/,'');
 	if(string.match('==')) string = string.split('==')[1];		//remove tags
-	string = string.replace(/<(.*?)>/g,'');
+	string = string.replace(/<(.*?)>/g,'').replace(/\r?\n|\r/g,'');
 
 	var	type = string.charAt(0),
 		isBase64 = !string.match(/[^a-zA-Z0-9+\/]/),
@@ -76,15 +76,24 @@ function Encrypt(text){
 
 	var cipher = PLencrypt(text,nonce24,sharedKey,true),		//true because compression is used
 		outString = nacl.util.encodeBase64(concatUint8Arrays([128],concatUint8Arrays(nonce,cipher))).replace(/=+$/,'');
+	mainBox.textContent = '';
 	if(fileMode.checked){
 		if(textMode.checked){
-			mainBox.innerHTML = '<a download="URSA42msg.txt" href="data:,' + outString + '"><b>URSA 4.2 encrypted message (text file)</b></a>'
+			var fileLink = document.createElement('a');
+			fileLink.download = "URSA42msg.txt";
+			fileLink.href = "data:," + outString;
+			fileLink.textContent = "URSA 4.2 encrypted message (text file)"
 		}else{
-			mainBox.innerHTML = '<a download="URSA42msg.plk" href="data:binary/octet-stream;base64,' + outString + '"><b>URSA 4.2 encrypted message (binary file)</b></a>'
+			var fileLink = document.createElement('a');
+			fileLink.download = "URSA42msg.plk";
+			fileLink.href = "data:binary/octet-stream;base64," + outString;
+			fileLink.textContent = "URSA 4.2 encrypted message (binary file)"
 		}
 	}else{
-		mainBox.innerHTML = "<pre>" + ("URSA42msg==" + outString + "==URSA42msg").match(/.{1,80}/g).join("<br>") + "</pre>"
+		var fileLink = document.createElement('pre');
+		fileLink.textContent = ("URSA42msg==" + outString + "==URSA42msg").match(/.{1,80}/g).join("\r\n")
 	}
+	mainBox.appendChild(fileLink)
 	mainMsg.textContent = 'Encryption successful. Copy and send.';
 	btnLabels()
 }
@@ -173,16 +182,25 @@ function padEncrypt(){
 	var cipherBin = padResult(textBin, keyTextBin, nonce, startIndex),
 		macBin = padMac(textBin, keyTextBin, nonce, startIndex),
 		outStr = nacl.util.encodeBase64(concatUint8Arrays([116],concatUint8Arrays(nonce,concatUint8Arrays(macBin,cipherBin)))).replace(/=+$/,'');
+	mainBox.textContent = '';
 	if(fileMode.checked){
 		if(textMode.checked){
-			mainBox.innerHTML = '<a download="URSA42msp.txt" href="data:,' + outStr + '"><b>URSA 4.2 Pad encrypted message (text file)</b></a>'
+			var fileLink = document.createElement('a');
+			fileLink.download = "URSA42msp.txt";
+			fileLink.href = "data:," + outStr;
+			fileLink.textContent = "URSA 4.2 Pad encrypted message (text file)"
 		}else{
-			mainBox.innerHTML = '<a download="URSA42msp.plk" href="data:binary/octet-stream;base64,' + outStr + '"><b>URSA 4.2 Pad encrypted message (binary file)</b></a>'
+			var fileLink = document.createElement('a');
+			fileLink.download = "URSA42msp.plk";
+			fileLink.href = "data:binary/octet-stream;base64," + outStr;
+			fileLink.textContent = "URSA 4.2 Pad encrypted message (binary file)"
 		}
 	}else{
-		mainBox.innerHTML = "<pre>" + ("URSA42msp==" + outStr + "==URSA42msp").match(/.{1,80}/g).join("<br>") + "</pre>"
+		var fileLink = document.createElement('pre');
+		fileLink.textContent = ("URSA24msp==" + outStr + "==URSA24msp").match(/.{1,80}/g).join("\r\n")
 	}
-	mainMsg.innerHTML = 'Encryption successful. Click <strong>Email</strong> or copy and send.';
+	mainBox.appendChild(fileLink)
+	mainMsg.textContent = 'Encryption successful. Click Email or copy and send.';
 	btnLabels()
 }
 
@@ -496,17 +514,26 @@ function humanEncrypt(text,isEncrypt){
 	}
 
 	if(!isEncrypt){
-		mainBox.innerHTML = cipherText
+		mainBox.textContent = cipherText
 	}else{
+		mainBox.textContent = '';
 		if(fileMode.checked){
 			if(textMode.checked){
-				mainBox.innerHTML = '<a download="URSA42msh.txt" href="data:,' + cipherText + '"><b>URSA 4.2 Human encrypted message (text file)</b></a>'
+				var fileLink = document.createElement('a');
+				fileLink.download = "URSA24msh.txt";
+				fileLink.href = "data:," + cipherText;
+				fileLink.textContent = "URSA 2.4 Human encrypted message (text file)"
 			}else{
-				mainBox.innerHTML = '<a download="URSA42msh.plk" href="data:binary/octet-stream;base64,' + cipherText + '"><b>URSA 4.2 Human encrypted message (binary file)</b></a>'
+				var fileLink = document.createElement('a');
+				fileLink.download = "URSA24msh.plk";
+				fileLink.href = "data:binary/octet-stream;base64," + cipherText;
+				fileLink.textContent = "URSA 2.4 Human encrypted message (binary file)"
 			}
 		}else{
-			mainBox.innerHTML = "<pre>" + ("URSA42msh==" + cipherText + "==URSA42msh").match(/.{1,80}/g).join("<br>") + "</pre>"
+			var fileLink = document.createElement('pre');
+			fileLink.textContent = ("URSA24msh==" + cipherText + "==URSA24msh").match(/.{1,80}/g).join("\r\n")
 		}
+		mainBox.appendChild(fileLink)
 	}
 	if(isEncrypt){
 		mainMsg.textContent = 'Human encryption done. Recipients can decrypt this by hand'

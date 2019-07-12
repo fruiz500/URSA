@@ -14,7 +14,7 @@ if(display){
 		var colorName = 'red'
 	}else if(entropy < 60){
 		var msg = 'Medium';
-		var colorName = 'orange'
+		var colorName = 'darkorange'
 	}else if(entropy < 90){
 		var msg = 'Good!';
 		var colorName = 'green'
@@ -31,18 +31,15 @@ if(display){
 
 	var seconds = time10/10000*Math.pow(2,iter-8);			//to tell the user how long it will take, in seconds
 
-	if(pwd.trim()==''){
+	if(pwd.trim() == ''){
 		msg = 'Enter your Key below'
 	}else{
-		if(hashiliOn){
-			msg = 'Key entropy: ' + Math.round(entropy*100)/100 + ' bits. ' + msg + '<br>Up to ' + Math.max(0.01,seconds.toPrecision(3)) + ' sec. to process<br>' + hashili(pwd)
-		}else{
-			msg = 'Key entropy: ' + Math.round(entropy*100)/100 + ' bits. ' + msg + '<br>Up to ' + Math.max(0.01,seconds.toPrecision(3)) + ' sec. to process'
-		}
+		msg = 'Key entropy: ' + Math.round(entropy*100)/100 + ' bits. ' + msg + '\r\nUp to ' + Math.max(0.01,seconds.toPrecision(3)) + ' sec. to process'
 	}
 if(display){																//display the appropriate messages
-	mainMsg.innerHTML = msg;				//innerHTML to preserve the line break
+	mainMsg.textContent = msg;				//innerHTML to preserve the line break
 	mainMsg.style.color = colorName;
+	hashili('mainMsg',pwd)
 }
 	return iter
 };
@@ -113,18 +110,28 @@ function reduceVariants(string){
 
 //makes 'pronounceable' hash of a string, so user can be sure the password was entered correctly
 var vowel = 'aeiou',
-	consonant = 'bcdfghjklmnprstvwxyz';
-function hashili(string){
-	var code = nacl.hash(nacl.util.decodeUTF8(string.trim())).slice(-2),			//take last 4 bytes of the SHA512		
-		code10 = ((code[0]*256)+code[1]) % 10000,									//convert to decimal
-		output = '';
+	consonant = 'bcdfghjklmnprstvwxyz',
+	hashiliTimer;
+function hashili(msgID,string){
+	var element = document.getElementById(msgID);
+	clearTimeout(hashiliTimer);
+	hashiliTimer = setTimeout(function(){
+		if(!string.trim()){
+			element.innerText += ''
+		}else{
+			var code = nacl.hash(nacl.util.decodeUTF8(string.trim())).slice(-2),			//take last 4 bytes of the SHA512		
+				code10 = ((code[0]*256)+code[1]) % 10000,		//convert to decimal
+				output = '';
 
-	for(var i = 0; i < 2; i++){
-		var remainder = code10 % 100;								//there are 5 vowels and 20 consonants; encode every 2 digits into a pair
-		output += consonant[Math.floor(remainder / 5)] + vowel[remainder % 5];
-		code10 = (code10 - remainder) / 100
-	}
-	return output
+			for(var i = 0; i < 2; i++){
+				var remainder = code10 % 100;								//there are 5 vowels and 20 consonants; encode every 2 digits into a pair
+				output += consonant[Math.floor(remainder / 5)] + vowel[remainder % 5];
+				code10 = (code10 - remainder) / 100
+			}
+//	return output
+			element.innerText += '\n' + output
+		}
+	}, 1000);						//one second delay to display hashili
 }
 
 //stretches a password string with a salt string to make a 256-bit Uint8Array Key

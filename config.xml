@@ -3,8 +3,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.fruiz500.ursa"
-        versionCode = "3"
-        version     = "4.2.4" >
+        versionCode = "4"
+        version     = "4.2.5" >
 		
     <name>URSA Privacy</name>
 

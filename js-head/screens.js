@@ -1,6 +1,15 @@
-﻿//display button labels according to item nature
+﻿//start blinking message, for Msg elements
+function blinkMsg(element){
+	element.textContent = '';
+	var blinker = document.createElement('span');
+	blinker.className = "blink";
+	blinker.textContent = 'PROCESSING';
+	element.appendChild(blinker)
+}
+
+//display button labels according to item nature
 function btnLabels(){
-	var string = mainBox.innerHTML.trim().replace(/&[^;]+;/g,'').replace(/<a(.*?).(plk|txt)" href="data:(.*?),/,'').replace(/"(.*?)\/a>$/,'').replace(/<(.*?)>/g,'');
+	var string = mainBox.innerHTML.trim().replace(/&[^;]+;/g,'').replace(/<a(.*?).(plk|txt)" href="data:(.*?),/,'').replace(/"(.*?)\/a>$/,'').replace(/<(.*?)>/g,'').replace(/\r?\n|\r/g,'');
 
 	if(string.match('==')) string = string.split('==')[1];				//remove tags
 	var	type = string.charAt(0),
@@ -17,19 +26,14 @@ function btnLabels(){
 	if(!string)imageBtn.textContent = 'Decrypt Img'
 }
 
-var hashiliOn = false;					//to show hashili
-
 //this is for showing and hiding text in key box and other password input boxes
 function showsec(){
 	if(pwd.style.webkitTextSecurity == ""){
-		if(hashiliOn){
-			pwd.style.webkitTextSecurity = "none";
-			showKey.src = hideImg
-		}else{hashiliOn = true}	
+		pwd.style.webkitTextSecurity = "none";
+		showKey.src = hideImg	
 	}else{
 		pwd.style.webkitTextSecurity = "";
-		showKey.src = eyeImg;
-		hashiliOn = false		
+		showKey.src = eyeImg
 	}
 	keyStrength(pwd.textContent,true)
 }
@@ -115,7 +119,7 @@ function pwdKeyup(evt){
 	}
 }
 
-//swaps contents of the key box and the main box
+//swaps contents of the key box and the main box, keeping formatting
 function swapBoxes(){
 	var text = mainBox.innerHTML.replace(/<br>$/,"").trim().replace(/<span(.*?)>/,'').replace(/<\/span>$/,'');
 	mainBox.innerHTML = pwd.innerHTML.replace(/<br>$/,"").trim();

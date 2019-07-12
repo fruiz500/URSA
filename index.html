@@ -85,7 +85,7 @@
   <div align="center"> <br>
 
     <!--message area and local directory box, plus buttons-->
-    <div id="mainMsg"><span id="JSmsg">JAVASCRIPT OFF, PASSLOK CANNOT RUN</span></div>
+    <div id="mainMsg" class="message"><span id="JSmsg">JAVASCRIPT OFF, PASSLOK CANNOT RUN</span></div>
     <br>
     <br>
     <table>
@@ -221,7 +221,7 @@
   <h2 id="helpWelcome">Welcome to URSA</h2>
   <button class="cssbutton" id="help2mainBtnTop" value="< Back" title="return to main screen (alt-M)" accesskey='m'>&#9668; Back</button>
   <br>
-  &nbsp;&nbsp;&nbsp;<span id='helpmsg'>For help on how to do things, click on each title.</span><br>
+  &nbsp;&nbsp;&nbsp;<span id='helpmsg' class="message">For help on how to do things, click on each title.</span><br>
   <br>
   <hr>
   <div id="aa1" class="helpitem">
@@ -361,12 +361,12 @@
     <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
     <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
     <div id="canary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
-    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.4 (February 2019) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
+    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.5 (July 2019) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
     </div>
   </div>
   <hr>
   <address>
-  URSA 4.2.4 &#169; F. Ruiz 2019
+  URSA 4.2.5 &#169; F. Ruiz 2019
   </address>
   <ul>
     <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
@@ -392,7 +392,7 @@
 <div id="chatDialog" class="white_content" align="center"> <br>
   <br>
   <br>
-  <span id="chatmsg">Choose the type of chat, then write in the box the date and time</span><br>
+  <span id="chatmsg" class="message">Choose the type of chat, then write in the box the date and time</span><br>
   <br>
   <input type="radio" name="chatmodes" id="dataChat"  title="chat with text messages and file exchange" checked/>
   &nbsp; Text and files&nbsp;&nbsp;
@@ -412,7 +412,7 @@
 <!--Cover text entry dialog-->
 <div id="coverScr" class="white_content" align="center">
   	<br>
-  	<span id="coverMsg">Please enter the cover text for hiding and click <strong>OK</strong></span>
+  	<span id="coverMsg" class="message">Please enter the cover text for hiding and click <strong>OK</strong></span>
     <br>
     <br>
     <div class="cssbox" contenteditable="true" align= "left" rows="5" autocomplete="off" id="coverBox" name="coverBox" placeholder="Enter the cover text here"></div>
@@ -443,7 +443,7 @@
   <button class="cssbutton" id="encodeJPGBtn" value="JPG Hide" title="hide main box contents into JPG image">Encrypt to JPG</button>
   <br>
   <br>
-  <div id="imageMsg" ></div>
+  <div id="imageMsg" class="message"></div>
   <br>
   <img id="previewImg" src="" width="100%"/>
 </div>
