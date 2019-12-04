@@ -12,7 +12,7 @@ function imageOrEmail(){
 			window.open(link,"_blank")
 		}
 	}else{
-		if(!pwd.textContent.trim()){
+		if(!pwd.value.trim()){
 			setTimeout(function(){mainMsg.textContent = 'You must enter a Key first, plus a message if you want to encrypt. To decrypt, leave the main box empty.'},0);
 			return
 		}
@@ -119,7 +119,7 @@ function encode(){
 	blinkMsg(imageMsg);
 
 	var array2embed = toBin(text),
-		pwdArray = pwd.textContent.trim().replace(/\n/g,' ').split('|'),
+		pwdArray = pwd.value.trim().split('|'),
 		password = pwdArray[0].trim();
 	if(pwdArray.length == 3){
 		var array2embed2 = toBin(LZString.compressToBase64(pwdArray[2].trim())),
@@ -158,7 +158,7 @@ function encode(){
 function decode(){	
 	blinkMsg(imageMsg);
 
-	var pwdArray = pwd.textContent.trim().replace(/\n/g,' ').split('|'),
+	var pwdArray = pwd.value.trim().split('|'),
 		password = pwdArray[0].trim();
 	if(pwdArray.length == 2){
 		var	password2 = pwdArray[1].trim()

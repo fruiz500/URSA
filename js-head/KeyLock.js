@@ -128,7 +128,6 @@ function hashili(msgID,string){
 				output += consonant[Math.floor(remainder / 5)] + vowel[remainder % 5];
 				code10 = (code10 - remainder) / 100
 			}
-//	return output
 			element.innerText += '\n' + output
 		}
 	}, 1000);						//one second delay to display hashili
@@ -176,7 +175,8 @@ function PLencrypt(plainstr,nonce24,sharedKey,isCompressed){
 //decrypt string (or uint8 array) with a shared Key. Var 'label' is to display messages
 function PLdecrypt(cipherStr,nonce24,sharedKey,isCompressed,label){
 	if(typeof cipherStr == 'string'){
-		var cipher = nacl.util.decodeBase64(cipherStr)
+		var cipher = nacl.util.decodeBase64(cipherStr);
+		if(!cipherStr) return false;
 	}else{
 		var cipher = cipherStr
 	}
@@ -256,10 +256,10 @@ function decryptSanitizer(string){
 //puts an 42-character random string in the key box (not 43 so it's not mistaken for a PassLok Lock)
 function randomToken(){
 	var token = nacl.util.encodeBase64(nacl.randomBytes(32)).slice(0,42);
-	pwd.textContent = token;
+	pwd.value = token;
 	setTimeout(function(){
-		keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim(),true);
-		pwd.type="TEXT";
+		keyStrength(pwd.value.trim(),true);
+		pwd.type = "text";
 		showKey.checked = true;
 	},50)
 }

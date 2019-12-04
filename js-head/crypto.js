@@ -34,7 +34,7 @@ function lockUnlock(){
 function getType(stringIn){
 	var string = stringIn.replace(/&[^;]+;/g,'').replace(/<a(.*?).(plk|txt)" href="data:(.*?),/,'').replace(/"(.*?)\/a>/,'');
 	if(string.match('==')) string = string.split('==')[1];		//remove tags
-	string = string.replace(/<(.*?)>/g,'').replace(/\r?\n|\r/g,'');
+	string = string.replace(/<(.*?)>/g,'').replace(/\r?\n|\r/g,'').trim();
 
 	var	type = string.charAt(0),
 		isBase64 = !string.match(/[^a-zA-Z0-9+\/]/),
@@ -51,7 +51,7 @@ function getType(stringIn){
 //Encryption process
 function Encrypt(text){
 	mainMsg.style.color = "";
-	var keyStr = pwd.innerHTML.replace(/<br>$/,"").split('|')[0].trim();
+	var keyStr = pwd.value.split('|')[0].trim();
 	if(!keyStr){
 		mainMsg.textContent = 'Enter shared Key';
 		return
@@ -114,7 +114,7 @@ function Decrypt(cipherStr){
 		mainMsg.textContent = 'Nothing to decrypt';
 		return
 	}
-	var keyStr = pwd.innerHTML.replace(/<br>$/,"").split('|')[0].trim();
+	var keyStr = pwd.value.split('|')[0].trim();
 	if(!keyStr){
 		mainMsg.textContent = 'Enter shared Key';
 		return
@@ -127,7 +127,7 @@ function Decrypt(cipherStr){
 	}
 	
 	if(!cipherStr.match(/[^A-Z]/)){														//only base26: special human encrypted mode
-		if(pwd.textContent.split('~').length != 3){
+		if(pwd.value.trim().split('~').length != 3){
 			mainMsg.textContent = 'Please supply a correct Key for human decryption: three strings separated by tildes';
 			return
 		}
@@ -137,8 +137,9 @@ function Decrypt(cipherStr){
 
 	var isCompressed = (cipherStr.length == 160 && !mainBox.textContent.match('=')) ? false: true;	//compression unless it's a PassLok short message
 
-	var fullArray = nacl.util.decodeBase64(cipherStr),
-		nonce = fullArray.slice(1,10),
+	var fullArray = nacl.util.decodeBase64(cipherStr);
+	if(!fullArray) return false;
+	var	nonce = fullArray.slice(1,10),
 		nonce24 = makeNonce24(nonce),
 		cipher = fullArray.slice(10);
 
@@ -161,7 +162,7 @@ var entropyPerChar = 1.58;			//expected entropy of the key text in bits per char
 function padEncrypt(){
 	var nonce = nacl.randomBytes(15),
 		text = mainBox.innerHTML.trim(),
-		keyText = pwd.textContent.trim();
+		keyText = pwd.value.trim();
 
 	if(text.match('="data:')){
 		var textBin = nacl.util.decodeUTF8(text)
@@ -289,15 +290,16 @@ function padMac(textBin, keyTextBin, nonce, startIndex){						//startIndex is th
 //for decrypting with long key
 function padDecrypt(cipherStr){
 	mainMsg.textContent = "";
-	var keyText = pwd.textContent.trim();
+	var keyText = pwd.value.trim();
 
 	if (keyText == ''){
 		mainMsg.textContent = 'Click Enter and enter long shared Key, then try again';
 		return
 	}
 	try{
-		var inputBin = nacl.util.decodeBase64(cipherStr),
-			keyTextBin = nacl.util.decodeUTF8(keyText);
+		var inputBin = nacl.util.decodeBase64(cipherStr);
+		if(!inputBin) return false;
+		var	keyTextBin = nacl.util.decodeUTF8(keyText);
 		if(cipherStr.length == 160){									//short mode message, for compatibility with PassLok
 			var	nonce = inputBin.slice(1,10),
 				macBin = inputBin.slice(10,26),
@@ -435,7 +437,7 @@ function humanEncrypt(text,isEncrypt){
 	}
 	text = text.replace(/[^A-Z]/g,'');																				//only base26 anyway
 
-	var rawKeys = pwd.textContent.split('~');
+	var rawKeys = pwd.value.trim().split('~');
 	for(var i = 0; i < 3; i++) rawKeys[i] = rawKeys[i].toUpperCase().removeDiacritics().replace(/[^A-Z]/g,'');	//remove accents, spaces, and all punctuation
 
 	var	base26B1arrays = makeAlphabet(compressKey(rawKeys[0],25)),

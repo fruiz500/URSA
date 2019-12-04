@@ -28,14 +28,14 @@ function btnLabels(){
 
 //this is for showing and hiding text in key box and other password input boxes
 function showsec(){
-	if(pwd.style.webkitTextSecurity == ""){
-		pwd.style.webkitTextSecurity = "none";
+	if(pwd.type == "password"){
+		pwd.type = "text";
 		showKey.src = hideImg	
 	}else{
-		pwd.style.webkitTextSecurity = "";
+		pwd.type = "password";
 		showKey.src = eyeImg
 	}
-	keyStrength(pwd.textContent,true)
+	keyStrength(pwd.value.trim(),true)
 }
 
 //for showing.hiding password fields
@@ -115,15 +115,15 @@ function pwdKeyup(evt){
 	evt = evt || window.event;
 	var key = evt.keyCode || evt.which || evt.keyChar;
 	if (key == 13){lockUnlock()} else{
-		 return keyStrength(pwd.innerHTML.replace(/<br>$/,"").trim(),true)
+		 return keyStrength(pwd.value.trim(),true)
 	}
 }
 
-//swaps contents of the key box and the main box, keeping formatting
+//swaps contents of the key box and the main box, losing linefeeds
 function swapBoxes(){
-	var text = mainBox.innerHTML.replace(/<br>$/,"").trim().replace(/<span(.*?)>/,'').replace(/<\/span>$/,'');
-	mainBox.innerHTML = pwd.innerHTML.replace(/<br>$/,"").trim();
-	pwd.innerHTML = text
+	var text = mainBox.textContent.replace(/\n/g,' ').trim();
+	mainBox.textContent = pwd.value.trim();
+	pwd.value = text
 }
 
 //writes five random dictionary words in the Password box
@@ -139,7 +139,7 @@ function suggestKey(){
 		keyStrength(output.replace(/<br>$/,"").trim().trim(),true);
 		pwd.type="TEXT";
 		showKey.checked = true;
-		pwd.textContent = output.trim()
+		pwd.value = output.trim()
 	},100);
 }
 

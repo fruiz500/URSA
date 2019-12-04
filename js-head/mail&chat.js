@@ -39,7 +39,7 @@ function Chat(){
 		return
 	}
 	var text = mainBox.textContent.trim();
-	if(!pwd.textContent.trim()){
+	if(!pwd.value.trim()){
 		mainMsg.textContent = "Please write in a Key before clicking Chat";
 		return
 	}

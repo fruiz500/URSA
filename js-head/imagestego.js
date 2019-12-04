@@ -645,7 +645,7 @@ function decodeFromCoefficients(type,startIndex){
 	return [outputBin,'Reveal successful',startIndex + blocksUsed * n + 3]								//clean up the end
 }
 
-//extract text from either tye of image
+//extract text from either type of image
 function decodeImage(imageElement,password,callback,skipEncrypt,iter,password2,callback2,iter2){
 	if(imageElement.src.slice(11,15) == 'png;'){							//two cases: png and jpeg
 		decodePNG(imageElement,password,callback,skipEncrypt,iter,password2,callback2,iter2)
