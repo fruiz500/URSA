@@ -275,8 +275,6 @@ img.intLink {
 #pwd {
 	text-security:disc;
 	min-height: 25px;
-	-moz-text-security: disc;
-    -webkit-text-security: disc;
     -webkit-user-select: text;
 	padding: 2px;
 }
