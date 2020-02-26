@@ -3,8 +3,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.fruiz500.ursa"
-        versionCode = "4"
-        version     = "4.2.5" >
+        versionCode = "5"
+        version     = "4.2.6" >
 		
     <name>URSA Privacy</name>
 
@@ -16,7 +16,7 @@
         Francisco Ruiz 
     </author>
     
-<preference name="phonegap-version" value="3.7.0" />
+<preference name="phonegap-version" value='cli-9.0.0' />
 
 <!--Don't ask for any permissions-->	
 <preference name="permissions" value="none"/>
