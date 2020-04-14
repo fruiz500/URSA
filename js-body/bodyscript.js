@@ -15,7 +15,6 @@
 		isAndroidPhone = (navigator.userAgent.match(/mobile/i) != null && isAndroid),
 		isFile = (window.location.protocol == 'file:');
 	textheight();
-	chatResize();
 
 //  Clear out "sorry, no JavaScript" warning and display the type of source
 	showGreeting();
@@ -57,10 +56,6 @@ function textheight(){
 			mainBox.style.height = fullheight - offsetheight + 'px';
 		}
 	}
-}
-
-function chatResize(){
-	chatFrame.height = document.documentElement.clientHeight - 60
 }
 
 //this one is called by window.onload below

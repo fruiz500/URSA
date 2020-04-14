@@ -32,9 +32,6 @@
 <!--lz-string compression algorithm 1.4.4. https://github.com/pieroxy/lz-string-->
 <script src="js-opensrc/lz-string.js"></script>
 
-<!--dompurify, used to sanitize decrypted material before putting in DOM v2.0.7. https://github.com/cure53/DOMPurify-->
-<script src="js-opensrc/purify.js"></script>
-
 <!--jpeg image steganography by Owen Campbell-Moore and others. https://github.com/owencm/js-steg. First jsstegencoder-1.0.js-->
 <script src="js-opensrc/jsstegencoder-1.0.js"></script>
 
@@ -115,7 +112,7 @@
 --><label for="imageFile"><span class="cssbutton" id="imageBtn" title="encrypt or decrypt to image">Decrypt Img</span></label><!--
 --><input type='file' id="imageFile"/><!--
 --><button class="cssbutton" id="hideBtn" value="Hide" title="hide encrypted message as regular text (alt-T)" accesskey="t">Text hide</button><!--
---><button class="cssbutton" id="chatBtn" value="Chat" title="make a chat invitation or open it (alt-C)" accesskey="c">Chat</button>
+--><button class="cssbutton" id="helpBtn" value="Help" title="get help on using URSA (alt-H)" accesskey="h">Help</button>
       &nbsp;
       <input type="checkbox" id="fileMode" title="output is turned into files" accesskey=""/>
 &nbsp; to File
@@ -210,11 +207,11 @@
   <div align="center">
     <!--buttons below the main box-->
     <div id="mainbuttonsbot">
-      <button class="cssbutton" id="sendSMSBtn" value="SMS" title="mobile: open the default Texting app">SMS</button><!--
---><button class="cssbutton" id="niceEditBtn" value="Rich" title="toggle rich text editor (alt-R)" accesskey="r">Rich</button><!--
+   <button class="cssbutton" id="niceEditBtn" value="Rich" title="toggle rich text editor (alt-R)" accesskey="r">Rich</button><!--
 --><button class="cssbutton" id="selectMainBtn" value="Select" title="select the text in the box and copy it to clipboard">Copy</button><!--
 --><button class="cssbutton" id="clearMainBtn" value="Clear" title="clear the text in the box">Clear</button><!--
---><button class="cssbutton" id="helpBtn" value="Help" title="get help on using URSA (alt-H)" accesskey="h">Help</button>
+--><button class="cssbutton" id="chatBtn" value="Chat" title="make a chat invitation or open it (alt-C)" accesskey="c">Chat</button><!--
+--><button class="cssbutton" id="sendSMSBtn" value="SMS" title="mobile: open the default Texting app">SMS</button>
     </div>
   </div>
 </div>
@@ -227,10 +224,10 @@
   &nbsp;&nbsp;&nbsp;<span id='helpmsg' class="message">For help on how to do things, click on each title.</span><br>
   <br>
   <hr>
-  <div id="aa1" class="helpitem">
+  <div class="helpHeading">
     <h3>What is URSA?</h3>
   </div>
-  <div id="a1" class="helptext">
+  <div class="helpText">
     <p>URSA makes your favorite email private by encrypting it with a shared Key so only the intended recipients can see it. You don't need to make an account anywhere, but you need to get the shared Key to the recipients by some secure means (unencrypted email or texting won't do). Once this Key is forgotten by all participants the content remains encrypted forever.</p>
     <p>In other apps "forever" means a really, really long time, because of the computational difficulty of recovering a high-entropy encryption Key. In URSA, it really means forever, whenever the Key is longer than the message being encrypted.</p>
     <p>You can also use URSA to set up real-time secure chat sessions involving text, files, audio, or even video. The connection is direct between participants, with a server getting involved only at the start so you can find each other.</p>
@@ -239,10 +236,10 @@
     <p>If you want more capability, you may want to try SeeOnce, from <a href="https://passlok.com/seeonce" target="_blank">https://passlok.com/seeonce</a>, or PassLok, from <a href="https://passlok.com/app" target="_blank">https://passlok.com/app</a>. In addition to read-once encryption and Letters encoding for a single recipient, PassLok implements three more encryption and five more steganography modes, plus signatures and secret splitting. PassLok can also encrypt for several recipients at once. SeeOnce encrypts for only one person at a time, but it does so in such a way that messages can only be decrypted once. URSA is fully compatible with PassLok, but not with SeeOnce.</p>
   </div>
   <hr>
-  <div id="aa2" class="helpitem">
+  <div class="helpHeading">
     <h3>How do I use URSA?</h3>
   </div>
-  <div id="a2" class="helptext">
+  <div class="helpText">
     <p>Just type the shared Key in the top box and the plain message in the bottom box. As you type the Key in, it is evaluated for strength, and a message above it tells you how good it is. If you click the eye icon, you'll also see a mnemonic "hashili" word based on the Key, to reassure you that you typed it correctly. Clicking the eye icon again reveals the whole Key.</p>
     <p>If you paste the plain message in, it will be encrypted automatically, otherwise click <strong>Encrypt</strong>. If then you click the <strong>Email</strong> button, it will be forwarded to your default email so you can send it out. The recipients only need to click on a link on the email and supply the shared Key.</p>
     <p>If you want to disguise the result as apparently normal text, click the <strong>Text hide</strong> button. You will be prompted for a cover text and directed to complete the result.</p>
@@ -252,10 +249,10 @@
     <p>URSA will run from a saved file, so you don't have to be online in order to use it.</p>
   </div>
   <hr>
-  <div id="aa3" class="helpitem">
+  <div class="helpHeading">
     <h3>How do I get quantum-resistant encryption?</h3>
   </div>
-  <div id="a3" class="helptext">
+  <div class="helpText">
     <p>As of 2019, reversing the encryption done with a symmetric Key having 256 bits of entropy still takes gazillions of years of computing time, but future quantum computers promise to shorten this (although not as much as they would for asymmetric encryption). URSA has a special "Pad mode" that not even quantum computers will be able to crack.</p>
     <p>URSA shifts into Pad mode whenever you supply a shared Key that is <em>longer than the plain message</em> being encrypted (the Key must be at least 43 characters long). Then press <strong>Encrypt</strong> normally.</p>
     <p>A pop-up will ask you for the start position, which must be a number in the range given by the pop-up. After you enter this, the encryption proceeds. To decrypt, the recipient must supply the same long shared Key and the same start position. Since security comes mostly from using a long Key, it may be okay to transmit the starting position in plaintext, if you have to.</p>
@@ -264,10 +261,10 @@
     <p>Pad mode encryption is slower than regular encryption, especially if the text to be encrypted is also long (the length of the Key text doesn't matter so much), but the result is mathematically impossible to decrypt without the Key.</p>
   </div> 
   <hr>
-  <div id="aa4" class="helpitem">
+  <div class="helpHeading">
     <h3>How do I use Human mode?</h3>
   </div>
-  <div id="a4" class="helptext">
+  <div class="helpText">
     <p>If you or your friends don't have access to a computer that hasn't been compromised, you can still communicate in Human mode, which can be performed simply with paper and pencil. This mode is explained in detail in this page, which also does encryption and decryption for you: <a href="https://passlok.com/human" target="_blank">https://passlok.com/human</a>.</p>
     <p>URSA shifts into Human mode whenever you supply a shared Key that consists of <em>three strings separated by tildes</em> &quot;~&quot; (or two tildes after a single string). Type your message in Latin characters, then press <strong>Encrypt</strong> normally. Bear in mind that all punctuation will be represented as periods upon decryption.</p>
     <p>You can disguise the result as apparently normal text as for the normal mode, by clicking the <strong>Text hide</strong> button.</p>
@@ -275,20 +272,20 @@
     <p>Messages encrypted by URSA in Human mode can be decrypted in PassLok, and vice-versa, plus the page linked above.</p>
   </div> 
   <hr>
-  <div id="aa5" class="helpitem">
+  <div class="helpHeading">
     <h3>How does Chat work?</h3>
   </div>
-  <div id="a5" class="helptext">
-    <p>If you click the <strong>Chat</strong> button, a dialog asks you what kind of real-time chat you want to set up. There are three choices: text and files, this plus audio, and all this plus video. You can also add a short message, such as a date and time for the chat session.</p>
+  <div class="helpText">
+    <p>If you click the <strong>Chat</strong> button, a dialog asks you what kind of real-time chat you want to set up. There are four choices: text and files, this plus audio, and all this plus video, and Jitsi, which is more full-featured (except for file exchange). You can also add a short message, such as a date and time for the chat session.</p>
     <p>After you click <strong>OK</strong>, URSA makes a chat invite exactly as when encrypting a message. You then send it to the other participants, keeping a copy for yourself. When the time for the chat comes, decrypt the chat invite and then you'll be able to join the chat session like everybody else.</p>
-    <p>When the recipients get your chat invite, they will decrypt it like any other URSA message and then the chat window will open and ask for an alias. When they supply this, they'll be connected directly to each of the participants already in the session. They may be asked to grant permission to feed audio or video when the connection takes place.</p>
-    <p>If you get disconnected, click the <strong>Reset Chat</strong> button to reload the chat window and type your alias again. The chat ceases to exist when all participants close their chat windows.</p>
+    <p>When the recipients get your chat invite, they will decrypt it like any other URSA message and then a new tab for the chat will open and ask for an alias. When they supply this, they'll be connected directly to each of the participants already in the session. They may be asked to grant permission to feed audio or video when the connection takes place.</p>
+    <p>If you get disconnected, reload the chat tab and type your alias again. You can change the chat type at this point.</p>
   </div>
   <hr>
-  <div id="aa6" class="helpitem">
+  <div class="helpHeading">
     <h3>Can I encrypt files and images?</h3>
   </div>
-  <div id="a6" class="helptext">
+  <div class="helpText">
     <p>Chat has its own secure file-sending process, so we refer here to encrypting files using the main encryption process. You have two choices:</p>
     <p>1. Encrypt the files using AES with a utility such as <a href="http://www.7-zip.org/" target="_blank">7-zip</a> (Windows), <a href="http://www.kekaosx.com/" target="_blank">Keka</a> (OSX), or p7zip (Linux), then encrypt the encryption password inside a URSA-encrypted message, and attach the encrypted archive to your email.</p>
     <p>2. You can also load files using the button at the right end of the rich text toolbar (which you display with the <strong>Rich</strong> button, if it is not displayed already), which will load each file as a link, and then encrypt them as a regular message. After decryption, the recipient can save each file by right-clicking it and selecting "Save Link as..."</p>
@@ -298,26 +295,26 @@
     <p>Be aware that Chrome cannot save files larger than 1.5MB, even if they have been correctly decrypted. Firefox and Safari don't have this limitation. In any case, you may want to encrypt to file rather than text in order to speed up the process as described in the next item, especially if you want to send the encrypted output by email.</p>
   </div>
   <hr>
-  <div id="aa7" class="helpitem">
+  <div class="helpHeading">
     <h3>Can I encrypt large stuff?</h3>
   </div>
-  <div id="a7" class="helptext">
+  <div class="helpText">
     <p>Sometimes the text, images, or files you wish to encrypt contain a lot of bytes, which would fill many screenfuls with gibberish text. Email programs won't take large text without clipping it, thus making it impossible to decrypt it. The solution is to output to a file rather than text, by checking the <strong>to File</strong> box and the type of file to make (Binary or text) before clicking <strong>Encrypt</strong>.</p>
     <p>After encryption, you will see a link on the main box, which you can then right-click and save locally with the "Save Link As..." option. Then you can send it as an email attachment, for instance. Be aware that Chrome cannot save files larger than 1.5MB. Firefox and Safari don't have this limitation.</p>
     <p>To decrypt the file, load it as described in the item above, and then decrypt it with the shared Key just like something encrypted to text.</p>
     </div>
   <hr>
-  <div id="aa8" class="helpitem">
+  <div class="helpHeading">
     <h3>Are there any potential insecurities?</h3>
   </div>
-  <div id="a8" class="helptext">
+  <div class="helpText">
     <p>We have tried to make URSA extremely easy to use without impacting security, but tradeoffs do exist. There are two issues that you must be aware of:</p>
     <p>1. <strong>How to get the shared Key to the recipients.</strong> Just encrypting it with a previously shared Key before sending is not secure enough, since compromising the previous Key will immediately compromise the new Key. Most likely, you are going to have to meet in person, or exchange Keys using an asymmetric encryption program such as <a href="https://passlok.com/seeonce" target="_blank">SeeOnce</a> or <a href="https://passlok.com/app" target="_blank">PassLok</a>.</p>
     <p>2. <strong>Hackers could change the code</strong> at the web server, and therefore destroy all security without users realizing it. The native app versions of URSA are code-signed by the respective app stores so this is not a problem with those, but if you are concerned about the authenticity of the web app, you can verify it by following the instructions below.</p>
-    <div id='bb8' class="helpitem">
+    <div class="helpHeading2">
       <p><em>Click here for instructions to verify the URSA code.</em></p>
     </div>
-    <div id="b8" class="helptext2">
+    <div class="helpText">
       <p>Warning: following the links in these instructions may give away your location; proceed with caution.</p>
       <p>1. Head to Online-convert.com <a href="http://hash.online-convert.com/sha256-generator" target="_blank">http://hash.online-convert.com/sha256-generator</a> and write https://passlok.com/ursa in the second box from the top, then type Enter or click "Convert File". This will instruct this website to fetch the URSA code from its server and perform a SHA256 operation on it.</p>
       <p>2. A new screen should appear, displaying the SHA256 string in several formats. Now you want to compare this with the published value, which is available at different places. If both strings are the same, the code is tamper-free. Here are a few locations where this string in published (more to be added):</p>
@@ -329,20 +326,20 @@
     </div>
   </div>
   <hr>
-  <div id="aa9" class="helpitem">
+  <div class="helpHeading">
     <h3>What's underneath URSA?</h3>
   </div>
-  <div id="a9" class="helptext">
+  <div class="helpText">
     <p>URSA is a very simplified sibling of PassLok Privacy (<a href="https://passlok.com/app" target="_blank">https://passlok.com/app</a>), from which it takes its symmetric encryption mode, which is based on the XSalsa20 stream cipher, plus the WiseHash key-stretching algorithm to increase security with weak Keys.</p>
     <p> PassLok can decrypt URSA-encrypted messages, and encrypt short messages that URSA can decrypt. It also includes a complete directory management system for Keys shared with other users, so you only need to select the correspondent's name from a list on the Main screen.</p>
     <p>The quantum-resistant mode is not based on XSalsa20, but rather on repeatedly taking the SHA512 hash of a shared Key longer than the message itself, and using the random-looking result as a keystream to encrypt the message.</p>
     <p>You can get full details on URSA's cryptography and the Chat function from the <a href="http://www.weebly.com/uploads/2/4/1/8/24187628/passlok_technical_document.pdf" target="_blank">PassLok technical document.</a>.</p>
   </div>
   <hr>
-  <div id="aa10" class="helpitem">
+  <div class="helpHeading">
     <h3>Keyboard shortcuts</h3>
   </div>
-  <div id="a10" class="helptext">
+  <div class="helpText">
     <p>The main functions in URSA can be accessed directly from the keyboard. The button tooltips tell you what the shortcut is for each button that has a shortcut, but below is a list just in case:</p>
     <ul>
       <p>Alt-L: <strong>L</strong>ock </p>
@@ -352,10 +349,10 @@
     </ul>
   </div>
   <hr>
-  <div id="aa11" class="helpitem">
+  <div class="helpHeading">
     <h3>Privacy Statement and Warrant Canary</h3>
   </div>
-  <div id="a11" class="helptext">
+  <div class="helpText">
     <p>URSA is a self-contained piece of code that does not rely on servers to do its job. Therefore:</p>
     <p><strong>1. We cannot give your Keys to anyone</strong> (not even yourself) because we don't have them.</p>
     <p><strong>2. We cannot give your private data to anyone</strong> because URSA does not send anything out of your device, either. When you download the app from the web server, you get only the code, without any cookies, plugins, or anything of that sort.</p>
@@ -364,24 +361,24 @@
     <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
     <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
     <div id="canary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
-    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.7 (February 2020) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
+    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.8 (April 2020) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
     </div>
   </div>
   <hr>
   <address>
-  URSA 4.2.7 &#169; F. Ruiz 2020
+  URSA 4.2.8 &#169; F. Ruiz 2020
   </address>
   <ul>
     <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
     <li>tweetNaCl JavaScript implementation by D. Chestnykh and D. Mandiri 2015</li>
     <li>scrypt key stretching implementation by D. Chestnykh 2014</li>
     <li>lz-string compression by pieroxy 2014</li>
-    <li>DOMPurify XSS sanitizer by cure53 2017</li>
     <li>image steganography based on F5 by Andreas Westfeld 2001</li>
     <li>jpeg image hiding libraries js-steg by Owen Campbell-Moore et al. 2014</li>
     <li>isaac seedable PRNG by Yves-Marie Rinquin 2012</li>
     <li>file In/Out based on an article from the This Could Be Better blog 2012</li>
-    <li>webRTC chat by Muaz Khan, modified by F. Ruiz 2015</li>
+    <li>webRTC chat by Muaz Khan 2019</li>
+    <li>Jitsi chat by jitsi.org 2020</li>
     <li>Letters encoding based on Advanced Unicode Stego by Adrian Crenshaw 2013</li>
   </ul>
   <address>
@@ -402,7 +399,10 @@
   <input type="radio" name="chatmodes" id="audioChat" title="like Text chat, plus audio"/>
   &nbsp; Audio&nbsp;&nbsp;
   <input type="radio" name="chatmodes" id="videoChat" title="like audio chat, plus video"/>
-  &nbsp; Video <br>
+  &nbsp; Video&nbsp;&nbsp;
+  <input type="radio" name="chatmodes" id="jitsiChat" title="full featured, on jit.si"/>
+  &nbsp; Jitsi
+  <br>
   <br>
   <textarea id="chatDate" class="cssbox" name="chatDate" rows="1" title="additional information" placeholder="Write here the date and time for the chat"></textarea>
   <br>
@@ -425,13 +425,6 @@
     <br>
     <br>
     <input type="checkbox" id="rememberCoverCheck" title="remember the text for this session">&nbsp;Remember
-</div>
-
-<!--Chat screen, just an iframe for https://www.passlok.com/chat-->
-<div id="chatScr" class="block_page" align="center">
-  <button class="cssbutton" id="closeChatBtn" value="< Back" title="returns to Main tab">&#9668; Back to URSA</button>
-  <button class="cssbutton" id="resetChatBtn" value="Reset" title="reset the chat">Reset Chat</button>
-  <iframe seamless id="chatFrame" src="" border=0 frameborder=0 allowfullscreen></iframe>
 </div>
 
 <!--Image hiding dialog-->

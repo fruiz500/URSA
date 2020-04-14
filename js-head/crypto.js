@@ -147,9 +147,9 @@ function Decrypt(cipherStr){
 
 	var plain = PLdecrypt(cipher,nonce24,sharedKey,isCompressed);
 	if(isCompressed){
-			mainBox.innerHTML = decryptSanitizer(plain.trim())
+			mainBox.innerHTML = safeHTML(plain.trim())
 	}else{																//PassLok short mode
-			mainBox.innerHTML = decryptSanitizer(decodeURI(plain).trim())
+			mainBox.innerHTML = safeHTML(decodeURI(plain).trim())
 	}
 
 	mainMsg.textContent = 'Decryption successful';
@@ -344,7 +344,7 @@ function padDecrypt(cipherStr){
 			macChecks = macChecks && (macBin[i] == macNew[i])
 		}
 		if(macChecks){																//check authentication
-			mainBox.innerHTML = decryptSanitizer(plain);
+			mainBox.innerHTML = safeHTML(plain);
 			mainMsg.textContent = 'Decryption successful';
 		}else{
 			mainMsg.textContent = 'Message authentication has failed';

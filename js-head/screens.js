@@ -42,10 +42,6 @@ function showsec(){
 var eyeImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAASFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACrhKybAAAAF3RSTlMA5Qyz9kEFh3rd1sjDoGsfHRKwQIp+Qzv02bEAAACJSURBVCjPvVBJEoQgDMwCAfeFmfH/P51KkFKL0qN9SXdDVngRy8joHPK4XGyJbtvhohz+3G0ndHPxp0b1mojSqqyZsk+tqphFVN6S8cH+g3wQgwCrGtT3VjhB0BB26QGgN0aAGhDIZP/wUHLrUrk5g4RT83rcbxn3WJA90Y/zgs8nqY94d/b38AeFUhCT+3yIqgAAAABJRU5ErkJggg==",
 	hideImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAb1BMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABt6r1GAAAAJHRSTlMAFNTiDPTNBvnaulFBAe/osrGBZCXSwIdnLhzIqKd7XFRLSjAYduwyAAAAuklEQVQoz62QRxbDIAwFhWkhwb07PeH+Z4wQPMjCS89KegP6AjiWSbF9oVzBQNyNlKZZ/s+wwpvLyXlkp7P5umiIcYDIwB0ZLWzrTb3GSQYbMsjDl3wj0fj6TDmpK7F60nnLeDCW2h6rgioBVZgmwlwUJoo6bkC7KRQ9iQ/MzuWtXyjKKcTpmVc8mht4Nu5NV+Y/UAKItaY7byHsOeSkp48uQSahO+kiISfD+ha/nbcLwxwFuzB1hUP5AR4JF1hy2DV7AAAAAElFTkSuQmCC";
 
-function chat2main(){
-	chatScr.style.display = 'none'
-}
-
 //close image screen
 function image2main(){
 	if(imageScr.style.display=='block'){
@@ -54,13 +50,6 @@ function image2main(){
 		Decrypt(mainBox.textContent);
 		setTimeout(function(){mainMsg.textContent = 'Image box closed. Did you save the image by right-clicking?'},100)
 	}
-}
-
-function resetChat(){
-	var frame = document.getElementById('chatFrame');
-	var src = frame.src;
-	frame.src = '';
-	setTimeout(function(){frame.src = src;}, 10)
 }
 
 //for clearing different boxes
@@ -149,16 +138,16 @@ function cancelCover(){
 	mainMsg.textContent = 'Text hide canceled'
 }
 
-//loads the chat frame
+//opens a chat page
 function main2chat(token){
-	if(isAndroid){
-		var reply = confirm('On Android, the chat function works from a browser page, but not yet from the app. Please cancel if you are running URSA as a native app.');
+	if(isAndroid && isChrome){
+		var reply = confirm('On Android, the chat function works from a browser page, but not yet from the app. Please cancel if you are running PassLok as a native app.');
 		if(!reply) return
 	}
-	document.getElementById('chatFrame').src = 'https://www.passlok.com/chat/index.html#' + token;
-	chatBtn.textContent = 'Back to Chat';
-	chatBtn.style.color = 'orange';
-	chatScr.style.display = 'block'
+	if(token){
+		window.open("https://passlok.com/chat2/index.html#" + token);
+		mainMsg.textContent = 'Chat session open in a separate tab'
+	}
 }
 
 //for opening the help screen and back
@@ -179,29 +168,28 @@ function focusBox(){
 	}
 }
 
-//closes everything else in help
-function openHelp(theID){
-	var helpItems = document.getElementsByClassName('helptext');
-	for(var i=0; i < helpItems.length; i++){
-		helpItems[i].style.display = 'none'
+//for opening one item at a time in the Help screen, with animation
+function openHelp(){
+	var helpItems = document.getElementsByClassName('helpHeading');
+	for(var i = 0; i < helpItems.length; i++){					//hide all help texts
+		var panel = helpItems[i].nextElementSibling;
+		panel.style.maxHeight = null;
 	}
-	document.getElementById(theID).style.display = "block";
-	if(isMobile){									//scroll to the item
-		location.href = '#';
-		location.href = '#a' + theID;
+	helpItems = document.getElementsByClassName('helpHeading2');
+	for(var i = 0; i < helpItems.length; i++){					//hide also secondary texts
+		var panel = helpItems[i].nextElementSibling;
+		panel.style.maxHeight = null;
 	}
+	var panel = this.nextElementSibling;							//except for the one clicked
+	panel.style.maxHeight = panel.scrollHeight + "px"	     
 }
-//2nd level
-function openHelp2(theID){
-	var helpItems = document.getElementsByClassName('helptext2');
-	for(var i=0; i < helpItems.length; i++){
-		helpItems[i].style.display = 'none'
-	}
-	document.getElementById(theID).style.display = "block";
-	if(isMobile){									//scroll to the item
-		location.href = '#';
-		location.href = '#a' + theID
-	}
+
+//for secondary help items
+function openHelp2(){
+	var panel = this.nextElementSibling,
+		parent = this.parentElement;
+	panel.style.maxHeight = panel.scrollHeight + "px";
+	setTimeout(function(){parent.style.maxHeight = parent.scrollHeight + "px"},301)
 }
 
 //for rich text editing
