@@ -79,20 +79,20 @@ function loadFileAsURL()
 			if(URLFromFileLoaded.slice(0,2) == '==' && URLFromFileLoaded.slice(-2) == '=='){
 				var fileLink = document.createElement("a");
 				fileLink.download = fileName;
-				fileLink.href = "data:," + safeHTML(URLFromFileLoaded);			//filter before adding to the DOM
+				fileLink.href = "data:," + decryptSanitizer(URLFromFileLoaded);			//filter before adding to the DOM
 				fileLink.textContent = fileName;
 				mainBox.appendChild(fileLink)
 			}else{
 				var spacer = document.createElement("br"),
 					textDiv = document.createElement("div");
-				textDiv.textContent = safeHTML(URLFromFileLoaded).replace(/  /g,' &nbsp;');
+				textDiv.textContent = decryptSanitizer(URLFromFileLoaded).replace(/  /g,' &nbsp;');
 				mainBox.appendChild(spacer);
 				mainBox.appendChild(textDiv)
 			}
 		}else{
 			var fileLink = document.createElement("a");
 			fileLink.download = fileName;
-			fileLink.href = safeHTML(URLFromFileLoaded).replace(/=+$/,'');
+			fileLink.href = decryptSanitizer(URLFromFileLoaded).replace(/=+$/,'');
 			fileLink.textContent = fileName;
 			mainBox.appendChild(fileLink)
 		}
@@ -121,7 +121,7 @@ function loadImage(){
 			return
 		}
 		var image = document.createElement("img");
-		image.src = safeHTML(URLFromFileLoaded).replace(/=+$/,'');
+		image.src = decryptSanitizer(URLFromFileLoaded).replace(/=+$/,'');
 		mainBox.appendChild(image)
 	};
 
