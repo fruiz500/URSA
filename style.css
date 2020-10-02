@@ -121,17 +121,21 @@ button:focus {
   height: 16px;
   z-index: 2;
 }
-.helpitem {
-	font-size: medium;
+.helpHeading {
 	cursor: pointer;
 	padding: 1px;
 }
-.helpitem:hover {
+.helpHeading:hover {
 	background-color: #eeeeee;
 }
-.helptext {
-	font-size: medium;
-	display: none;
+.helpHeading2 {
+	cursor: pointer;
+	padding: 1px;
+}
+.helpText {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease-out;
 }
 .intLink {
 	cursor: pointer;
@@ -368,20 +372,6 @@ img.intLink {
 #coverBox {
 	width: 95%;
 	max-height: 500px;
-}
-
-#chatScr {
-	display: none;
-}
-#closeChatBtn {
-	float: left;
-}
-#resetChatBtn {
-	float: right;
-}
-#chatFrame {
-	width: 100%;
-	height: 900px;
 }
 
 #imageScr {

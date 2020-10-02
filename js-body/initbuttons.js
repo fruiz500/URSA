@@ -1,14 +1,6 @@
 ﻿// initialize things
 window.onload = function() {
 
-	if(isMobile){
-		niceEditBtn.style.display = 'none';		//no rich text editing on mobile
-		mainFile.style.display = 'none';
-		selectMainBtn.style.display = 'none';
-	} else {
-		sendSMSBtn.style.display = 'none';
-	}
-
   //event listeners for buttons etc.
 	window.addEventListener('resize',textheight);
 
@@ -38,6 +30,8 @@ window.onload = function() {
 	encodeJPGBtn.addEventListener('click', encode);
 
    	chatBtn.addEventListener('click', Chat);
+
+   	sendSMSBtn.addEventListener('click', sendSMS);
 	
 	fileMode.addEventListener('click', toggleFileOptions);
 
@@ -50,10 +44,6 @@ window.onload = function() {
 	help2mainBtnBottom.addEventListener('click', main2help);
 
    	sendSMSBtn.addEventListener('click', sendSMS);
-
-   	closeChatBtn.addEventListener('click', chat2main);
-
-   	resetChatBtn.addEventListener('click', resetChat);
 
    	cancelChatBtn.addEventListener('click', closeChat);
 
@@ -93,7 +83,7 @@ window.onload = function() {
 	document.images[6].addEventListener("click", function() {formatDoc('superscript')});
 	document.images[7].addEventListener("click", function() {formatDoc('justifyleft')});
 	document.images[8].addEventListener("click", function() {formatDoc('justifycenter')});
-	document.images[9].addEventListener("click", function() {ormatDoc('justifyright')});
+	document.images[9].addEventListener("click", function() {formatDoc('justifyright')});
 	document.images[10].addEventListener("click", function() {formatDoc('justifyfull')});
 	document.images[11].addEventListener("click", function() {formatDoc('insertorderedlist')});
 	document.images[12].addEventListener("click", function() {formatDoc('insertunorderedlist')});
@@ -108,24 +98,20 @@ window.onload = function() {
 	document.images[21].addEventListener("click", function() {formatDoc('redo')});
 
 //for the help screens
-	aa1.addEventListener('click', function() {openHelp('a1')});
-	aa2.addEventListener('click', function() {openHelp('a2')});
-	aa3.addEventListener('click', function() {openHelp('a3')});
-	aa4.addEventListener('click', function() {openHelp('a4')});
-	aa5.addEventListener('click', function() {openHelp('a5')});
-	aa6.addEventListener('click', function() {openHelp('a6')});
-	aa7.addEventListener('click', function() {openHelp('a7')});
-	aa8.addEventListener('click', function() {openHelp('a8')});
-	aa9.addEventListener('click', function() {openHelp('a9')});
-	aa10.addEventListener('click', function() {openHelp('a10')});
-	aa11.addEventListener('click', function() {openHelp('a11')});
+	var helpHeaders = document.getElementsByClassName("helpHeading");		//add listeners to all the help headers
 
-	bb8.addEventListener('click', function() {openHelp2('b8')});
+	for (var i = 0; i < helpHeaders.length; i++) {
+		helpHeaders[i].addEventListener('click', openHelp);
+	}
+	
+	var helpHeaders2 = document.getElementsByClassName("helpHeading2");		//2nd level help
+	
+	for (var i = 0; i < helpHeaders2.length; i++) {
+		helpHeaders2[i].addEventListener('click', openHelp2);
+	}
 
 //fixes after inline styles were moved to css file
-
 	mainScr.style.display = 'block';
-	b8.style.display = 'none';
 	showKey.src = eyeImg;
 };
 

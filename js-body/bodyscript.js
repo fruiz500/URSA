@@ -15,7 +15,6 @@
 		isAndroidPhone = (navigator.userAgent.match(/mobile/i) != null && isAndroid),
 		isFile = (window.location.protocol == 'file:');
 	textheight();
-	chatResize();
 
 //  Clear out "sorry, no JavaScript" warning and display the type of source
 	showGreeting();
@@ -59,10 +58,6 @@ function textheight(){
 	}
 }
 
-function chatResize(){
-	chatFrame.height = document.documentElement.clientHeight - 60
-}
-
 //this one is called by window.onload below
 function loadFileAsURL()
 {
@@ -84,20 +79,20 @@ function loadFileAsURL()
 			if(URLFromFileLoaded.slice(0,2) == '==' && URLFromFileLoaded.slice(-2) == '=='){
 				var fileLink = document.createElement("a");
 				fileLink.download = fileName;
-				fileLink.href = "data:," + safeHTML(URLFromFileLoaded);			//filter before adding to the DOM
+				fileLink.href = "data:," + decryptSanitizer(URLFromFileLoaded);			//filter before adding to the DOM
 				fileLink.textContent = fileName;
 				mainBox.appendChild(fileLink)
 			}else{
 				var spacer = document.createElement("br"),
 					textDiv = document.createElement("div");
-				textDiv.textContent = safeHTML(URLFromFileLoaded).replace(/  /g,' &nbsp;');
+				textDiv.textContent = decryptSanitizer(URLFromFileLoaded).replace(/  /g,' &nbsp;');
 				mainBox.appendChild(spacer);
 				mainBox.appendChild(textDiv)
 			}
 		}else{
 			var fileLink = document.createElement("a");
 			fileLink.download = fileName;
-			fileLink.href = safeHTML(URLFromFileLoaded).replace(/=+$/,'');
+			fileLink.href = decryptSanitizer(URLFromFileLoaded).replace(/=+$/,'');
 			fileLink.textContent = fileName;
 			mainBox.appendChild(fileLink)
 		}
@@ -126,7 +121,7 @@ function loadImage(){
 			return
 		}
 		var image = document.createElement("img");
-		image.src = safeHTML(URLFromFileLoaded).replace(/=+$/,'');
+		image.src = decryptSanitizer(URLFromFileLoaded).replace(/=+$/,'');
 		mainBox.appendChild(image)
 	};
 

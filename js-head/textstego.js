@@ -194,7 +194,6 @@ function toLetters(text){
 //gets the original text from Letters encoded text
 function fromLetters(text){
 	var bintemp = [],
-		finalString = "",
 		tempchar = "";
 	for (var i = 0; i < text.length; i++){
 		if (charMappings[text[i]] === undefined ){
@@ -206,8 +205,7 @@ function fromLetters(text){
 	var binStr = bintemp.join(''),
 		bin = new Array(binStr.length);
 	for(var i = 0; i < binStr.length; i++) bin[i] = parseInt(binStr.charAt(i));
-	finalString = fromBin(bin.slice(0,bin.length-(bin.length % 6)));
-	mainBox.innerHTML = decryptSanitizer(finalString);
+	mainBox.textContent = fromBin(bin.slice(0,bin.length-(bin.length % 6)))
 }
 
 //adds spaces that can be encoded if Chinese, Korean, or Japanese
