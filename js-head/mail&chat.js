@@ -19,8 +19,12 @@ function sendMail() {
 
 //calls texting app
 function sendSMS(){
-	selectMain();
-	window.open("SMS:","_parent")
+	if(sendSMSBtn.textContent == 'Save'){
+		saveFiles()
+	}else{
+		selectMain();
+		window.open("SMS:","_parent")
+	}
 }
 
 //decrypts a chat invite if found, then open chat screen, otherwise make one. If the chat screen is open, returns to it

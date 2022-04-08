@@ -23,7 +23,7 @@
 <!--License notice and SSL force-->
 <script src="js-head/license.js"></script>
 
-<!--Tweet NaCl crypto library 1.0.1 by Dmitry Chestnykh. https://github.com/dchest/tweetnacl-js-->
+<!--Tweet NaCl crypto library 1.0.3 by Dmitry Chestnykh. https://github.com/dchest/tweetnacl-js-->
 <script src="js-opensrc/nacl.js"></script>
 
 <!--scrypt-async-js KDF 2.0.1 by Dmitry Chestnykh. https://github.com/dchest/scrypt-async-js-->
@@ -32,7 +32,7 @@
 <!--lz-string compression algorithm 1.4.4. https://github.com/pieroxy/lz-string-->
 <script src="js-opensrc/lz-string.js"></script>
 
-<!--DOMPurify, used to sanitize decrypted material before putting in DOM v2.1.1. https://github.com/cure53/DOMPurify-->
+<!--DOMPurify, used to sanitize decrypted material before putting in DOM v2.3.6. https://github.com/cure53/DOMPurify-->
 <script src="js-opensrc/purify.js"></script>
 
 <!--jpeg image steganography by Owen Campbell-Moore and others. https://github.com/owencm/js-steg. First jsstegencoder-1.0.js-->
@@ -201,6 +201,7 @@
 <img class="intLink" title="Load a file" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAMAAABhEH5lAAAATlBMVEUAAAAAAAD19fVcXFwbGxsTExP8/PzT09NxcXFaWlo4ODg1NTUEBAT5+fnw8PDr6+vU1NTIyMi+vr6Xl5dsbGxnZ2dXV1dISEghISEMDAw0f0rSAAAAAXRSTlMAQObYZgAAAFBJREFUGNO9yEkOgCAQBMBmUxDc9/9/VJ2EjgkHb9axcJuceqQRtMq4aAdWkDr6xtW5jJRFx2MBu23fdS7eG6Vz0U8VytrKmhMnVoDQlOfbBQLIAl4FF2fyAAAAAElFTkSuQmCC" />
 </label>
 <input type="file" id="mainFile"/>
+<img class="intLink" title="Download files" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAdVBMVEUAAAAfHx9GRkYAAAAPDw9aWlr+/v739/fHx8dpaWkEBAT7+/v29vby8vLu7u7Z2dm1tbWysrKtra2qqqqMjIxWVlZJSUk1NTUUFBQJCQnz8/Pq6uri4uLMzMzKysq+vr69vb2NjY16enpvb29hYWE9PT0rKytDpsqlAAAAAXRSTlMAQObYZgAAAHdJREFUGNO1zscOgCAMgGG0iIp77z3e/xEV05CoJJ78D9B86aHkO6bUuXBUnFWuig1q/sTs5PclyR7YpZ+vD+4rrSg3mJ7rFgWA9EZhcPmlbuyh1mCLr0vEO0CI7HPB2AgRTh43mORYMstBk3HaEqxZdFlmkZ87AICHBL2TAUCPAAAAAElFTkSuQmCC" />
     </div>
   </div>
   <div id="mainBox" contenteditable="true" class="cssbox" accesskey=";" placeholder="Enter your message here and the shared Key in the top box, then click Encrypt. You can also enter images and files after you click the Rich button."></div>
@@ -266,7 +267,7 @@
   </div>
   <div class="helpText">
     <p>If you or your friends don't have access to a computer that hasn't been compromised, you can still communicate in Human mode, which can be performed simply with paper and pencil. This mode is explained in detail in this page, which also does encryption and decryption for you: <a href="https://passlok.com/human" target="_blank">https://passlok.com/human</a>.</p>
-    <p>URSA shifts into Human mode whenever you supply a shared Key that consists of <em>three strings separated by tildes</em> &quot;~&quot; (or two tildes after a single string). Type your message in Latin characters, then press <strong>Encrypt</strong> normally. Bear in mind that all punctuation will be represented as periods upon decryption.</p>
+    <p>URSA shifts into Human mode whenever you supply a shared Key that consists of <em>three strings separated by tildes</em> "~" (or two tildes after a single string). Type your message in Latin characters, then press <strong>Encrypt</strong> normally. Bear in mind that all punctuation will be represented as periods upon decryption.</p>
     <p>You can disguise the result as apparently normal text as for the normal mode, by clicking the <strong>Text hide</strong> button.</p>
     <p>If the appropriate key is loaded, decryption happens automatically as soon as you paste in the encrypted message. Otherwise, click the <strong>Decrypt</strong> button. Unlike in other modes, you won't get a message telling you whether or not the decryption has been successful.</p>
     <p>Messages encrypted by URSA in Human mode can be decrypted in PassLok, and vice-versa, plus the page linked above.</p>
@@ -288,11 +289,11 @@
   <div class="helpText">
     <p>Chat has its own secure file-sending process, so we refer here to encrypting files using the main encryption process. You have two choices:</p>
     <p>1. Encrypt the files using AES with a utility such as <a href="http://www.7-zip.org/" target="_blank">7-zip</a> (Windows), <a href="http://www.kekaosx.com/" target="_blank">Keka</a> (OSX), or p7zip (Linux), then encrypt the encryption password inside a URSA-encrypted message, and attach the encrypted archive to your email.</p>
-    <p>2. You can also load files using the button at the right end of the rich text toolbar (which you display with the <strong>Rich</strong> button, if it is not displayed already), which will load each file as a link, and then encrypt them as a regular message. After decryption, the recipient can save each file by right-clicking it and selecting "Save Link as..."</p>
+    <p>2. You can also load files using the button near the right end of the rich text toolbar (which you display with the <strong>Rich</strong> button, if it is not displayed already), which will load each file as a link, and then encrypt them as a regular message. After decryption, the recipient can save the files contained in the main box by clicking the Save button below the box or the rightmost button on the toolbar.</p>
     <p>Images can be loaded as described above or directly as image, by clicking the image icon on the rich text toolbar and are encrypted just like text.</p>
     <p>If the file loaded is text, it will load as text rather than as a link. You can also load text into the Key box. Just load it first into the main box, and then click the <b>Swap</b> button.</p>
     <p>Finally, you can save an encrypted message as a file, by checking the <strong>to File</strong> box and selecting the type (Binary or Text) before encrypting. You save the resulting file to disk by right-clicking as described above.</p>
-    <p>Be aware that Chrome cannot save files larger than 1.5MB, even if they have been correctly decrypted. Firefox and Safari don't have this limitation. In any case, you may want to encrypt to file rather than text in order to speed up the process as described in the next item, especially if you want to send the encrypted output by email.</p>
+    <p>If you include files, which tend to contain a lot more bytes than text, you may want to encrypt to file rather than text in order to speed up the process as described in the next item, especially if you want to send the encrypted output by email.</p>
   </div>
   <hr>
   <div class="helpHeading">
@@ -300,7 +301,7 @@
   </div>
   <div class="helpText">
     <p>Sometimes the text, images, or files you wish to encrypt contain a lot of bytes, which would fill many screenfuls with gibberish text. Email programs won't take large text without clipping it, thus making it impossible to decrypt it. The solution is to output to a file rather than text, by checking the <strong>to File</strong> box and the type of file to make (Binary or text) before clicking <strong>Encrypt</strong>.</p>
-    <p>After encryption, you will see a link on the main box, which you can then right-click and save locally with the "Save Link As..." option. Then you can send it as an email attachment, for instance. Be aware that Chrome cannot save files larger than 1.5MB. Firefox and Safari don't have this limitation.</p>
+    <p>After encryption, you will see a link on the main box, which you can download by clicking the Save button below the box. Then you can send it as an email attachment, for instance.</p>
     <p>To decrypt the file, load it as described in the item above, and then decrypt it with the shared Key just like something encrypted to text.</p>
     </div>
   <hr>
@@ -361,19 +362,19 @@
     <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
     <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
     <div id="canary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
-    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.9 (October 2020) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
+    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.11 (April 2022) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
     </div>
   </div>
   <hr>
   <address>
-  URSA 4.2.9 &#169; F. Ruiz 2020
+  URSA 4.2.11 &#169; F. Ruiz 2022
   </address>
   <ul>
     <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
     <li>tweetNaCl JavaScript implementation by D. Chestnykh and D. Mandiri 2015</li>
     <li>scrypt key stretching implementation by D. Chestnykh 2014</li>
     <li>lz-string compression by pieroxy 2014</li>
-    <li>DOMPurify XSS sanitizer by cure53 2020</li>
+    <li>DOMPurify XSS sanitizer by cure53 2022</li>
     <li>image steganography based on F5 by Andreas Westfeld 2001</li>
     <li>jpeg image hiding libraries js-steg by Owen Campbell-Moore et al. 2014</li>
     <li>isaac seedable PRNG by Yves-Marie Rinquin 2012</li>

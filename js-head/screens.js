@@ -23,7 +23,8 @@ function btnLabels(){
 		decryptBtn.textContent = 'Encrypt';
 		imageBtn.textContent = 'Encr. to Img'
 	}
-	if(!string)imageBtn.textContent = 'Decrypt Img'
+	if(!string)imageBtn.textContent = 'Decrypt Img';
+	if(mainBox.innerHTML.includes('href="data:')){sendSMSBtn.textContent = "Save"}else{sendSMSBtn.textContent = "SMS"}
 }
 
 //this is for showing and hiding text in key box and other password input boxes
