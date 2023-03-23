@@ -1,0 +1,30 @@
+{
+  "name": "URSA Privacy",
+  "short_name": "URSA",
+  "description": "High strength symmetric encryption for your favorite email, plus real-time secure chat",
+  "version": "4.2.13",
+  "manifest_version": 3,
+  "icons": {
+   "16": "ursa-icon16.png",
+   "48": "ursa-icon48.png",
+   "128": "ursa-icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; img-src 'self' data:; connect-src 'self' data:; style-src 'self'"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "action": {
+   "default_icon": {
+	   		"16": "ursa-icon16gray.png",
+           "48": "ursa-icon48gray.png"
+   },
+   "default_title": "URSA Privacy"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ursa@passlok.com"
+    }
+  }
+}

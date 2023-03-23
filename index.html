@@ -24,7 +24,7 @@
 <script src="js-head/license.js"></script>
 
 <!--Tweet NaCl crypto library 1.0.3 by Dmitry Chestnykh. https://github.com/dchest/tweetnacl-js-->
-<script src="js-opensrc/nacl.js"></script>
+<script src="js-opensrc/nacl-fast.js"></script>
 
 <!--scrypt-async-js KDF 2.0.1 by Dmitry Chestnykh. https://github.com/dchest/scrypt-async-js-->
 <script src="js-opensrc/scrypt-async.js"></script>
@@ -32,7 +32,7 @@
 <!--lz-string compression algorithm 1.4.4. https://github.com/pieroxy/lz-string-->
 <script src="js-opensrc/lz-string.js"></script>
 
-<!--DOMPurify, used to sanitize decrypted material before putting in DOM v2.3.6. https://github.com/cure53/DOMPurify-->
+<!--DOMPurify, used to sanitize decrypted material before putting in DOM v3.0.1. https://github.com/cure53/DOMPurify-->
 <script src="js-opensrc/purify.js"></script>
 
 <!--jpeg image steganography by Owen Campbell-Moore and others. https://github.com/owencm/js-steg. First jsstegencoder-1.0.js-->
@@ -82,7 +82,7 @@
 
 <!--Main screen-->
 <div id="mainScr">
-  <div align="center"> <br>
+  <div class="centered"> <br>
 
     <!--message area and local directory box, plus buttons-->
     <div id="mainMsg" class="message"><span id="JSmsg">JAVASCRIPT OFF, PASSLOK CANNOT RUN</span></div>
@@ -91,7 +91,7 @@
     <table>
     <tr>
     <td width="100%">
-    <input type="password" class="cssbox" id="pwd" name="text" placeholder="" align="left"/>
+    <input type="password" class="cssbox left" id="pwd" name="text" placeholder=""/>
     </td>
     <td width="0%">
     <img id='showKey' class="field-icon" src="" title="click this to see/hide the Key">
@@ -205,7 +205,7 @@
     </div>
   </div>
   <div id="mainBox" contenteditable="true" class="cssbox" accesskey=";" placeholder="Enter your message here and the shared Key in the top box, then click Encrypt. You can also enter images and files after you click the Rich button."></div>
-  <div align="center">
+  <div class="centered">
     <!--buttons below the main box-->
     <div id="mainbuttonsbot">
    <button class="cssbutton" id="niceEditBtn" value="Rich" title="toggle rich text editor (alt-R)" accesskey="r">Rich</button><!--
@@ -220,7 +220,7 @@
 <!--Help screen-->
 <div id="helpScr">
   <h2 id="helpWelcome">Welcome to URSA</h2>
-  <button class="cssbutton" id="help2mainBtnTop" value="< Back" title="return to main screen (alt-M)" accesskey='m'>&#9668; Back</button>
+  <button class="cssbutton" id="help2mainBtnTop" value="&lt; Back" title="return to main screen (alt-M)" accesskey='m'>&#9668; Back</button>
   <br>
   &nbsp;&nbsp;&nbsp;<span id='helpmsg' class="message">For help on how to do things, click on each title.</span><br>
   <br>
@@ -362,12 +362,12 @@
     <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
     <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
     <div id="canary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
-    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.11 (April 2022) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
+    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.13 (March 2023) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
     </div>
   </div>
   <hr>
   <address>
-  URSA 4.2.11 &#169; F. Ruiz 2022
+  URSA 4.2.13 &#169; F. Ruiz 2023
   </address>
   <ul>
     <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
@@ -387,22 +387,22 @@
   This document may be used, modified or redistributed under GNU GPL license, version 3.0 or higher.
   </address>
   <br>
-  <button class="cssbutton" id="help2mainBtnBottom" value="< Back" title="return to main screen (alt-M)">&#9668; Back</button>
+  <button class="cssbutton" id="help2mainBtnBottom" value="&lt; Back" title="return to main screen (alt-M)">&#9668; Back</button>
 </div>
 
 <!--Chat dialog, to enter the chat type and date or other information-->
-<div id="chatDialog" class="white_content" align="center"> <br>
+<div id="chatDialog" class="white_content"> <br>
   <br>
   <br>
   <span id="chatmsg" class="message">Choose the type of chat, then write in the box the date and time</span><br>
   <br>
-  <input type="radio" name="chatmodes" id="dataChat"  title="chat with text messages and file exchange" checked/>
+  <input type="radio" name="chatmodes" id="dataChat"  title="chat with text messages and file exchange"/>
   &nbsp; Text and files&nbsp;&nbsp;
   <input type="radio" name="chatmodes" id="audioChat" title="like Text chat, plus audio"/>
   &nbsp; Audio&nbsp;&nbsp;
   <input type="radio" name="chatmodes" id="videoChat" title="like audio chat, plus video"/>
   &nbsp; Video&nbsp;&nbsp;
-  <input type="radio" name="chatmodes" id="jitsiChat" title="full featured, on jit.si"/>
+  <input type="radio" name="chatmodes" id="jitsiChat" title="full featured, on jit.si" checked/>
   &nbsp; Jitsi
   <br>
   <br>
@@ -415,12 +415,12 @@
 </div>
 
 <!--Cover text entry dialog-->
-<div id="coverScr" class="white_content" align="center">
+<div id="coverScr" class="white_content">
   	<br>
   	<span id="coverMsg" class="message">Please enter the cover text for hiding and click <strong>OK</strong></span>
     <br>
     <br>
-    <div class="cssbox" contenteditable="true" align= "left" rows="5" autocomplete="off" id="coverBox" name="coverBox" placeholder="Enter the cover text here"></div>
+    <div class="cssbox left" contenteditable="true" rows="5" autocomplete="off" id="coverBox" name="coverBox" placeholder="Enter the cover text here"></div>
     <br>
     <button class="cssbutton" id="cancelCoverBtn" value="cancel" title="close cover text dialog">Cancel</button>&nbsp;
     <button class="cssbutton" id="acceptCoverBtn" value="OK" title="accept cover text">OK</button>
@@ -430,8 +430,8 @@
 </div>
 
 <!--Image hiding dialog-->
-<div id='imageScr' class="white_content" align="center">
-  <button class="cssbutton" id="image2mainBtn" value="< Done" title="return to main screen (alt-I)" accesskey="i">&#9668; Done</button>
+<div id='imageScr' class="white_content">
+  <button class="cssbutton" id="image2mainBtn" value="&lt; Done" title="return to main screen (alt-I)" accesskey="i">&#9668; Done</button>
   <span id="imgSpacer"><br>
   <br>
   <br>

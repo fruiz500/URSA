@@ -64,8 +64,7 @@ function loadFileAsURL()
 	var fileToLoad = mainFile.files[0];
 
 	var fileReader = new FileReader();
-	fileReader.onload = function(fileLoadedEvent)
-	{
+	fileReader.onload = function(fileLoadedEvent){
 		var fileName = fileToLoad.name;
 		var URLFromFileLoaded = fileLoadedEvent.target.result;
 		if(URLFromFileLoaded.length > 2000000){
@@ -96,7 +95,9 @@ function loadFileAsURL()
 			fileLink.textContent = fileName;
 			mainBox.appendChild(fileLink)
 		}
-	};
+		mainFile.type = '';
+        mainFile.type = 'file'            //reset file input
+	}
 	if(fileToLoad.type.slice(0,4) == "text"){
 		fileReader.readAsText(fileToLoad, "UTF-8");
 		mainMsg.textContent = 'This is the content of file ' + fileToLoad.name;
@@ -122,7 +123,9 @@ function loadImage(){
 		}
 		var image = document.createElement("img");
 		image.src = decryptSanitizer(URLFromFileLoaded).replace(/=+$/,'');
-		mainBox.appendChild(image)
+		mainBox.appendChild(image);
+		imgFile.type = '';
+        imgFile.type = 'file'            //reset file input
 	};
 
 	fileReader.readAsDataURL(fileToLoad, "UTF-8");
