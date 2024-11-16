@@ -13,7 +13,7 @@ Because of this, URSA is pure html code consisting mostly of JavaScript instruct
 These are the open source libraries used in URSA, which can be found in the js-opensrc directory:
 * Tweet NaCl in JavaScript: https://github.com/dchest/tweetnacl-js
 * SCRYPT key stretching, edited to make it synchronous. https://github.com/dchest/scrypt-async-js
-* DOMPurify, used to sanitize decrypted material before putting in DOM v2.1.1. https://github.com/cure53/DOMPurify
+* DOMPurify, used to sanitize decrypted material before putting in DOM v3.1.7. https://github.com/cure53/DOMPurify
 * jpeg image steganography by Owen Campbell-Moore and others. https://github.com/owencm/js-steg
 
 The URSA original code is in directories js-head and js-body (note: names are the same as their PassLok equivalents, but they are different libraries):
