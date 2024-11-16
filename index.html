@@ -2,7 +2,7 @@
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" manifest="ursa.appcache">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>URSA Privacy</title>
+    <title>URSA</title>
 
     <meta name="Keywords" content="passlok, URSA, browser, encryption, decryption, symmetric, public key, signature, AES, ECDH, Diffie, Hellman, elliptic curve, advanced, javascript, PGP, PRISM">
     <meta name="Description" content="URSA encryption">
@@ -32,7 +32,7 @@
 <!--lz-string compression algorithm 1.4.4. https://github.com/pieroxy/lz-string-->
 <script src="js-opensrc/lz-string.js"></script>
 
-<!--DOMPurify, used to sanitize decrypted material before putting in DOM v3.0.1. https://github.com/cure53/DOMPurify-->
+<!--DOMPurify, used to sanitize decrypted material before putting in DOM v3.1.7. https://github.com/cure53/DOMPurify-->
 <script src="js-opensrc/purify.js"></script>
 
 <!--jpeg image steganography by Owen Campbell-Moore and others. https://github.com/owencm/js-steg. First jsstegencoder-1.0.js-->
@@ -267,7 +267,7 @@
   </div>
   <div class="helpText">
     <p>If you or your friends don't have access to a computer that hasn't been compromised, you can still communicate in Human mode, which can be performed simply with paper and pencil. This mode is explained in detail in this page, which also does encryption and decryption for you: <a href="https://passlok.com/human" target="_blank">https://passlok.com/human</a>.</p>
-    <p>URSA shifts into Human mode whenever you supply a shared Key that consists of <em>three strings separated by tildes</em> "~" (or two tildes after a single string). Type your message in Latin characters, then press <strong>Encrypt</strong> normally. Bear in mind that all punctuation will be represented as periods upon decryption.</p>
+    <p>URSA shifts into Human mode whenever you supply a shared Key that consists of <em>four strings separated by tildes</em> "~" (plus optionally another tilde and a numeral). Type your message in Latin characters, then press <strong>Encrypt</strong> normally. Bear in mind that all punctuation will be represented as periods upon decryption.</p>
     <p>You can disguise the result as apparently normal text as for the normal mode, by clicking the <strong>Text hide</strong> button.</p>
     <p>If the appropriate key is loaded, decryption happens automatically as soon as you paste in the encrypted message. Otherwise, click the <strong>Decrypt</strong> button. Unlike in other modes, you won't get a message telling you whether or not the decryption has been successful.</p>
     <p>Messages encrypted by URSA in Human mode can be decrypted in PassLok, and vice-versa, plus the page linked above.</p>
@@ -362,19 +362,19 @@
     <p><strong>Notice:</strong> Since URSA is distributed as a piece of human-readable code, we consider it an expression of free speech protected by the laws of many countries. Putting into circulation tampered versions of URSA, whether by individuals or public entities, violates free speech and copyright protection laws.</p>
     <p>URSA contains strong cryptographic methods, which may be illegal to use in some countries. Please check the local laws before using URSA.</p>
     <div id="canary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAGFBMVEUAAAAAAAD///91XhdgYGCcnJzMzMzUqipkv+fEAAAAAXRSTlMAQObYZgAAAYFJREFUOMt1lLGOgzAQREEUaVkHkhpEUkOVmvsDIt31IF1PdP8vnWwzHtaGKRDmsbO7eHGm9Cfyys4km/ojmEvQ/ZBS10N6Gl+I18/v6G/KtCrTOnVuscbWSwsxPYPBwEsGw1nxgEGpxoUzuI00MjuDqWdwvyD4e88nuOdbMFOge3j79V3liHAjL7np4kt4u5V2fwS8bGbbHd3hjZ0wyt1hZAzuxL3FZoffqrUSlaG4qqU2HFbMfoplj68pNqr0T4xF4SFUMyJcY+EqxVgTS4QlwkZjrAXSubFRsw4H5p5BxLlIgwfTIW6DoXafPcYkqN74zRf3uN7bf2HHChvnuMGX7WoRYD8tTN/4q2CS/YQ8tvY79GwsXjO3J6jq/Qz7Mds8ds5RSDypAmz4zSr1E/EfQ9MJHjDd5PSGu1Vt8Q3BOBrVDuNdnj0DB2RCvH0xPpnYHoLhXmluXdajU7E7ONOj+YyP5Fzx9MDHQHIkQGCv1WtcaFqSkKeUumjnVB80TP0D1fGXaRHBg/YAAAAASUVORK5CYII=">
-    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.2.13 (March 2023) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
+    <p>This paragraph and the canary logo above attest to the fact that, up until the release of version 4.3 (November 2024) we have not received any requests under gag order for user data or modifications of the code. This paragraph will be periodically updated as this situation continues.</p>
     </div>
   </div>
   <hr>
   <address>
-  URSA 4.2.13 &#169; F. Ruiz 2023
+  URSA 4.3 &#169; F. Ruiz 2024
   </address>
   <ul>
     <li>engine: NaCl by D. Bernstein, W. Janssen, T. Lange, P. Schwabe, M. Dempsky, and A. Moon 2013</li>
     <li>tweetNaCl JavaScript implementation by D. Chestnykh and D. Mandiri 2015</li>
     <li>scrypt key stretching implementation by D. Chestnykh 2014</li>
     <li>lz-string compression by pieroxy 2014</li>
-    <li>DOMPurify XSS sanitizer by cure53 2022</li>
+    <li>DOMPurify XSS sanitizer by cure53 2024</li>
     <li>image steganography based on F5 by Andreas Westfeld 2001</li>
     <li>jpeg image hiding libraries js-steg by Owen Campbell-Moore et al. 2014</li>
     <li>isaac seedable PRNG by Yves-Marie Rinquin 2012</li>
